@@ -1,0 +1,33 @@
+[project]
+name = "fix-that-prompt"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "chainlit>=2.6.5",
+    "langchain>=0.3.27",
+    "langchain-openai>=0.3.28",
+    "loguru>=0.7.3",
+    "pillow>=10.0.0",
+    "python-dotenv>=1.1.1",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12.7",
+]
+
+[tool.ruff]
+line-length = 80
+target-version = "py312"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "C90", "I", "N", "UP", "B", "A", "C4", "PIE", "SIM"]
+ignore = ["E501"]  # Line too long (handled by formatter)

@@ -1,0 +1,142 @@
+[
+  {
+    "id": "vague_essay",
+    "category": "Academic Writing",
+    "bad_prompt": "Write about AI",
+    "weak_response": "AI is good. It helps people. There are many types of AI. Some people worry about AI. AI will change the future. The end.",
+    "context": "Student needs help writing an academic essay about artificial intelligence for a college course",
+    "expected_improvements": [
+      "Specify essay length and format requirements",
+      "Define specific aspects of AI to focus on",
+      "Indicate target audience and academic level",
+      "Request proper citations and references",
+      "Specify desired tone and writing style"
+    ]
+  },
+  {
+    "id": "unclear_code",
+    "category": "Programming",
+    "bad_prompt": "Make a function",
+    "weak_response": "def func():\n    return True",
+    "context": "Developer needs a Python function to solve a specific problem",
+    "expected_improvements": [
+      "Specify what the function should do",
+      "Define input parameters and types",
+      "Specify expected output format",
+      "Include error handling requirements",
+      "Request documentation and examples"
+    ]
+  },
+  {
+    "id": "generic_email",
+    "category": "Business Communication", 
+    "bad_prompt": "Write an email",
+    "weak_response": "Hi,\n\nI hope you are well. I wanted to reach out about something. Please let me know what you think.\n\nThanks,\nSender",
+    "context": "Professional needs to write a follow-up email after a client meeting",
+    "expected_improvements": [
+      "Specify the recipient and relationship",
+      "Define the email's specific purpose",
+      "Include relevant meeting details",
+      "Request specific action items",
+      "Set appropriate professional tone"
+    ]
+  },
+  {
+    "id": "vague_analysis",
+    "category": "Data Analysis",
+    "bad_prompt": "Look at this data",
+    "weak_response": "The data shows numbers. There are high values and low values. Some trends exist. More analysis needed.",
+    "context": "Business analyst needs to examine sales performance data",
+    "expected_improvements": [
+      "Specify the type of analysis required", 
+      "Define key metrics and KPIs to focus on",
+      "Indicate the time period for analysis",
+      "Request specific insights and recommendations",
+      "Specify output format and visualizations"
+    ]
+  },
+  {
+    "id": "poor_creative",
+    "category": "Creative Writing",
+    "bad_prompt": "Write a story",
+    "weak_response": "Once upon a time there was a person. They did things. Then stuff happened. The end.",
+    "context": "Writer needs a compelling short story for a fiction magazine submission",
+    "expected_improvements": [
+      "Specify genre and target audience",
+      "Define word count and format requirements", 
+      "Include specific themes or elements",
+      "Request compelling characters and plot",
+      "Specify narrative style and voice"
+    ]
+  },
+  {
+    "id": "basic_recipe",
+    "category": "Cooking",
+    "bad_prompt": "How to cook food",
+    "weak_response": "Put ingredients together. Cook them. Eat when done.",
+    "context": "Home cook wants to prepare a specific dish for a dinner party",
+    "expected_improvements": [
+      "Specify the exact dish and cuisine type",
+      "Include dietary restrictions and preferences",
+      "Request serving size and prep time",
+      "Ask for detailed step-by-step instructions",
+      "Include ingredient substitutions and tips"
+    ]
+  },
+  {
+    "id": "weak_marketing",
+    "category": "Marketing",
+    "bad_prompt": "Sell this product",
+    "weak_response": "This product is good. You should buy it. It costs money. Available now.",
+    "context": "Marketing manager needs compelling copy for a new product launch",
+    "expected_improvements": [
+      "Define target customer demographics",
+      "Specify unique value propositions",
+      "Include competitive advantages",
+      "Request specific call-to-action",
+      "Define marketing channel and format"
+    ]
+  },
+  {
+    "id": "simple_explanation",
+    "category": "Education",
+    "bad_prompt": "Explain science",
+    "weak_response": "Science is about studying things. Scientists do experiments. They learn stuff. Science is important.",
+    "context": "Teacher needs to explain photosynthesis to 5th-grade students",
+    "expected_improvements": [
+      "Specify the exact scientific concept",
+      "Define the student age and grade level",
+      "Request age-appropriate language",
+      "Include examples and analogies",
+      "Ask for interactive elements"
+    ]
+  },
+  {
+    "id": "generic_advice",
+    "category": "Life Coaching",
+    "bad_prompt": "Help me with my life",
+    "weak_response": "Life is hard sometimes. Try to be positive. Things will get better. Stay strong.",
+    "context": "Person seeking guidance on career transition after job loss",
+    "expected_improvements": [
+      "Specify the exact life situation",
+      "Define specific goals and challenges",
+      "Request actionable steps and timeline",
+      "Include relevant personal context",
+      "Ask for resources and tools"
+    ]
+  },
+  {
+    "id": "unclear_travel",
+    "category": "Travel Planning", 
+    "bad_prompt": "Plan a trip",
+    "weak_response": "Go somewhere. Book flights. Stay at hotels. Have fun.",
+    "context": "Family of four planning a week-long vacation within budget constraints",
+    "expected_improvements": [
+      "Specify destination preferences and budget",
+      "Include travel dates and duration",
+      "Define family composition and ages",
+      "Request specific activities and accommodations",
+      "Include practical logistics and requirements"
+    ]
+  }
+]

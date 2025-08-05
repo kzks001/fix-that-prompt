@@ -1,0 +1,70 @@
+2025-08-05 09:43:47 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: session_started, Details: 
+2025-08-05 09:43:47 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: prompt_selected, Details: ID: poor_creative, Category: Creative Writing
+2025-08-05 09:43:58 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: round_submitted, Details: Round 1
+2025-08-05 09:44:05 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 1.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 1.0, 'creativity': 0.0, 'total': 1.0}}
+2025-08-05 09:44:05 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks1, Round: 1, Score: 1.00
+2025-08-05 09:44:05 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks1', 'round': 1, 'score': 1.0, 'category': 'Creative Writing'}
+2025-08-05 09:45:11 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'kzks1', 'final_score': 1.0, 'rounds_played': 1}
+2025-08-05 09:45:11 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: session_ended, Details: Final score: 1.00, Rounds: 1
+2025-08-05 09:45:11 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'kzks1', 'final_score': 1.0, 'rank': 1}
+2025-08-05 09:47:39 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: duplicate_username_attempt, Details: 
+2025-08-05 09:47:50 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks2, Action: session_started, Details: 
+2025-08-05 09:47:50 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks2, Action: prompt_selected, Details: ID: basic_recipe, Category: Cooking
+2025-08-05 09:48:01 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks2, Action: round_submitted, Details: Round 1
+2025-08-05 09:48:06 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 3.0, 'breakdown': {'prompt_quality': 1.0, 'costar_usage': 2.0, 'creativity': 0.0, 'total': 3.0}}
+2025-08-05 09:48:06 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks2, Round: 1, Score: 3.00
+2025-08-05 09:48:06 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks2', 'round': 1, 'score': 3.0, 'category': 'Cooking'}
+2025-08-05 09:48:49 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks2, Action: prompt_selected, Details: ID: poor_creative, Category: Creative Writing
+2025-08-05 09:48:58 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks2, Action: round_submitted, Details: Round 2
+2025-08-05 09:49:02 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 7.0, 'breakdown': {'prompt_quality': 4.0, 'costar_usage': 2.0, 'creativity': 1.0, 'total': 7.0}}
+2025-08-05 09:49:02 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks2, Round: 2, Score: 7.00
+2025-08-05 09:49:02 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks2', 'round': 2, 'score': 7.0, 'category': 'Creative Writing'}
+2025-08-05 09:56:22 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks2, Action: session_started, Details: 
+2025-08-05 09:56:22 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks2, Action: prompt_selected, Details: ID: poor_creative, Category: Creative Writing
+2025-08-05 09:56:31 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks2, Action: round_submitted, Details: Round 1
+2025-08-05 09:56:34 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 1.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 1.0, 'creativity': 0.0, 'total': 1.0}}
+2025-08-05 09:56:34 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks2, Round: 1, Score: 1.00
+2025-08-05 09:56:34 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks2', 'round': 1, 'score': 1.0, 'category': 'Creative Writing'}
+2025-08-05 10:02:01 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks, Action: session_started, Details: 
+2025-08-05 10:02:01 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks, Action: prompt_selected, Details: ID: poor_creative, Category: Creative Writing
+2025-08-05 10:02:04 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks, Action: round_submitted, Details: Round 1
+2025-08-05 10:02:09 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 2.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 2.0, 'creativity': 0.0, 'total': 2.0}}
+2025-08-05 10:02:09 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks, Round: 1, Score: 2.00
+2025-08-05 10:02:09 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks', 'round': 1, 'score': 2.0, 'category': 'Creative Writing'}
+2025-08-05 10:02:21 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'kzks', 'final_score': 2.0, 'rounds_played': 1}
+2025-08-05 10:02:21 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks, Action: session_ended, Details: Final score: 2.00, Rounds: 1
+2025-08-05 10:02:21 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'kzks', 'final_score': 2.0, 'rank': 1}
+2025-08-05 10:05:41 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks2, Action: session_started, Details: 
+2025-08-05 10:05:41 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks2, Action: prompt_selected, Details: ID: basic_recipe, Category: Cooking
+2025-08-05 10:05:44 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks2, Action: round_submitted, Details: Round 1
+2025-08-05 10:05:47 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 3.0, 'breakdown': {'prompt_quality': 1.0, 'costar_usage': 2.0, 'creativity': 0.0, 'total': 3.0}}
+2025-08-05 10:05:47 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks2, Round: 1, Score: 3.00
+2025-08-05 10:05:47 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks2', 'round': 1, 'score': 3.0, 'category': 'Cooking'}
+2025-08-05 10:06:31 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'kzks2', 'final_score': 3.0, 'rounds_played': 1}
+2025-08-05 10:06:31 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks2, Action: session_ended, Details: Final score: 3.00, Rounds: 1
+2025-08-05 10:06:31 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'kzks2', 'final_score': 3.0, 'rank': 1}
+2025-08-05 10:06:37 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks3, Action: session_started, Details: 
+2025-08-05 10:06:37 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks3, Action: prompt_selected, Details: ID: unclear_code, Category: Programming
+2025-08-05 10:06:42 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks3, Action: round_submitted, Details: Round 1
+2025-08-05 10:06:46 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 3.0, 'breakdown': {'prompt_quality': 1.0, 'costar_usage': 2.0, 'creativity': 0.0, 'total': 3.0}}
+2025-08-05 10:06:46 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks3, Round: 1, Score: 3.00
+2025-08-05 10:06:46 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks3', 'round': 1, 'score': 3.0, 'category': 'Programming'}
+2025-08-05 10:07:06 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks3, Action: prompt_selected, Details: ID: poor_creative, Category: Creative Writing
+2025-08-05 10:07:16 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks3, Action: round_submitted, Details: Round 2
+2025-08-05 10:07:35 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 3.0, 'breakdown': {'prompt_quality': 1.0, 'costar_usage': 2.0, 'creativity': 0.0, 'total': 3.0}}
+2025-08-05 10:07:35 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks3, Round: 2, Score: 3.00
+2025-08-05 10:07:35 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks3', 'round': 2, 'score': 3.0, 'category': 'Creative Writing'}
+2025-08-05 10:07:42 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks3, Action: prompt_selected, Details: ID: weak_marketing, Category: Marketing
+2025-08-05 10:07:48 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks3, Action: round_submitted, Details: Round 3
+2025-08-05 10:07:55 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 4.0, 'breakdown': {'prompt_quality': 2.0, 'costar_usage': 2.0, 'creativity': 0.0, 'total': 4.0}}
+2025-08-05 10:07:55 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks3, Round: 3, Score: 4.00
+2025-08-05 10:07:55 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks3', 'round': 3, 'score': 4.0, 'category': 'Marketing'}
+2025-08-05 10:07:55 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'kzks3', 'final_score': 4.0, 'rounds_played': 3}
+2025-08-05 10:07:55 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks3, Action: session_ended, Details: Final score: 4.00, Rounds: 3
+2025-08-05 10:07:55 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'kzks3', 'final_score': 4.0, 'rank': 1}
+2025-08-05 10:08:30 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: main, Action: session_started, Details: 
+2025-08-05 10:08:30 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: main, Action: prompt_selected, Details: ID: vague_essay, Category: Academic Writing
+2025-08-05 10:08:41 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: main, Action: round_submitted, Details: Round 1
+2025-08-05 10:08:45 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 5.0, 'breakdown': {'prompt_quality': 2.0, 'costar_usage': 2.0, 'creativity': 1.0, 'total': 5.0}}
+2025-08-05 10:08:45 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: main, Round: 1, Score: 5.00
+2025-08-05 10:08:45 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'main', 'round': 1, 'score': 5.0, 'category': 'Academic Writing'}

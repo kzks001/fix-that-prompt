@@ -1,0 +1,12 @@
+# Fix That Prompt! - Requirements
+# Generated from pyproject.toml for easier deployment
+
+chainlit>=2.6.5
+langchain>=0.3.27
+langchain-openai>=0.3.28
+loguru>=0.7.3
+pillow>=10.0.0
+python-dotenv>=1.1.1
+
+# Development dependencies
+ruff>=0.12.7
