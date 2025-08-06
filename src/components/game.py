@@ -1,18 +1,19 @@
 """Core game logic for Fix That Prompt game."""
 
-import asyncio
-from typing import Optional, List, Dict, Tuple
-from datetime import datetime
-
-from loguru import logger
 from langchain_openai import ChatOpenAI
+from loguru import logger
 
-from ..models.player_session import PlayerSession, GameRound, BadPrompt, COSTARFramework
-from ..prompts.loader import PromptLoader
-from ..evaluators.ragas_wrapper import RAGASPromptEvaluator, PromptEvaluation
 from ..components.session_manager import SessionManager
 from ..database.leaderboard_db import LeaderboardDB
-from ..utils.logger import log_player_action, log_game_event, log_score_event
+from ..evaluators.ragas_wrapper import RAGASPromptEvaluator
+from ..models.player_session import (
+    BadPrompt,
+    COSTARFramework,
+    GameRound,
+    PlayerSession,
+)
+from ..prompts.loader import PromptLoader
+from ..utils.logger import log_game_event, log_player_action, log_score_event
 
 
 class FixThatPromptGame:
@@ -48,7 +49,7 @@ class FixThatPromptGame:
 
     async def start_new_game(
         self, username: str
-    ) -> Tuple[bool, str, Optional[PlayerSession]]:
+    ) -> tuple[bool, str, PlayerSession | None]:
         """
         Start a new game for a player.
 
@@ -60,11 +61,11 @@ class FixThatPromptGame:
         """
         return self.session_manager.start_new_session(username)
 
-    def get_current_session(self, username: str) -> Optional[PlayerSession]:
+    def get_current_session(self, username: str) -> PlayerSession | None:
         """Get the current session for a player."""
         return self.session_manager.get_session(username)
 
-    def get_session_for_history(self, username: str) -> Optional[PlayerSession]:
+    def get_session_for_history(self, username: str) -> PlayerSession | None:
         """Get a session (active or completed) for history purposes."""
         # First check active sessions
         active_session = self.session_manager.get_session(username)
@@ -91,7 +92,7 @@ class FixThatPromptGame:
         """Get the COSTAR framework guidance text."""
         return self.costar_framework.get_guidance()
 
-    def get_current_round_prompt(self, username: str) -> Optional[BadPrompt]:
+    def get_current_round_prompt(self, username: str) -> BadPrompt | None:
         """
         Get the bad prompt for the current round.
 
@@ -125,18 +126,35 @@ class FixThatPromptGame:
             # If no unused prompts, allow reuse
             return self.prompt_loader.get_random_prompt()
 
-    async def generate_improved_response(self, improved_prompt: str) -> str:
+    async def generate_improved_response(
+        self, improved_prompt: str, bad_prompt: BadPrompt
+    ) -> str:
         """
-        Generate an improved response using the player's improved prompt.
+        Generate an improved response using the player's improved prompt with proper context.
 
         Args:
             improved_prompt: The player's improved prompt
+            bad_prompt: The original bad prompt with context and category
 
         Returns:
             Generated response text
         """
         try:
-            response = await self.llm.ainvoke(improved_prompt)
+            # Create a contextual prompt that ensures the LLM understands the task
+            contextual_prompt = f"""
+You are helping with a task in the category: {bad_prompt.category}
+
+Context: {bad_prompt.context}
+
+The user has provided this prompt for you to respond to:
+"{improved_prompt}"
+
+Please respond to this prompt as if you are completing the original task. Focus on providing a helpful response for the {bad_prompt.category.lower()} task described in the context above.
+
+If the user's prompt is unclear, off-topic, or seems to be describing how to write prompts rather than actually giving you a task, please politely indicate that you need a clearer prompt for the {bad_prompt.category.lower()} task.
+"""
+
+            response = await self.llm.ainvoke(contextual_prompt)
             return response.content
 
         except Exception as e:
@@ -145,7 +163,7 @@ class FixThatPromptGame:
 
     async def submit_round(
         self, username: str, bad_prompt: BadPrompt, improved_prompt: str
-    ) -> Tuple[bool, str, Optional[GameRound]]:
+    ) -> tuple[bool, str, GameRound | None]:
         """
         Submit an improved prompt for evaluation and scoring.
 
@@ -174,7 +192,9 @@ class FixThatPromptGame:
 
             # Generate improved response
             logger.info(f"Generating improved response for {username}")
-            improved_response = await self.generate_improved_response(improved_prompt)
+            improved_response = await self.generate_improved_response(
+                improved_prompt, bad_prompt
+            )
 
             # Evaluate the improvement
             logger.info(f"Evaluating prompt improvement for {username}")
@@ -237,7 +257,7 @@ class FixThatPromptGame:
         session = self.session_manager.get_session(username)
         return session is not None and session.can_play_more_rounds
 
-    def get_session_summary(self, username: str) -> Optional[Dict[str, any]]:
+    def get_session_summary(self, username: str) -> dict[str, any] | None:
         """
         Get a summary of the player's current session.
 
@@ -269,7 +289,7 @@ class FixThatPromptGame:
             ],
         }
 
-    def end_game(self, username: str) -> Tuple[bool, str, Optional[Dict[str, any]]]:
+    def end_game(self, username: str) -> tuple[bool, str, dict[str, any] | None]:
         """
         End the game for a player and return final results.
 
@@ -314,7 +334,7 @@ class FixThatPromptGame:
 
         return True, "Game ended successfully!", final_results
 
-    def get_leaderboard(self, limit: int = 10) -> List[Dict[str, any]]:
+    def get_leaderboard(self, limit: int = 10) -> list[dict[str, any]]:
         """
         Get the current leaderboard.
 
@@ -326,7 +346,7 @@ class FixThatPromptGame:
         """
         return self.leaderboard_db.get_top_players(limit)
 
-    def get_game_stats(self) -> Dict[str, any]:
+    def get_game_stats(self) -> dict[str, any]:
         """
         Get overall game statistics.
 

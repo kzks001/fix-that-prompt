@@ -155,3 +155,14 @@
 2025-08-06 10:36:30 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks', 'final_score': 0.0, 'rounds_remaining': 3, 'is_completed': False}
 2025-08-06 10:55:28 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 8.0, 'breakdown': {'prompt_quality': 4.0, 'costar_usage': 2.0, 'creativity': 2.0, 'total': 8.0}}
 2025-08-06 10:55:28 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks', 'final_score': 8.0, 'rounds_remaining': 2, 'is_completed': False}
+2025-08-06 14:31:15 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 9.0, 'breakdown': {'prompt_quality': 5.0, 'costar_usage': 2.0, 'creativity': 2.0, 'total': 9.0}}
+2025-08-06 14:31:15 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks', 'final_score': 9.0, 'rounds_remaining': 1, 'is_completed': False}
+2025-08-06 14:35:54 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 14:35:54 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks', 'final_score': 9.0, 'rounds_remaining': 0, 'is_completed': True}
+2025-08-06 14:42:18 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks1', 'final_score': 0.0, 'rounds_remaining': 3, 'is_completed': False}
+2025-08-06 14:42:49 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 14:42:49 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks1', 'final_score': 0.0, 'rounds_remaining': 2, 'is_completed': False}
+2025-08-06 14:53:00 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 10.0, 'breakdown': {'prompt_quality': 5.0, 'costar_usage': 3.0, 'creativity': 2.0, 'total': 10.0}}
+2025-08-06 14:53:00 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks1', 'final_score': 10.0, 'rounds_remaining': 1, 'is_completed': False}
+2025-08-06 14:54:29 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 14:54:29 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks1', 'final_score': 10.0, 'rounds_remaining': 0, 'is_completed': True}

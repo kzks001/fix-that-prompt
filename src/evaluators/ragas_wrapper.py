@@ -1,12 +1,22 @@
 """LLM-as-a-judge evaluation wrapper for scoring prompt improvements."""
 
 import asyncio
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
 from langchain_openai import ChatOpenAI
 from loguru import logger
 
 from ..utils.logger import log_game_event
+
+
+@dataclass
+class EvaluationResult:
+    """Result from a single evaluation metric."""
+
+    score: float
+    max_score: float
+    reasoning: str
 
 
 @dataclass
@@ -21,110 +31,56 @@ class PromptEvaluation:
     breakdown: dict[str, float]
 
 
-class RAGASPromptEvaluator:
-    """LLM-as-a-judge evaluator for prompt improvements using custom criteria."""
+class BaseEvaluator(ABC):
+    """Base class for all metric evaluators."""
 
-    def __init__(self, model_name: str = "gpt-4o-mini") -> None:
-        """
-        Initialize the LLM-as-a-judge evaluator.
-
-        Args:
-            model_name: The OpenAI model to use for evaluation
-        """
+    def __init__(self, model_name: str = "gpt-4o-mini"):
+        """Initialize the evaluator with an LLM model."""
         self.model_name = model_name
         self.llm = ChatOpenAI(model=model_name, temperature=0.1)
 
-        # Custom evaluation criteria
-        self.evaluation_prompts = {
-            "prompt_quality": """
-Evaluate the quality of this improved prompt based on clarity, specificity,
-and completeness. Score from 0-5 points.
+    @abstractmethod
+    def get_evaluation_prompt(self) -> str:
+        """Get the evaluation prompt template for this metric."""
+        ...
 
-Original prompt: {original_prompt}
-Improved prompt: {improved_prompt}
-Context: {context}
+    @abstractmethod
+    def get_max_score(self) -> float:
+        """Get the maximum possible score for this metric."""
+        ...
 
-Scoring criteria (BE STRICT):
-- 5 points: Excellent - Clear, specific, comprehensive, well-structured, addresses all context requirements AND stays on the same topic/domain
-- 4 points: Good - Clear and specific with minor gaps, mostly addresses context and stays on topic
-- 3 points: Average - Some clarity and specificity, partially addresses context, mostly on topic
-- 2 points: Below Average - Vague or incomplete, barely addresses context, somewhat off-topic
-- 1 point: Poor - Very vague, confusing, largely irrelevant to context, or wrong topic
-- 0 points: No improvement, worse than original, completely different topic, or completely irrelevant
+    def _extract_score(self, response_text: str) -> float:
+        """Extract score from the evaluator's response."""
+        lines = response_text.strip().split("\n")
+        for line in lines:
+            line = line.strip()
+            if line.startswith("Score:"):
+                try:
+                    score_text = line.replace("Score:", "").strip()
+                    return float(score_text)
+                except ValueError:
+                    continue
+            elif any(char.isdigit() for char in line) and len(line) < 10:
+                try:
+                    numbers = [
+                        float(s) for s in line.split() if s.replace(".", "").isdigit()
+                    ]
+                    if numbers and 0 <= numbers[0] <= self.get_max_score():
+                        return numbers[0]
+                except ValueError:
+                    continue
 
-CRITICAL: The improved prompt MUST stay within the same topic/domain as indicated by the context.
-- If context is about "academic essay", the improved prompt must be for academic writing, not marketing/business/creative writing
-- If context is about "marketing strategy", it must stay in marketing, not switch to academic or technical writing
-- If context is about "programming", it must stay technical, not become a creative writing prompt
+        logger.warning(
+            f"Could not extract score from response: {response_text[:100]}..."
+        )
+        return 0.0
 
-IMPORTANT: Single words, generic phrases, or prompts that completely change the subject matter automatically get 0-1 points maximum.
-
-You must start your response with "Score: X" where X is the numerical score, then provide reasoning including topic relevance assessment.
-""",
-            "costar_usage": """
-Evaluate how well the improved prompt uses the COSTAR framework elements:
-Context, Objective, Style, Tone, Audience, Response format.
-Score from 0-3 points.
-
-Original prompt: {original_prompt}
-Improved prompt: {improved_prompt}
-Context: {context}
-
-Scoring criteria (BE STRICT):
-- 3 points: Uses 4+ COSTAR elements effectively and explicitly within the correct topic/domain
-- 2 points: Uses 2-3 COSTAR elements clearly and explicitly within the correct topic/domain
-- 1 point: Uses 1 COSTAR element clearly within the correct topic/domain
-- 0 points: No clear COSTAR elements used OR completely wrong topic/domain
-
-CRITICAL: The improved prompt must stay within the same topic/domain as the context. Even excellent COSTAR usage gets 0 points if it's for the wrong subject matter.
-- Academic context → COSTAR elements must be for academic writing
-- Marketing context → COSTAR elements must be for marketing
-- Programming context → COSTAR elements must be for technical/coding tasks
-
-IMPORTANT: Generic words like "help", "please", single-word responses, or topic-switching automatically get 0 points.
-
-You must start your response with "Score: X" where X is the numerical score, then identify which specific COSTAR elements were used and confirm topic relevance.
-""",
-            "creativity": """
-Evaluate the creativity and innovation in the prompt improvement.
-Score from 0-2 points.
-
-Original prompt: {original_prompt}
-Improved prompt: {improved_prompt}
-Context: {context}
-
-Scoring criteria (BE STRICT):
-- 2 points: Highly creative - Novel approach, innovative techniques, creative formatting WITHIN the correct topic/domain
-- 1 point: Moderately creative - Some unique elements or approaches WITHIN the correct topic/domain
-- 0 points: No creativity, generic, standard, single words, worse than original, OR wrong topic/domain
-
-CRITICAL: Creativity is only valuable if it stays within the correct topic/domain. A brilliantly creative marketing prompt for an academic writing task gets 0 points.
-
-IMPORTANT: Single words, generic phrases like "help" or "please", responses that show no understanding of the task, or topic-switching automatically get 0 points.
-
-You must start your response with "Score: X" where X is the numerical score, then explain the creative elements (or lack thereof) and confirm topic relevance.
-""",
-        }
-
-        logger.info(f"Initialized LLM evaluator with model: {model_name}")
-
-    async def _evaluate_aspect(
-        self, aspect: str, original_prompt: str, improved_prompt: str, context: str
-    ) -> tuple[float, str]:
-        """
-        Evaluate a specific aspect of the prompt improvement.
-
-        Args:
-            aspect: The aspect to evaluate ('prompt_quality', 'costar_usage', 'creativity')
-            original_prompt: The original bad prompt
-            improved_prompt: The user's improved prompt
-            context: The context for the prompt scenario
-
-        Returns:
-            Tuple of (score, reasoning)
-        """
+    async def evaluate(
+        self, original_prompt: str, improved_prompt: str, context: str
+    ) -> EvaluationResult:
+        """Evaluate the prompt improvement for this metric."""
         try:
-            evaluation_prompt = self.evaluation_prompts[aspect].format(
+            evaluation_prompt = self.get_evaluation_prompt().format(
                 original_prompt=original_prompt,
                 improved_prompt=improved_prompt,
                 context=context,
@@ -133,54 +89,154 @@ You must start your response with "Score: X" where X is the numerical score, the
             response = await self.llm.ainvoke(evaluation_prompt)
             response_text = response.content
 
-            # Extract score from response (look for number at start or "Score: X")
-            score = self._extract_score(response_text, aspect)
+            score = self._extract_score(response_text)
 
-            logger.debug(f"Evaluated {aspect}: score={score}")
-            return score, response_text
+            return EvaluationResult(
+                score=score, max_score=self.get_max_score(), reasoning=response_text
+            )
 
         except Exception as e:
-            logger.error(f"Error evaluating {aspect}: {e}")
-            return 0.0, f"Error during evaluation: {str(e)}"
+            logger.error(f"Error in {self.__class__.__name__}: {e}")
+            return EvaluationResult(
+                score=0.0,
+                max_score=self.get_max_score(),
+                reasoning=f"Error during evaluation: {str(e)}",
+            )
 
-    def _extract_score(self, response_text: str, aspect: str) -> float:
+
+class PromptQualityEvaluator(BaseEvaluator):
+    """Evaluator for prompt quality and clarity."""
+
+    def get_max_score(self) -> float:
+        return 5.0
+
+    def get_evaluation_prompt(self) -> str:
+        return """
+You are evaluating a user's attempt to improve a bad prompt.
+
+ORIGINAL BAD PROMPT: "{original_prompt}"
+CONTEXT (provided by the game, NOT by the user): {context}
+USER'S IMPROVED PROMPT (what you are evaluating): "{improved_prompt}"
+
+Your job is to score ONLY the user's improved prompt (the text between quotes above) from 0-5 points.
+
+CRITICAL REQUIREMENTS FOR THE USER'S IMPROVED PROMPT:
+1. It must be an actual prompt that could be given to an AI to complete the same task as the original
+2. It must be significantly better than the original bad prompt
+3. It must stay within the same topic/domain as the original task
+4. It should NOT be a description or explanation of how to write prompts
+
+AUTOMATIC 0 POINTS if the user's improved prompt is:
+- Just describing what COSTAR framework is (not applying it)
+- Not actually a usable prompt for the task
+- Completely different topic than the original
+- Generic instructions about prompt writing
+- Single words or meaningless phrases
+
+SCORING:
+- 5 points: Excellent prompt that dramatically improves the original, highly specific and actionable
+- 4 points: Good prompt with clear improvements, specific and usable
+- 3 points: Decent prompt with some improvements
+- 2 points: Minor improvements but still unclear or incomplete
+- 1 point: Barely better than original or very poor quality
+- 0 points: No actual improvement, wrong topic, or not a real prompt
+
+Start your response with "Score: X" then explain why, focusing on whether this is actually a usable prompt for the intended task.
+"""
+
+
+class COSTARUsageEvaluator(BaseEvaluator):
+    """Evaluator for COSTAR framework usage."""
+
+    def get_max_score(self) -> float:
+        return 3.0
+
+    def get_evaluation_prompt(self) -> str:
+        return """
+You are evaluating how well a user applied the COSTAR framework to improve a bad prompt.
+
+ORIGINAL BAD PROMPT: "{original_prompt}"
+CONTEXT (provided by the game, NOT by the user): {context}
+USER'S IMPROVED PROMPT (what you are evaluating): "{improved_prompt}"
+
+Your job is to score ONLY the user's improved prompt for actual COSTAR framework usage (0-3 points).
+
+COSTAR Elements to look for IN THE USER'S IMPROVED PROMPT:
+- Context: Does the user provide relevant background/context?
+- Objective: Does the user specify clear goals/outcomes?
+- Style: Does the user specify format, structure, or style preferences?
+- Tone: Does the user specify the desired tone/voice?
+- Audience: Does the user identify the target audience?
+- Response: Does the user specify the desired response format?
+
+AUTOMATIC 0 POINTS if the user's improved prompt is:
+- Just explaining what COSTAR framework IS (not using it)
+- Not actually applying COSTAR to the task
+- Wrong topic completely
+- Generic framework descriptions
+- Copy-pasted COSTAR definitions
+
+SCORING:
+- 3 points: Uses 4+ COSTAR elements effectively IN their actual prompt for the task
+- 2 points: Uses 2-3 COSTAR elements clearly IN their actual prompt
+- 1 point: Uses 1 COSTAR element clearly IN their actual prompt
+- 0 points: No actual COSTAR application OR just describing what COSTAR is
+
+Start your response with "Score: X" then identify which specific COSTAR elements were actually applied in the user's prompt.
+"""
+
+
+class CreativityEvaluator(BaseEvaluator):
+    """Evaluator for creativity and innovation."""
+
+    def get_max_score(self) -> float:
+        return 2.0
+
+    def get_evaluation_prompt(self) -> str:
+        return """
+You are evaluating the creativity and innovation in a user's prompt improvement.
+
+ORIGINAL BAD PROMPT: "{original_prompt}"
+CONTEXT (provided by the game, NOT by the user): {context}
+USER'S IMPROVED PROMPT (what you are evaluating): "{improved_prompt}"
+
+Your job is to score ONLY the user's improved prompt for creativity and innovation (0-2 points).
+
+AUTOMATIC 0 POINTS if the user's improved prompt is:
+- Just explaining what COSTAR framework is (no creativity in descriptions)
+- Not actually a prompt for the task
+- Copy-pasted framework definitions
+- Generic instructions about writing
+- Wrong topic completely
+
+SCORING (only if it's actually a usable prompt for the task):
+- 2 points: Highly creative approach, innovative techniques, novel formatting for the specific task
+- 1 point: Some creative elements or unique approaches for the task
+- 0 points: No creativity, generic, or not actually a prompt for the task
+
+Start your response with "Score: X" then explain whether this shows creativity in solving the actual task.
+"""
+
+
+class RAGASPromptEvaluator:
+    """Orchestrator for all metric evaluators."""
+
+    def __init__(self, model_name: str = "gpt-4o-mini") -> None:
         """
-        Extract numerical score from evaluation response.
+        Initialize the evaluator with separate metric evaluators.
 
         Args:
-            response_text: The LLM's evaluation response
-            aspect: The aspect being evaluated
-
-        Returns:
-            Extracted score as float
+            model_name: The OpenAI model to use for evaluation
         """
-        import re
+        self.model_name = model_name
 
-        # Try to find score patterns
-        patterns = [
-            r"score[:\s]*(\d+(?:\.\d+)?)",
-            r"(\d+(?:\.\d+)?)\s*(?:points?|/)",
-            r"^(\d+(?:\.\d+)?)",  # Number at start of line
-        ]
+        # Initialize separate evaluators for each metric
+        self.prompt_quality_evaluator = PromptQualityEvaluator(model_name)
+        self.costar_usage_evaluator = COSTARUsageEvaluator(model_name)
+        self.creativity_evaluator = CreativityEvaluator(model_name)
 
-        for pattern in patterns:
-            match = re.search(pattern, response_text.lower())
-            if match:
-                try:
-                    score = float(match.group(1))
-                    # Validate score is within expected range
-                    max_scores = {
-                        "prompt_quality": 5,
-                        "costar_usage": 3,
-                        "creativity": 2,
-                    }
-                    if 0 <= score <= max_scores.get(aspect, 5):
-                        return score
-                except ValueError:
-                    continue
-
-        logger.warning(f"Could not extract score from response for {aspect}")
-        return 0.0
+        logger.info(f"Initialized LLM evaluator with model: {model_name}")
+        logger.info("Using separate evaluators for each metric")
 
     async def evaluate_prompt_improvement(
         self,
@@ -190,7 +246,7 @@ You must start your response with "Score: X" where X is the numerical score, the
         context: str,
     ) -> PromptEvaluation:
         """
-        Evaluate a prompt improvement using multiple criteria.
+        Evaluate a prompt improvement using separate metric evaluators concurrently.
 
         Args:
             original_prompt: The original bad prompt
@@ -201,55 +257,56 @@ You must start your response with "Score: X" where X is the numerical score, the
         Returns:
             PromptEvaluation with scores and feedback
         """
-        logger.info("Starting prompt evaluation")
+        logger.info("Starting prompt evaluation with separate evaluators")
 
         try:
-            # Evaluate all aspects concurrently
+            # Evaluate all metrics concurrently using separate evaluators
             tasks = [
-                self._evaluate_aspect(
-                    "prompt_quality", original_prompt, improved_prompt, context
+                self.prompt_quality_evaluator.evaluate(
+                    original_prompt, improved_prompt, context
                 ),
-                self._evaluate_aspect(
-                    "costar_usage", original_prompt, improved_prompt, context
+                self.costar_usage_evaluator.evaluate(
+                    original_prompt, improved_prompt, context
                 ),
-                self._evaluate_aspect(
-                    "creativity", original_prompt, improved_prompt, context
+                self.creativity_evaluator.evaluate(
+                    original_prompt, improved_prompt, context
                 ),
             ]
 
             results = await asyncio.gather(*tasks)
 
-            prompt_quality_score, prompt_quality_feedback = results[0]
-            costar_score, costar_feedback = results[1]
-            creativity_score, creativity_feedback = results[2]
+            prompt_quality_result = results[0]
+            costar_result = results[1]
+            creativity_result = results[2]
 
             # Calculate total score
-            total_score = prompt_quality_score + costar_score + creativity_score
+            total_score = (
+                prompt_quality_result.score
+                + costar_result.score
+                + creativity_result.score
+            )
 
             # Generate comprehensive feedback
             feedback = self._generate_comprehensive_feedback(
-                prompt_quality_score,
-                prompt_quality_feedback,
-                costar_score,
-                costar_feedback,
-                creativity_score,
-                creativity_feedback,
+                prompt_quality_result,
+                costar_result,
+                creativity_result,
                 total_score,
             )
 
             # Create breakdown
             breakdown = {
-                "prompt_quality": prompt_quality_score,
-                "costar_usage": costar_score,
-                "creativity": creativity_score,
+                "prompt_quality": prompt_quality_result.score,
+                "costar_usage": costar_result.score,
+                "creativity": creativity_result.score,
                 "total": total_score,
             }
 
             evaluation = PromptEvaluation(
                 total_score=total_score,
-                prompt_quality_score=prompt_quality_score,
-                costar_usage_score=costar_score,
-                creativity_score=creativity_score,
+                prompt_quality_score=prompt_quality_result.score,
+                costar_usage_score=costar_result.score,
+                creativity_score=creativity_result.score,
                 feedback=feedback,
                 breakdown=breakdown,
             )
@@ -259,6 +316,9 @@ You must start your response with "Score: X" where X is the numerical score, the
             )
 
             logger.info(f"Evaluation completed - Total score: {total_score:.2f}/10")
+            logger.info(
+                f"Individual scores: Quality={prompt_quality_result.score}, COSTAR={costar_result.score}, Creativity={creativity_result.score}"
+            )
             return evaluation
 
         except Exception as e:
@@ -276,27 +336,24 @@ You must start your response with "Score: X" where X is the numerical score, the
 
     def _generate_comprehensive_feedback(
         self,
-        prompt_quality_score: float,
-        prompt_quality_feedback: str,
-        costar_score: float,
-        costar_feedback: str,
-        creativity_score: float,
-        creativity_feedback: str,
+        prompt_quality_result: EvaluationResult,
+        costar_result: EvaluationResult,
+        creativity_result: EvaluationResult,
         total_score: float,
     ) -> str:
-        """Generate comprehensive feedback from individual evaluations."""
+        """Generate comprehensive feedback from individual evaluation results."""
 
         feedback_parts = [
             f"**🎯 Total Score: {total_score:.1f}/10**",
             "",
-            f"**📝 Prompt Quality: {prompt_quality_score:.1f}/5**",
-            prompt_quality_feedback,
+            f"**📝 Prompt Quality: {prompt_quality_result.score:.1f}/{prompt_quality_result.max_score}**",
+            prompt_quality_result.reasoning,
             "",
-            f"**⭐ COSTAR Framework Usage: {costar_score:.1f}/3**",
-            costar_feedback,
+            f"**⭐ COSTAR Framework Usage: {costar_result.score:.1f}/{costar_result.max_score}**",
+            costar_result.reasoning,
             "",
-            f"**💡 Creativity Bonus: {creativity_score:.1f}/2**",
-            creativity_feedback,
+            f"**💡 Creativity Bonus: {creativity_result.score:.1f}/{creativity_result.max_score}**",
+            creativity_result.reasoning,
             "",
             self._get_performance_message(total_score),
         ]

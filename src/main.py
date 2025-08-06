@@ -76,6 +76,12 @@ Each round, you receive a **poorly written prompt** with its **weak AI response*
                 label="🏆 Leaderboard",
             ),
             Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+            Action(
+                name="top_leaderboard_prompt",
+                payload={"action": "top_leaderboard_prompt"},
+                label="🎯 Top Prompt",
+            ),
+            Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
         ],
     ).send()
 
@@ -153,6 +159,12 @@ async def leaderboard_action(action):
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
+                Action(
+                    name="top_leaderboard_prompt",
+                    payload={"action": "top_leaderboard_prompt"},
+                    label="🎯 Top Prompt",
+                ),
+                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ],
         ).send()
 
@@ -195,19 +207,54 @@ async def stats_action(action):
                 payload={"action": "leaderboard"},
                 label="🏆 Leaderboard",
             ),
+            Action(
+                name="top_leaderboard_prompt",
+                payload={"action": "top_leaderboard_prompt"},
+                label="🎯 Top Prompt",
+            ),
+            Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
         ],
     ).send()
 
     cl.user_session.set("main_message", new_message)
 
 
+@cl.action_callback("logout")
+async def logout_action(action):
+    """Handle logout button clicks - return to username prompt."""
+    # Clear previous message for clean navigation
+    await clear_previous_message()
+
+    # Reset all session data
+    cl.user_session.set("game_state", "waiting_for_username")
+    cl.user_session.set("username", None)
+    cl.user_session.set("player_data", None)
+
+    # Show initial username prompt
+    await show_username_prompt()
+
+
+async def show_username_prompt():
+    """Show the initial username prompt screen."""
+    main_message = await cl.Message(
+        content="""
+# 🎮 **Welcome to Fix That Prompt!**
+*Transform bad prompts into brilliant ones using AI and the COSTAR framework*
+
+👤 **Enter your SingLife email name:**
+
+💡 *eg. sk01 if email is sk01@singlife.com*
+"""
+    ).send()
+
+    cl.user_session.set("main_message", main_message)
+
+
 @cl.action_callback("next")
 async def next_action(action):
     """Handle next round button clicks."""
-    # Clear any previous messages
-    main_message = cl.user_session.get("main_message")
-    if main_message:
-        await main_message.remove()
+    # Clear previous message for clean navigation
+    await clear_previous_message()
 
     username = cl.user_session.get("username")
     player_data = cl.user_session.get("player_data")
@@ -226,10 +273,8 @@ async def next_action(action):
 @cl.action_callback("stop")
 async def stop_action(action):
     """Handle stop game button clicks."""
-    # Clear any previous messages
-    main_message = cl.user_session.get("main_message")
-    if main_message:
-        await main_message.remove()
+    # Clear previous message for clean navigation
+    await clear_previous_message()
 
     username = cl.user_session.get("username")
     player_data = cl.user_session.get("player_data")
@@ -257,10 +302,8 @@ async def stop_action(action):
 @cl.action_callback("back_to_menu")
 async def back_to_menu_action(action):
     """Handle back to menu button clicks - shows appropriate menu based on user status."""
-    # Clear any previous messages
-    main_message = cl.user_session.get("main_message")
-    if main_message:
-        await main_message.remove()
+    # Clear previous message for clean navigation
+    await clear_previous_message()
 
     username = cl.user_session.get("username")
 
@@ -292,10 +335,8 @@ async def back_to_menu_action(action):
 @cl.action_callback("play_round")
 async def play_round_action(action):
     """Handle play round button clicks."""
-    # Clear any previous messages
-    main_message = cl.user_session.get("main_message")
-    if main_message:
-        await main_message.remove()
+    # Clear previous message for clean navigation
+    await clear_previous_message()
 
     username = cl.user_session.get("username")
     player_data = cl.user_session.get("player_data")
@@ -321,10 +362,8 @@ async def play_round_action(action):
 @cl.action_callback("user_history")
 async def user_history_action(action):
     """Handle user history button clicks."""
-    # Clear any previous messages
-    main_message = cl.user_session.get("main_message")
-    if main_message:
-        await main_message.remove()
+    # Clear previous message for clean navigation
+    await clear_previous_message()
 
     username = cl.user_session.get("username")
     if not username:
@@ -336,6 +375,7 @@ async def user_history_action(action):
                     payload={"action": "back_to_menu"},
                     label="🏠 Back to Menu",
                 ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
                 Action(
                     name="leaderboard",
                     payload={"action": "leaderboard"},
@@ -344,7 +384,12 @@ async def user_history_action(action):
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
-                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+                Action(
+                    name="top_leaderboard_prompt",
+                    payload={"action": "top_leaderboard_prompt"},
+                    label="🎯 Top Prompt",
+                ),
+                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ],
         ).send()
         cl.user_session.set("main_message", error_message)
@@ -361,6 +406,7 @@ async def user_history_action(action):
                     payload={"action": "back_to_menu"},
                     label="🏠 Back to Menu",
                 ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
                 Action(
                     name="leaderboard",
                     payload={"action": "leaderboard"},
@@ -369,7 +415,12 @@ async def user_history_action(action):
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
-                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+                Action(
+                    name="top_leaderboard_prompt",
+                    payload={"action": "top_leaderboard_prompt"},
+                    label="🎯 Top Prompt",
+                ),
+                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ],
         ).send()
         cl.user_session.set("main_message", no_history_message)
@@ -424,13 +475,19 @@ async def user_history_action(action):
                 payload={"action": "back_to_menu"},
                 label="🏠 Back to Menu",
             ),
+            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
             Action(
                 name="leaderboard",
                 payload={"action": "leaderboard"},
                 label="🏆 Leaderboard",
             ),
             Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
-            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+            Action(
+                name="top_leaderboard_prompt",
+                payload={"action": "top_leaderboard_prompt"},
+                label="🎯 Top Prompt",
+            ),
+            Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
         ],
     ).send()
     cl.user_session.set("main_message", history_message)
@@ -439,10 +496,8 @@ async def user_history_action(action):
 @cl.action_callback("top_leaderboard_prompt")
 async def top_leaderboard_prompt_action(action):
     """Handle top leaderboard prompt button clicks."""
-    # Clear any previous messages
-    main_message = cl.user_session.get("main_message")
-    if main_message:
-        await main_message.remove()
+    # Clear previous message for clean navigation
+    await clear_previous_message()
 
     top_players = game.get_leaderboard(1)
 
@@ -455,6 +510,7 @@ async def top_leaderboard_prompt_action(action):
                     payload={"action": "back_to_menu"},
                     label="🏠 Back to Menu",
                 ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
                 Action(
                     name="leaderboard",
                     payload={"action": "leaderboard"},
@@ -463,7 +519,7 @@ async def top_leaderboard_prompt_action(action):
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
-                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ],
         ).send()
         cl.user_session.set("main_message", no_players_message)
@@ -483,6 +539,7 @@ async def top_leaderboard_prompt_action(action):
                     payload={"action": "back_to_menu"},
                     label="🏠 Back to Menu",
                 ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
                 Action(
                     name="leaderboard",
                     payload={"action": "leaderboard"},
@@ -491,7 +548,7 @@ async def top_leaderboard_prompt_action(action):
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
-                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ],
         ).send()
         cl.user_session.set("main_message", error_message)
@@ -546,13 +603,14 @@ async def top_leaderboard_prompt_action(action):
                 payload={"action": "back_to_menu"},
                 label="🏠 Back to Menu",
             ),
+            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
             Action(
                 name="leaderboard",
                 payload={"action": "leaderboard"},
                 label="🏆 Leaderboard",
             ),
             Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
-            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+            Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
         ],
     ).send()
     cl.user_session.set("main_message", top_prompt_message)
@@ -590,19 +648,8 @@ async def start():
     cl.user_session.set("username", None)
     cl.user_session.set("player_data", None)
 
-    # Ask for username immediately
-    main_message = await cl.Message(
-        content="""
-# 🎮 **Welcome to Fix That Prompt!**
-*Transform bad prompts into brilliant ones using AI and the COSTAR framework*
-
-👤 **Enter your SingLife email name:**
-
-💡 *eg. sk01 if email is sk01@singlife.com*
-"""
-    ).send()
-
-    cl.user_session.set("main_message", main_message)
+    # Show initial username prompt
+    await show_username_prompt()
 
 
 @cl.on_message
@@ -626,15 +673,26 @@ async def main(message: cl.Message):
         await cl.Message(
             content="🤔 I'm not sure what to do with that. Please use the buttons below to navigate.",
             actions=[
-                Action(name="help", payload={"action": "help"}, label="❓ Help"),
+                Action(
+                    name="back_to_menu",
+                    payload={"action": "back_to_menu"},
+                    label="🏠 Back to Menu",
+                ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
                 Action(
                     name="leaderboard",
                     payload={"action": "leaderboard"},
                     label="🏆 Leaderboard",
                 ),
                 Action(
-                    name="stats", payload={"action": "stats"}, label="📊 Game Stats"
+                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
+                Action(
+                    name="top_leaderboard_prompt",
+                    payload={"action": "top_leaderboard_prompt"},
+                    label="🎯 Top Prompt",
+                ),
+                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ],
         ).send()
 
@@ -676,6 +734,12 @@ async def handle_main_menu_input(message_content: str):
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
+                Action(
+                    name="top_leaderboard_prompt",
+                    payload={"action": "top_leaderboard_prompt"},
+                    label="🎯 Top Prompt",
+                ),
+                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ],
         ).send()
 
@@ -688,7 +752,7 @@ async def handle_username_input(username_input: str):
     username = username_input.strip()
 
     if not username:
-        # Clear and replace with error message
+        # Show error message using main_message logic
         main_message = cl.user_session.get("main_message")
         if main_message:
             await main_message.update(
@@ -699,6 +763,7 @@ async def handle_username_input(username_input: str):
                 content="❌ **Username cannot be empty.** Please enter a valid SingLife email name."
             ).send()
             cl.user_session.set("main_message", new_message)
+
         return
 
     # Get or create user in database
@@ -709,22 +774,19 @@ async def handle_username_input(username_input: str):
     cl.user_session.set("player_data", player_data)
     cl.user_session.set("game_state", "main_menu")
 
-    # Clear the initial message and show the appropriate menu
+    # Clear the main_message if exists
     main_message = cl.user_session.get("main_message")
     if main_message:
         try:
             await main_message.remove()
-            # Small delay to ensure message removal is processed
             await asyncio.sleep(0.1)
         except Exception as e:
             logger.warning(f"Could not remove main message: {e}")
 
-    # Show different menus based on user status
+    # Show the appropriate menu
     if player_data.is_completed:
-        # User has completed all 3 rounds - show read-only menu
         await show_completed_user_menu(player_data)
     else:
-        # User can still play - show game menu
         await show_active_user_menu(player_data)
 
 
@@ -764,6 +826,12 @@ Ready to become a prompt master?
                 label="🏆 Leaderboard",
             ),
             Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+            Action(
+                name="top_leaderboard_prompt",
+                payload={"action": "top_leaderboard_prompt"},
+                label="🎯 Top Prompt",
+            ),
+            Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
         ]
     else:
         # Returning user with some progress
@@ -796,6 +864,7 @@ Ready to continue your prompt engineering journey?
                     payload={"action": "user_history"},
                     label="📜 My History",
                 ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
                 Action(
                     name="leaderboard",
                     payload={"action": "leaderboard"},
@@ -804,6 +873,12 @@ Ready to continue your prompt engineering journey?
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
+                Action(
+                    name="top_leaderboard_prompt",
+                    payload={"action": "top_leaderboard_prompt"},
+                    label="🎯 Top Prompt",
+                ),
+                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ]
         else:
             # This shouldn't happen as completed users go to the other menu, but just in case
@@ -813,6 +888,7 @@ Ready to continue your prompt engineering journey?
                     payload={"action": "user_history"},
                     label="📜 My History",
                 ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
                 Action(
                     name="leaderboard",
                     payload={"action": "leaderboard"},
@@ -821,6 +897,12 @@ Ready to continue your prompt engineering journey?
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
+                Action(
+                    name="top_leaderboard_prompt",
+                    payload={"action": "top_leaderboard_prompt"},
+                    label="🎯 Top Prompt",
+                ),
+                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ]
 
     main_message = await cl.Message(content=status_msg, actions=actions).send()
@@ -857,21 +939,23 @@ Thanks for playing **Fix That Prompt!**
 
     actions = [
         Action(
-            name="leaderboard",
-            payload={"action": "leaderboard"},
-            label="🏆 View Leaderboard",
-        ),
-        Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
-        Action(
             name="user_history",
             payload={"action": "user_history"},
             label="📜 My History",
         ),
+        Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+        Action(
+            name="leaderboard",
+            payload={"action": "leaderboard"},
+            label="🏆 Leaderboard",
+        ),
+        Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
         Action(
             name="top_leaderboard_prompt",
             payload={"action": "top_leaderboard_prompt"},
-            label="🎯 Top Leaderboard Prompt",
+            label="🎯 Top Prompt",
         ),
+        Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
     ]
 
     main_message = await cl.Message(content=status_msg, actions=actions).send()
@@ -979,8 +1063,10 @@ async def handle_improved_prompt(improved_prompt: str, username: str):
         player_data = cl.user_session.get("player_data")
         current_round_number = player_data.rounds_played + 1
 
-        # Generate improved response
-        improved_response = await game.generate_improved_response(improved_prompt)
+        # Generate improved response with proper context
+        improved_response = await game.generate_improved_response(
+            improved_prompt, bad_prompt
+        )
 
         # Evaluate the improvement
         evaluation = await game.evaluator.evaluate_prompt_improvement(
