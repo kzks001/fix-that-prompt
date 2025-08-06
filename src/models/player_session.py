@@ -33,14 +33,23 @@ class GameRound:
 
 @dataclass
 class PlayerScore:
-    """Represents the final score for a player."""
+    """Represents a player's progress and history with persistent round tracking."""
 
     username: str
-    final_score: float
-    rounds_played: int
-    best_round_score: float
-    total_rounds: int
-    timestamp: datetime = field(default_factory=datetime.now)
+    rounds_remaining: int = 3  # Starts at 3, decrements with each round played
+    final_score: float = 0.0  # Best score achieved so far
+    rounds_played: int = 0
+    best_round_score: float = 0.0
+    total_rounds: int = 0
+    rounds: List[GameRound] = field(default_factory=list)
+    is_completed: bool = False  # True when all 3 rounds are finished
+    created_at: datetime = field(default_factory=datetime.now)
+    last_played: datetime = field(default_factory=datetime.now)
+
+    @property
+    def can_play_more_rounds(self) -> bool:
+        """Check if player can play more rounds."""
+        return self.rounds_remaining > 0 and not self.is_completed
 
 
 @dataclass
@@ -72,14 +81,21 @@ class PlayerSession:
         self.current_round += 1
 
     def end_session(self) -> PlayerScore:
-        """End the session and return final score."""
+        """End the session and return current progress (may not be complete game)."""
         self.is_active = False
+        rounds_completed = len(self.rounds)
+        is_game_complete = rounds_completed >= self.max_rounds
+
         return PlayerScore(
             username=self.username,
+            rounds_remaining=max(0, self.max_rounds - rounds_completed),
             final_score=self.best_score,
-            rounds_played=len(self.rounds),
+            rounds_played=rounds_completed,
             best_round_score=self.best_score,
-            total_rounds=len(self.rounds),
+            total_rounds=rounds_completed,
+            rounds=self.rounds.copy(),
+            is_completed=is_game_complete,
+            last_played=datetime.now(),
         )
 
 

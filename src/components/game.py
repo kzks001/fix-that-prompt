@@ -64,6 +64,29 @@ class FixThatPromptGame:
         """Get the current session for a player."""
         return self.session_manager.get_session(username)
 
+    def get_session_for_history(self, username: str) -> Optional[PlayerSession]:
+        """Get a session (active or completed) for history purposes."""
+        # First check active sessions
+        active_session = self.session_manager.get_session(username)
+        if active_session:
+            return active_session
+
+        # If not active, retrieve from database
+        player_score = self.leaderboard_db.get_player_history(username)
+        if player_score and player_score.rounds:
+            # Convert PlayerScore back to PlayerSession format for compatibility
+            session = PlayerSession(
+                username=player_score.username,
+                current_round=player_score.total_rounds + 1,
+                max_rounds=3,
+                rounds=player_score.rounds,
+                is_active=False,
+                created_at=player_score.created_at,
+            )
+            return session
+
+        return None
+
     def get_costar_guidance(self) -> str:
         """Get the COSTAR framework guidance text."""
         return self.costar_framework.get_guidance()

@@ -1,14 +1,9 @@
-# Welcome to Chainlit! 🚀🤖
+# Fix That Prompt!
 
-Hi there, Developer! 👋 We're excited to have you on board. Chainlit is a powerful tool designed to help you prototype, debug and share applications built on top of LLMs.
+Transform bad prompts into brilliant ones using AI and the COSTAR framework.
 
-## Useful Links 🔗
+## Welcome to the Game
 
-- **Documentation:** Get started with our comprehensive [Chainlit Documentation](https://docs.chainlit.io) 📚
-- **Discord Community:** Join our friendly [Chainlit Discord](https://discord.gg/k73SQ3FyUh) to ask questions, share your projects, and connect with other developers! 💬
+This game challenges you to improve poorly written prompts using the COSTAR framework. Each round, you'll see a bad prompt and its weak response, then rewrite it to get a better result. Your goal is to achieve the highest score possible!
 
-We can't wait to see what you create with Chainlit! Happy coding! 💻😊
-
-## Welcome screen
-
-To modify the welcome screen, edit the `chainlit.md` file at the root of your project. If you do not want a welcome screen, just leave this file empty.
+<script src="/public/refresh_handler.js"></script>

@@ -1,45 +1,46 @@
 {
   "players": [
     {
-      "username": "kzks1",
-      "final_score": 1.0,
-      "rounds_played": 1,
-      "best_round_score": 1.0,
-      "total_rounds": 1,
-      "timestamp": "2025-08-05T09:45:11.565518",
-      "rank": null
-    },
-    {
       "username": "kzks",
-      "final_score": 2.0,
+      "rounds_remaining": 2,
+      "final_score": 8.0,
       "rounds_played": 1,
-      "best_round_score": 2.0,
+      "best_round_score": 8.0,
       "total_rounds": 1,
-      "timestamp": "2025-08-05T10:02:21.833590",
-      "rank": null
-    },
-    {
-      "username": "kzks2",
-      "final_score": 3.0,
-      "rounds_played": 1,
-      "best_round_score": 3.0,
-      "total_rounds": 1,
-      "timestamp": "2025-08-05T10:06:31.219384",
-      "rank": null
-    },
-    {
-      "username": "kzks3",
-      "final_score": 4.0,
-      "rounds_played": 3,
-      "best_round_score": 4.0,
-      "total_rounds": 3,
-      "timestamp": "2025-08-05T10:07:55.091228",
-      "rank": null
+      "is_completed": false,
+      "created_at": "2025-08-06T10:36:30.972275",
+      "last_played": "2025-08-06T10:55:28.250045",
+      "rank": null,
+      "rounds": [
+        {
+          "round_number": 1,
+          "original_prompt": "Help me with my life",
+          "improved_prompt": "C - Context: Provide clear context and background information\nO - Objective: Define specific, measurable objectives\nS - Style: Specify the desired tone, format, and style\nT - Tone: Set the appropriate conversational tone\nA - Audience: Identify the target audience clearly\nR - Response: Specify the desired response format and structure",
+          "improved_response": "Certainly! Here’s how to structure your request using the C.O.S.T.A.R. framework:\n\n### C - Context:\nProvide clear context and background information about the topic or situation. Explain why this information is relevant and what led to the current discussion. For example, if you’re discussing climate change, you might include recent scientific findings, statistics on global temperature rise, or information on policy changes.\n\n### O - Objective:\nDefine specific, measurable objectives you wish to achieve with this communication. For instance, if you want to raise awareness about climate change, your objective might be to inform the audience about the latest research findings and encourage them to take action, such as reducing carbon footprints.\n\n### S - Style:\nSpecify the desired tone, format, and style of the response. This could include whether you want it to be formal or informal, the length of the response, and any particular style guidelines to follow (e.g., APA format, bullet points, etc.).\n\n### T - Tone:\nSet the appropriate conversational tone for the response. This could range from professional and authoritative to casual and approachable, depending on the audience and context. For example, if your audience is students, a friendly and engaging tone may be more effective.\n\n### A - Audience:\nIdentify the target audience clearly. Specify demographics or characteristics such as age, profession, interests, or any other relevant factors. Knowing the audience helps tailor the message effectively.\n\n### R - Response:\nSpecify the desired response format and structure. This could include whether you want a written article, a presentation, a report, or an infographic. Outline any specific sections or points that should be included in the response.\n\n---\n\n### Example of Using C.O.S.T.A.R.:\n\n**C - Context:**  \nThe increasing frequency of natural disasters related to climate change has raised significant public concern. Recent reports indicate that global temperatures have risen by 1.2 degrees Celsius since the pre-industrial era, leading to more extreme weather events.\n\n**O - Objective:**  \nThe goal is to inform the general public about the impacts of climate change on natural disasters and encourage at least 50% of the audience to adopt sustainable practices within the next year.\n\n**S - Style:**  \nThe response should be in a blog format, approximately 800-1000 words, incorporating subheadings for easy navigation and including bullet points for key takeaways.\n\n**T - Tone:**  \nAdopt a conversational and informative tone that is engaging yet authoritative, making complex scientific data accessible to the average reader.\n\n**A - Audience:**  \nThe target audience is environmentally-conscious adults aged 25-45 who are interested in sustainability but may not have a deep understanding of climate science.\n\n**R - Response:**  \nThe response should be structured as follows: Introduction, Key Findings on Climate Change, Impacts on Natural Disasters, Practical Steps for Sustainability, Conclusion, and a call to action encouraging readers to share the information and commit to change.\n\nBy following this structure, you can effectively communicate your message while ensuring clarity and engagement with your audience.",
+          "ragas_score": 8.0,
+          "feedback": "**🎯 Total Score: 8.0/10**\n\n**📝 Prompt Quality: 4.0/5**\nScore: 4\n\nReasoning: The improved prompt demonstrates a clear structure using the C-O-S-T-A-R framework, which effectively outlines the necessary components for providing guidance on a career transition after job loss. It specifies the context, objective, style, tone, audience, and response format, making it comprehensive and well-organized. \n\nHowever, while it is mostly clear and specific, there could be minor gaps in detailing the specific measurable objectives and the desired response format. For example, it could benefit from explicitly stating what kind of guidance is sought (e.g., resume writing, interview preparation, networking strategies) and what format the response should take (e.g., a list, a narrative, bullet points). \n\nOverall, it stays on topic and addresses the context of seeking guidance for a career transition, which is crucial for scoring. Thus, it earns a score of 4 for being good but not fully comprehensive.\n\n**⭐ COSTAR Framework Usage: 2.0/3**\nScore: 2\n\nThe improved prompt effectively uses the following COSTAR elements:\n\n- **Context**: It provides a clear context by stating that the person is seeking guidance on a career transition after job loss.\n- **Objective**: It suggests defining specific, measurable objectives, which is relevant to the context of career transition.\n- **Audience**: It implies the audience is someone seeking career advice, though it could be more explicitly defined.\n\nHowever, the prompt lacks explicit mention of **Style**, **Tone**, and **Response** format, which limits its effectiveness. Overall, it remains relevant to the topic of career guidance, but it does not fully utilize all elements of the COSTAR framework.\n\n**💡 Creativity Bonus: 2.0/2**\nScore: 2\n\nThe improved prompt demonstrates a highly creative and innovative approach to structuring a request for guidance on a life transition, specifically a career change after job loss. The use of the acronym \"COSTAR\" effectively organizes the elements needed for a comprehensive and clear request, which enhances the clarity and specificity of the original prompt. Each component—Context, Objective, Style, Tone, Audience, and Response—addresses critical aspects of communication that are often overlooked in generic requests for help. \n\nThis structured format not only provides a novel way to present the request but also ensures that the person providing assistance has all the necessary information to give tailored advice. The context of seeking guidance on a career transition is maintained throughout, ensuring that the prompt remains relevant to the topic. Overall, the improved prompt showcases creativity in its organization and clarity, making it a significant enhancement over the original.\n\n🎉 **Excellent work!** Your prompt improvement skills are strong!",
+          "timestamp": "2025-08-06T10:55:28.248898",
+          "bad_prompt": {
+            "id": "generic_advice",
+            "category": "Life Coaching",
+            "bad_prompt": "Help me with my life",
+            "weak_response": "Life is hard sometimes. Try to be positive. Things will get better. Stay strong.",
+            "context": "Person seeking guidance on career transition after job loss",
+            "expected_improvements": [
+              "Specify the exact life situation",
+              "Define specific goals and challenges",
+              "Request actionable steps and timeline",
+              "Include relevant personal context",
+              "Ask for resources and tools"
+            ]
+          }
+        }
+      ]
     }
   ],
   "metadata": {
-    "created_at": "2025-08-05T09:43:40.137986",
-    "last_updated": "2025-08-05T10:07:55.092422",
-    "total_games": 4
+    "created_at": "2025-08-06T10:36:30.972347",
+    "last_updated": "2025-08-06T10:55:28.250187",
+    "total_games": 1
   }
 }

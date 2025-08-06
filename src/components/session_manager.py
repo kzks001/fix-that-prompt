@@ -103,7 +103,7 @@ class SessionManager:
             logger.error(f"Failed to save score for {username}")
             return False, "Error saving score to leaderboard", final_score
 
-        # Remove from active sessions
+        # Remove from active sessions (history now stored in database)
         del self.active_sessions[username]
 
         log_player_action(

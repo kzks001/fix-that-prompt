@@ -369,3 +369,1325 @@
 2025-08-05 10:14:40 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
 2025-08-05 10:14:40 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
 2025-08-05 10:14:40 | INFO     | src.main:initialize_game:29 | Game initialized successfully
+2025-08-06 08:39:09 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:39:09 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:39:09 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:39:09 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:39:09 | INFO     | src.main:initialize_game:29 | Game initialized successfully
+2025-08-06 08:39:34 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks, Action: duplicate_username_attempt, Details: 
+2025-08-06 08:39:37 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: duplicate_username_attempt, Details: 
+2025-08-06 08:39:41 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks3, Action: duplicate_username_attempt, Details: 
+2025-08-06 08:40:42 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: stat, Action: session_started, Details: 
+2025-08-06 08:40:42 | INFO     | src.components.session_manager:start_new_session:67 | Started new session for player: stat
+2025-08-06 08:40:42 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: stat, Action: prompt_selected, Details: ID: basic_recipe, Category: Cooking
+2025-08-06 08:41:05 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: stat, Action: round_submitted, Details: Round 1
+2025-08-06 08:41:05 | INFO     | src.components.game:submit_round:153 | Generating improved response for stat
+2025-08-06 08:41:22 | INFO     | src.components.game:submit_round:157 | Evaluating prompt improvement for stat
+2025-08-06 08:41:22 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 08:41:29 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 8.0, 'breakdown': {'prompt_quality': 4.0, 'costar_usage': 2.0, 'creativity': 2.0, 'total': 8.0}}
+2025-08-06 08:41:29 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 8.00/10
+2025-08-06 08:41:29 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: stat, Round: 1, Score: 8.00
+2025-08-06 08:41:29 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'stat', 'round': 1, 'score': 8.0, 'category': 'Cooking'}
+2025-08-06 08:41:29 | INFO     | src.components.game:submit_round:190 | Round 1 completed for stat - Score: 8.00
+2025-08-06 08:43:05 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:43:05 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:43:05 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:43:05 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:43:05 | INFO     | src.main:initialize_game:30 | Game initialized successfully
+2025-08-06 08:43:18 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:43:18 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:43:18 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:43:18 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:43:18 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:43:25 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:43:25 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:43:25 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:43:25 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:43:25 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:43:28 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:43:28 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:43:28 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:43:28 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:43:28 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:43:30 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:43:30 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:43:30 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:43:30 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:43:30 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:43:39 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:43:39 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:43:39 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:43:39 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:43:39 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:43:41 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:43:41 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:43:41 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:43:41 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:43:41 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:43:44 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:43:44 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:43:44 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:43:44 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:43:44 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:43:51 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:43:51 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:43:51 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:43:51 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:43:51 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:43:54 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:43:54 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:43:54 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:43:54 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:43:54 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:44:22 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:44:22 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:44:22 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:44:22 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:44:22 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:45:00 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:45:00 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:45:00 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:45:00 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:45:00 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:45:03 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:45:03 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:45:03 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:45:03 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:45:03 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:45:05 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:45:05 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:45:05 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:45:05 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:45:05 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:45:08 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:45:08 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:45:08 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:45:08 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:45:08 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:45:14 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:45:14 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:45:14 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:45:14 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:45:14 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:45:17 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:45:17 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:45:17 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:45:17 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:45:17 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:46:19 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:46:19 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:46:19 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:46:19 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:46:19 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:35 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:35 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:35 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:35 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:35 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:36 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:36 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:36 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:36 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:36 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:38 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:38 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:38 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:38 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:38 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:41 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:41 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:41 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:41 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:41 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:42 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:42 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:42 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:42 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:42 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:44 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:44 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:44 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:44 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:44 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:45 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:45 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:45 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:45 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:45 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:46 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:46 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:46 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:46 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:46 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:48 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:48 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:48 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:48 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:48 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:49 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:49 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:49 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:49 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:49 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:51 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:51 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:51 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:51 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:51 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:52 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:52 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:52 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:52 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:52 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:54 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:54 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:54 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:54 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:54 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:47:55 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:47:55 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:47:55 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:47:55 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:47:55 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:48:21 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:48:21 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:48:21 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:48:21 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:48:21 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:48:24 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:48:24 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:48:24 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:48:24 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:48:24 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:48:26 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:48:26 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:48:26 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:48:26 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:48:26 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:48:27 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:48:27 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:48:27 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:48:27 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:48:27 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:48:29 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:48:29 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:48:29 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:48:29 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:48:29 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:48:33 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:48:33 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:48:33 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:48:33 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:48:33 | INFO     | src.main:initialize_game:96 | Game initialized successfully
+2025-08-06 08:50:17 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:50:17 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:50:17 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:50:17 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:50:17 | INFO     | src.main:initialize_game:100 | Game initialized successfully
+2025-08-06 08:52:14 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:52:14 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:52:14 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:52:14 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:52:14 | INFO     | src.main:initialize_game:100 | Game initialized successfully
+2025-08-06 08:52:34 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:52:34 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:52:34 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:52:34 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:52:34 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 08:52:49 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:52:49 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:52:49 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:52:49 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:52:49 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 08:52:59 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:52:59 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:52:59 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:52:59 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:52:59 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 08:53:17 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:53:17 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:53:17 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:53:17 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:53:17 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 08:53:40 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:53:40 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:53:40 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:53:40 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:53:40 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 08:53:42 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:53:42 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:53:42 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:53:42 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:53:42 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 08:53:49 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:53:49 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:53:49 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:53:49 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:53:49 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 08:53:52 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:53:52 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:53:52 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:53:52 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:53:52 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 08:53:54 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:53:54 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:53:54 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:53:54 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:53:54 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 08:55:11 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:55:11 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:55:11 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:55:11 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:55:11 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 08:56:54 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 08:56:54 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 08:56:54 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 08:56:54 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 08:56:54 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 09:00:40 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:00:40 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:00:40 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:00:40 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:00:40 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 09:03:35 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:03:35 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:03:35 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:03:35 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:03:35 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 09:03:46 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:03:46 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:03:46 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:03:46 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:03:46 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 09:16:35 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:16:35 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:16:35 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:16:35 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:16:35 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 09:16:47 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:16:47 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:16:47 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:16:47 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:16:47 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 09:16:55 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:16:55 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:16:55 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:16:55 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:16:55 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 09:17:09 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:17:09 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:17:09 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:17:09 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:17:09 | INFO     | src.main:initialize_game:97 | Game initialized successfully
+2025-08-06 09:18:41 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:18:41 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:18:41 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:18:41 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:18:41 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 09:20:02 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:20:02 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:20:02 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:20:02 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:20:02 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 09:20:13 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:20:13 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:20:13 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:20:13 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:20:13 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 09:21:24 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:21:24 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:21:24 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:21:24 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:21:24 | INFO     | src.main:initialize_game:101 | Game initialized successfully
+2025-08-06 09:21:59 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:21:59 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:21:59 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:21:59 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:21:59 | INFO     | src.main:initialize_game:191 | Game initialized successfully
+2025-08-06 09:22:35 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:22:35 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:22:35 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:22:35 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:22:35 | INFO     | src.main:initialize_game:191 | Game initialized successfully
+2025-08-06 09:23:26 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:23:26 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:23:26 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:23:26 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:23:26 | INFO     | src.main:initialize_game:217 | Game initialized successfully
+2025-08-06 09:25:44 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:25:44 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:25:44 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:25:44 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:25:44 | INFO     | src.main:initialize_game:218 | Game initialized successfully
+2025-08-06 09:25:47 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:25:47 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:25:47 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:25:47 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:25:47 | INFO     | src.main:initialize_game:219 | Game initialized successfully
+2025-08-06 09:25:49 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:25:49 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:25:49 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:25:49 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:25:49 | INFO     | src.main:initialize_game:220 | Game initialized successfully
+2025-08-06 09:25:53 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:25:53 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:25:53 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:25:53 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:25:53 | INFO     | src.main:initialize_game:221 | Game initialized successfully
+2025-08-06 09:25:56 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:25:56 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:25:56 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:25:56 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:25:56 | INFO     | src.main:initialize_game:221 | Game initialized successfully
+2025-08-06 09:26:28 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:26:28 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:26:28 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:26:28 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:26:28 | INFO     | src.main:initialize_game:221 | Game initialized successfully
+2025-08-06 09:26:52 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:26:52 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:26:52 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:26:52 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:26:52 | INFO     | src.main:initialize_game:221 | Game initialized successfully
+2025-08-06 09:26:54 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:26:54 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:26:54 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:26:54 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:26:54 | INFO     | src.main:initialize_game:221 | Game initialized successfully
+2025-08-06 09:26:57 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:26:57 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:26:57 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:26:57 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:26:57 | INFO     | src.main:initialize_game:221 | Game initialized successfully
+2025-08-06 09:26:59 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:26:59 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:26:59 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:26:59 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:26:59 | INFO     | src.main:initialize_game:221 | Game initialized successfully
+2025-08-06 09:27:02 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:27:02 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:27:02 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:27:02 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:27:02 | INFO     | src.main:initialize_game:221 | Game initialized successfully
+2025-08-06 09:27:10 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:27:10 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:27:10 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:27:10 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:27:10 | INFO     | src.main:initialize_game:220 | Game initialized successfully
+2025-08-06 09:27:13 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:27:13 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:27:13 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:27:13 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:27:13 | INFO     | src.main:initialize_game:219 | Game initialized successfully
+2025-08-06 09:27:15 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:27:15 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:27:15 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:27:15 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:27:15 | INFO     | src.main:initialize_game:218 | Game initialized successfully
+2025-08-06 09:27:18 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:27:18 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:27:18 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:27:18 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:27:18 | INFO     | src.main:initialize_game:217 | Game initialized successfully
+2025-08-06 09:27:39 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:27:39 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:27:39 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:27:39 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:27:39 | INFO     | src.main:initialize_game:222 | Game initialized successfully
+2025-08-06 09:27:51 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:27:51 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:27:51 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:27:51 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:27:51 | INFO     | src.main:initialize_game:227 | Game initialized successfully
+2025-08-06 09:27:58 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:27:58 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:27:58 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:27:58 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:27:58 | INFO     | src.main:initialize_game:232 | Game initialized successfully
+2025-08-06 09:28:04 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:28:04 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:28:04 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:28:04 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:28:04 | INFO     | src.main:initialize_game:237 | Game initialized successfully
+2025-08-06 09:28:14 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:28:14 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:28:14 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:28:14 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:28:14 | INFO     | src.main:initialize_game:237 | Game initialized successfully
+2025-08-06 09:31:51 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:31:51 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:31:51 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:31:51 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:31:51 | INFO     | src.main:initialize_game:243 | Game initialized successfully
+2025-08-06 09:32:37 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1, Action: session_started, Details: 
+2025-08-06 09:32:37 | INFO     | src.components.session_manager:start_new_session:67 | Started new session for player: testing1
+2025-08-06 09:32:37 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1, Action: prompt_selected, Details: ID: generic_email, Category: Business Communication
+2025-08-06 09:33:03 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1, Action: round_submitted, Details: Round 1
+2025-08-06 09:33:03 | INFO     | src.components.game:submit_round:153 | Generating improved response for testing1
+2025-08-06 09:33:04 | INFO     | src.components.game:submit_round:157 | Evaluating prompt improvement for testing1
+2025-08-06 09:33:04 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 09:33:10 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 9.0, 'breakdown': {'prompt_quality': 5.0, 'costar_usage': 2.0, 'creativity': 2.0, 'total': 9.0}}
+2025-08-06 09:33:10 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 9.00/10
+2025-08-06 09:33:10 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testing1, Round: 1, Score: 9.00
+2025-08-06 09:33:10 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testing1', 'round': 1, 'score': 9.0, 'category': 'Business Communication'}
+2025-08-06 09:33:10 | INFO     | src.components.game:submit_round:190 | Round 1 completed for testing1 - Score: 9.00
+2025-08-06 09:34:16 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1, Action: prompt_selected, Details: ID: unclear_travel, Category: Travel Planning
+2025-08-06 09:39:50 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:39:50 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:39:50 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:39:50 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:39:50 | INFO     | src.main:initialize_game:243 | Game initialized successfully
+2025-08-06 09:40:04 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:40:04 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:40:04 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:40:04 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:40:04 | INFO     | src.main:initialize_game:243 | Game initialized successfully
+2025-08-06 09:40:38 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:40:38 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:40:38 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:40:38 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:40:38 | INFO     | src.main:initialize_game:243 | Game initialized successfully
+2025-08-06 09:42:39 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testying2, Action: session_started, Details: 
+2025-08-06 09:42:39 | INFO     | src.components.session_manager:start_new_session:67 | Started new session for player: testying2
+2025-08-06 09:42:39 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testying2, Action: prompt_selected, Details: ID: generic_email, Category: Business Communication
+2025-08-06 09:42:51 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testying2, Action: round_submitted, Details: Round 1
+2025-08-06 09:42:51 | INFO     | src.components.game:submit_round:153 | Generating improved response for testying2
+2025-08-06 09:43:02 | INFO     | src.components.game:submit_round:157 | Evaluating prompt improvement for testying2
+2025-08-06 09:43:02 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 09:43:07 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 9.0, 'breakdown': {'prompt_quality': 5.0, 'costar_usage': 2.0, 'creativity': 2.0, 'total': 9.0}}
+2025-08-06 09:43:07 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 9.00/10
+2025-08-06 09:43:07 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testying2, Round: 1, Score: 9.00
+2025-08-06 09:43:07 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testying2', 'round': 1, 'score': 9.0, 'category': 'Business Communication'}
+2025-08-06 09:43:07 | INFO     | src.components.game:submit_round:190 | Round 1 completed for testying2 - Score: 9.00
+2025-08-06 09:44:17 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testying2, Action: prompt_selected, Details: ID: basic_recipe, Category: Cooking
+2025-08-06 09:44:30 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testying2, Action: round_submitted, Details: Round 2
+2025-08-06 09:44:30 | INFO     | src.components.game:submit_round:153 | Generating improved response for testying2
+2025-08-06 09:44:31 | INFO     | src.components.game:submit_round:157 | Evaluating prompt improvement for testying2
+2025-08-06 09:44:31 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 09:44:35 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 09:44:35 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 0.00/10
+2025-08-06 09:44:35 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testying2, Round: 2, Score: 0.00
+2025-08-06 09:44:35 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testying2', 'round': 2, 'score': 0.0, 'category': 'Cooking'}
+2025-08-06 09:44:35 | INFO     | src.components.game:submit_round:190 | Round 2 completed for testying2 - Score: 0.00
+2025-08-06 09:44:38 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'testying2', 'final_score': 9.0, 'rounds_played': 2}
+2025-08-06 09:44:38 | INFO     | src.database.leaderboard_db:add_player_score:116 | Added score for player: testying2 (Score: 9.00)
+2025-08-06 09:44:38 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testying2, Action: session_ended, Details: Final score: 9.00, Rounds: 2
+2025-08-06 09:44:38 | INFO     | src.components.session_manager:end_session:115 | Ended session for testying2 - Final score: 9.00
+2025-08-06 09:44:38 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'testying2', 'final_score': 9.0, 'rank': 1}
+2025-08-06 09:48:45 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:48:45 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:48:45 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:48:45 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:48:45 | INFO     | src.main:initialize_game:232 | Game initialized successfully
+2025-08-06 09:49:11 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:49:11 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:49:11 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:49:11 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:49:11 | INFO     | src.main:initialize_game:232 | Game initialized successfully
+2025-08-06 09:49:23 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing123, Action: session_started, Details: 
+2025-08-06 09:49:23 | INFO     | src.components.session_manager:start_new_session:67 | Started new session for player: testing123
+2025-08-06 09:49:23 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing123, Action: prompt_selected, Details: ID: basic_recipe, Category: Cooking
+2025-08-06 09:49:26 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing123, Action: round_submitted, Details: Round 1
+2025-08-06 09:49:26 | INFO     | src.components.game:submit_round:153 | Generating improved response for testing123
+2025-08-06 09:49:27 | INFO     | src.components.game:submit_round:157 | Evaluating prompt improvement for testing123
+2025-08-06 09:49:27 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 09:49:29 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 09:49:29 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 0.00/10
+2025-08-06 09:49:29 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testing123, Round: 1, Score: 0.00
+2025-08-06 09:49:29 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testing123', 'round': 1, 'score': 0.0, 'category': 'Cooking'}
+2025-08-06 09:49:29 | INFO     | src.components.game:submit_round:190 | Round 1 completed for testing123 - Score: 0.00
+2025-08-06 09:49:43 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing123, Action: prompt_selected, Details: ID: vague_essay, Category: Academic Writing
+2025-08-06 09:49:49 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing123, Action: round_submitted, Details: Round 2
+2025-08-06 09:49:49 | INFO     | src.components.game:submit_round:153 | Generating improved response for testing123
+2025-08-06 09:49:52 | INFO     | src.components.game:submit_round:157 | Evaluating prompt improvement for testing123
+2025-08-06 09:49:52 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 09:49:54 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 09:49:54 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 0.00/10
+2025-08-06 09:49:54 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testing123, Round: 2, Score: 0.00
+2025-08-06 09:49:54 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testing123', 'round': 2, 'score': 0.0, 'category': 'Academic Writing'}
+2025-08-06 09:49:54 | INFO     | src.components.game:submit_round:190 | Round 2 completed for testing123 - Score: 0.00
+2025-08-06 09:49:58 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'testing123', 'final_score': 0.0, 'rounds_played': 2}
+2025-08-06 09:49:58 | INFO     | src.database.leaderboard_db:add_player_score:116 | Added score for player: testing123 (Score: 0.00)
+2025-08-06 09:49:58 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing123, Action: session_ended, Details: Final score: 0.00, Rounds: 2
+2025-08-06 09:49:58 | INFO     | src.components.session_manager:end_session:115 | Ended session for testing123 - Final score: 0.00
+2025-08-06 09:49:58 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'testing123', 'final_score': 0.0, 'rank': 6}
+2025-08-06 09:55:07 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:55:07 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:55:07 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:55:07 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:55:07 | INFO     | src.main:initialize_game:232 | Game initialized successfully
+2025-08-06 09:55:13 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:55:13 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:55:13 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:55:13 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:55:13 | INFO     | src.main:initialize_game:232 | Game initialized successfully
+2025-08-06 09:55:43 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:55:43 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:55:43 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:55:43 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:55:43 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 09:56:22 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:56:22 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 09:56:22 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:56:22 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:56:22 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 09:56:35 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1234, Action: session_started, Details: 
+2025-08-06 09:56:35 | INFO     | src.components.session_manager:start_new_session:67 | Started new session for player: testing1234
+2025-08-06 09:56:35 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1234, Action: prompt_selected, Details: ID: weak_marketing, Category: Marketing
+2025-08-06 09:56:40 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1234, Action: round_submitted, Details: Round 1
+2025-08-06 09:56:40 | INFO     | src.components.game:submit_round:153 | Generating improved response for testing1234
+2025-08-06 09:56:41 | INFO     | src.components.game:submit_round:157 | Evaluating prompt improvement for testing1234
+2025-08-06 09:56:41 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 09:56:43 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 1.0, 'breakdown': {'prompt_quality': 1.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 1.0}}
+2025-08-06 09:56:43 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 1.00/10
+2025-08-06 09:56:43 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testing1234, Round: 1, Score: 1.00
+2025-08-06 09:56:43 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testing1234', 'round': 1, 'score': 1.0, 'category': 'Marketing'}
+2025-08-06 09:56:43 | INFO     | src.components.game:submit_round:190 | Round 1 completed for testing1234 - Score: 1.00
+2025-08-06 09:57:37 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'testing1234', 'final_score': 1.0, 'rounds_played': 1}
+2025-08-06 09:57:37 | INFO     | src.database.leaderboard_db:add_player_score:116 | Added score for player: testing1234 (Score: 1.00)
+2025-08-06 09:57:37 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1234, Action: session_ended, Details: Final score: 1.00, Rounds: 1
+2025-08-06 09:57:37 | INFO     | src.components.session_manager:end_session:115 | Ended session for testing1234 - Final score: 1.00
+2025-08-06 09:57:37 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'testing1234', 'final_score': 1.0, 'rank': 6}
+2025-08-06 09:59:13 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:59:13 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 09:59:13 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:59:13 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:59:13 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 09:59:18 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:59:18 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 09:59:18 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:59:18 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:59:18 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 09:59:25 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:59:25 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 09:59:25 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:59:25 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:59:25 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 09:59:30 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:59:30 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 09:59:30 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:59:30 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:59:30 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 09:59:36 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:59:36 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 09:59:36 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:59:36 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:59:36 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 09:59:40 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 09:59:40 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 09:59:40 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 09:59:40 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 09:59:40 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:02:04 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:02:04 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 10:02:04 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:02:04 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:02:04 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:02:30 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing12345, Action: session_started, Details: 
+2025-08-06 10:02:30 | INFO     | src.components.session_manager:start_new_session:68 | Started new session for player: testing12345
+2025-08-06 10:02:30 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing12345, Action: prompt_selected, Details: ID: basic_recipe, Category: Cooking
+2025-08-06 10:02:32 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing12345, Action: round_submitted, Details: Round 1
+2025-08-06 10:02:32 | INFO     | src.components.game:submit_round:157 | Generating improved response for testing12345
+2025-08-06 10:02:33 | INFO     | src.components.game:submit_round:161 | Evaluating prompt improvement for testing12345
+2025-08-06 10:02:33 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 10:02:35 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 10:02:35 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 0.00/10
+2025-08-06 10:02:35 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testing12345, Round: 1, Score: 0.00
+2025-08-06 10:02:35 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testing12345', 'round': 1, 'score': 0.0, 'category': 'Cooking'}
+2025-08-06 10:02:35 | INFO     | src.components.game:submit_round:194 | Round 1 completed for testing12345 - Score: 0.00
+2025-08-06 10:02:37 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'testing12345', 'final_score': 0.0, 'rounds_played': 1}
+2025-08-06 10:02:37 | INFO     | src.database.leaderboard_db:add_player_score:116 | Added score for player: testing12345 (Score: 0.00)
+2025-08-06 10:02:37 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing12345, Action: session_ended, Details: Final score: 0.00, Rounds: 1
+2025-08-06 10:02:37 | INFO     | src.components.session_manager:end_session:145 | Ended session for testing12345 - Final score: 0.00
+2025-08-06 10:02:37 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'testing12345', 'final_score': 0.0, 'rank': 8}
+2025-08-06 10:03:20 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:03:20 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 10:03:20 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:03:20 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:03:20 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:03:25 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:03:25 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 10:03:25 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:03:25 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:03:25 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:05:06 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:05:06 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 10:05:06 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:05:06 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:05:06 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:06:20 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:06:20 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 10:06:20 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:06:20 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:06:20 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:06:26 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:06:26 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 10:06:26 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:06:26 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:06:26 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:06:32 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:06:32 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 10:06:32 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:06:32 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:06:32 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:06:37 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:06:37 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 10:06:37 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:06:37 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:06:37 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:06:52 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:06:52 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 10:06:52 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:06:52 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:06:52 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:07:03 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:07:03 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 10:07:03 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:07:03 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:07:03 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:07:12 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:07:12 | INFO     | src.components.session_manager:__init__:26 | Session manager initialized
+2025-08-06 10:07:12 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:07:12 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:07:12 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:07:17 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:07:17 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:07:17 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:07:17 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:07:17 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:07:22 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:07:22 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:07:22 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:07:22 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:07:22 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:07:28 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:07:28 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:07:28 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:07:28 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:07:28 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:07:33 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:07:33 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:07:33 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:07:33 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:07:33 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:08:22 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:08:22 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:08:22 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:08:22 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:08:22 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:08:42 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: session_started, Details: 
+2025-08-06 10:08:42 | INFO     | src.components.session_manager:start_new_session:67 | Started new session for player: kzks1
+2025-08-06 10:08:42 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: prompt_selected, Details: ID: vague_essay, Category: Academic Writing
+2025-08-06 10:08:44 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: round_submitted, Details: Round 1
+2025-08-06 10:08:44 | INFO     | src.components.game:submit_round:176 | Generating improved response for kzks1
+2025-08-06 10:08:45 | INFO     | src.components.game:submit_round:180 | Evaluating prompt improvement for kzks1
+2025-08-06 10:08:45 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 10:08:49 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 10:08:49 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 0.00/10
+2025-08-06 10:08:49 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks1, Round: 1, Score: 0.00
+2025-08-06 10:08:49 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks1', 'round': 1, 'score': 0.0, 'category': 'Academic Writing'}
+2025-08-06 10:08:49 | INFO     | src.components.game:submit_round:213 | Round 1 completed for kzks1 - Score: 0.00
+2025-08-06 10:08:59 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: prompt_selected, Details: ID: simple_explanation, Category: Education
+2025-08-06 10:09:02 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: round_submitted, Details: Round 2
+2025-08-06 10:09:02 | INFO     | src.components.game:submit_round:176 | Generating improved response for kzks1
+2025-08-06 10:09:03 | INFO     | src.components.game:submit_round:180 | Evaluating prompt improvement for kzks1
+2025-08-06 10:09:03 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 10:09:08 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 10:09:08 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 0.00/10
+2025-08-06 10:09:08 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks1, Round: 2, Score: 0.00
+2025-08-06 10:09:08 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks1', 'round': 2, 'score': 0.0, 'category': 'Education'}
+2025-08-06 10:09:08 | INFO     | src.components.game:submit_round:213 | Round 2 completed for kzks1 - Score: 0.00
+2025-08-06 10:09:28 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: prompt_selected, Details: ID: basic_recipe, Category: Cooking
+2025-08-06 10:09:32 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: round_submitted, Details: Round 3
+2025-08-06 10:09:32 | INFO     | src.components.game:submit_round:176 | Generating improved response for kzks1
+2025-08-06 10:09:33 | INFO     | src.components.game:submit_round:180 | Evaluating prompt improvement for kzks1
+2025-08-06 10:09:33 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 10:09:36 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 10:09:36 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 0.00/10
+2025-08-06 10:09:36 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks1, Round: 3, Score: 0.00
+2025-08-06 10:09:36 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks1', 'round': 3, 'score': 0.0, 'category': 'Cooking'}
+2025-08-06 10:09:36 | INFO     | src.components.game:submit_round:213 | Round 3 completed for kzks1 - Score: 0.00
+2025-08-06 10:09:36 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'kzks1', 'final_score': 0.0, 'rounds_played': 3}
+2025-08-06 10:09:36 | INFO     | src.database.leaderboard_db:add_player_score:167 | Added score for player: kzks1 (Score: 0.00)
+2025-08-06 10:09:36 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: session_ended, Details: Final score: 0.00, Rounds: 3
+2025-08-06 10:09:36 | INFO     | src.components.session_manager:end_session:115 | Ended session for kzks1 - Final score: 0.00
+2025-08-06 10:09:36 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'kzks1', 'final_score': 0.0, 'rank': 1}
+2025-08-06 10:17:28 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:17:28 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:17:28 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:17:28 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:17:28 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:17:37 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:17:37 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:17:37 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:17:37 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:17:37 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:17:54 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:17:54 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:17:54 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:17:54 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:17:54 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:18:17 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:18:17 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:18:17 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:18:17 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:18:17 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:18:56 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:18:56 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:18:56 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:18:56 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:18:56 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:19:16 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:19:16 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:19:16 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:19:16 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:19:16 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:19:52 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:19:52 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:19:52 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:19:52 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:19:52 | INFO     | src.main:initialize_game:360 | Game initialized successfully
+2025-08-06 10:20:03 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:20:03 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:20:03 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:20:03 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:20:03 | INFO     | src.main:initialize_game:378 | Game initialized successfully
+2025-08-06 10:20:11 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:20:11 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:20:11 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:20:11 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:20:11 | INFO     | src.main:initialize_game:378 | Game initialized successfully
+2025-08-06 10:20:29 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:20:29 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:20:29 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:20:29 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:20:29 | INFO     | src.main:initialize_game:378 | Game initialized successfully
+2025-08-06 10:20:55 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:20:55 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:20:55 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:20:55 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:20:55 | INFO     | src.main:initialize_game:378 | Game initialized successfully
+2025-08-06 10:21:02 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:21:02 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:21:02 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:21:02 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:21:02 | INFO     | src.main:initialize_game:378 | Game initialized successfully
+2025-08-06 10:21:16 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:21:16 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:21:16 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:21:16 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:21:16 | INFO     | src.main:initialize_game:378 | Game initialized successfully
+2025-08-06 10:21:23 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:21:23 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:21:23 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:21:23 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:21:23 | INFO     | src.main:initialize_game:378 | Game initialized successfully
+2025-08-06 10:21:35 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:21:35 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:21:35 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:21:35 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:21:35 | INFO     | src.main:initialize_game:387 | Game initialized successfully
+2025-08-06 10:21:44 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:21:44 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:21:44 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:21:44 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:21:44 | INFO     | src.main:initialize_game:402 | Game initialized successfully
+2025-08-06 10:21:54 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:21:54 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:21:54 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:21:54 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:21:54 | INFO     | src.main:initialize_game:385 | Game initialized successfully
+2025-08-06 10:25:49 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:25:49 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:25:49 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:25:49 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:25:49 | INFO     | src.main:initialize_game:385 | Game initialized successfully
+2025-08-06 10:25:50 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:25:50 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:25:50 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:25:50 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:25:50 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:26:23 | INFO     | src.database.leaderboard_db:create_or_update_player:166 | Created new player: kzks2
+2025-08-06 10:26:23 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks2', 'final_score': 0.0, 'rounds_remaining': 3, 'is_completed': False}
+2025-08-06 10:26:59 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 10:27:01 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 10:27:01 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 0.00/10
+2025-08-06 10:27:01 | INFO     | src.database.leaderboard_db:create_or_update_player:161 | Updated player: kzks2
+2025-08-06 10:27:01 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks2', 'final_score': 0.0, 'rounds_remaining': 2, 'is_completed': False}
+2025-08-06 10:29:31 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:29:31 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:29:31 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:29:31 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:29:31 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:29:47 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:29:47 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:29:47 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:29:47 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:29:47 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:30:39 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:30:39 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:30:39 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:30:39 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:30:39 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:32:17 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:32:17 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:32:17 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:32:17 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:32:17 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:32:54 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:32:54 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:32:54 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:32:54 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:32:54 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:33:02 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:33:02 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:33:02 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:33:02 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:33:02 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:33:16 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:33:16 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:33:16 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:33:16 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:33:16 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:33:23 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:33:23 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:33:23 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:33:23 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:33:23 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:33:29 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:33:29 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:33:29 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:33:29 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:33:29 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:33:37 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:33:37 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:33:37 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:33:37 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:33:37 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:33:49 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:33:49 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:33:49 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:33:49 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:33:49 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:34:03 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:34:03 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:34:03 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:34:03 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:34:03 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:36:26 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:36:26 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:36:26 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:36:26 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:36:26 | INFO     | src.main:initialize_game:389 | Game initialized successfully
+2025-08-06 10:36:30 | INFO     | src.database.leaderboard_db:create_or_update_player:195 | Created new player: kzks
+2025-08-06 10:36:30 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks', 'final_score': 0.0, 'rounds_remaining': 3, 'is_completed': False}
+2025-08-06 10:39:39 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:39:39 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:39:39 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:39:39 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:39:39 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:39:45 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:39:45 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:39:45 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:39:45 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:39:45 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:39:52 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:39:52 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:39:52 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:39:52 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:39:52 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:40:03 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:40:03 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:40:03 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:40:03 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:40:03 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:40:20 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:40:20 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:40:20 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:40:20 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:40:20 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:40:54 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:40:54 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:40:54 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:40:54 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:40:54 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:41:11 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:41:11 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:41:11 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:41:11 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:41:11 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:41:30 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:41:30 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:41:30 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:41:30 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:41:30 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:41:45 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:41:45 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:41:45 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:41:45 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:41:45 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:41:52 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:41:52 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:41:52 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:41:52 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:41:52 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:42:09 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:42:09 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:42:09 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:42:09 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:42:09 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:42:20 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:42:20 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:42:20 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:42:20 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:42:20 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:43:19 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:43:19 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:43:19 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:43:19 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:43:19 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:45:29 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:45:29 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:45:29 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:45:29 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:45:29 | INFO     | src.main:initialize_game:418 | Game initialized successfully
+2025-08-06 10:45:48 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:45:48 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:45:48 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:45:48 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:45:48 | INFO     | src.main:initialize_game:423 | Game initialized successfully
+2025-08-06 10:45:57 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:45:57 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:45:57 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:45:57 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:45:57 | INFO     | src.main:initialize_game:428 | Game initialized successfully
+2025-08-06 10:46:07 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:46:07 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:46:07 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:46:07 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:46:07 | INFO     | src.main:initialize_game:433 | Game initialized successfully
+2025-08-06 10:46:18 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:46:18 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:46:18 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:46:18 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:46:18 | INFO     | src.main:initialize_game:438 | Game initialized successfully
+2025-08-06 10:46:24 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:46:24 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:46:24 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:46:24 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:46:24 | INFO     | src.main:initialize_game:443 | Game initialized successfully
+2025-08-06 10:46:49 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:46:49 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:46:49 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:46:49 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:46:49 | INFO     | src.main:initialize_game:448 | Game initialized successfully
+2025-08-06 10:47:16 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:47:16 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:47:16 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:47:16 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:47:16 | INFO     | src.main:initialize_game:450 | Game initialized successfully
+2025-08-06 10:47:22 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:47:22 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:47:22 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:47:22 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:47:22 | INFO     | src.main:initialize_game:451 | Game initialized successfully
+2025-08-06 10:47:28 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:47:28 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:47:28 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:47:28 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:47:28 | INFO     | src.main:initialize_game:452 | Game initialized successfully
+2025-08-06 10:47:34 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:47:34 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:47:34 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:47:34 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:47:34 | INFO     | src.main:initialize_game:453 | Game initialized successfully
+2025-08-06 10:47:44 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:47:44 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:47:44 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:47:44 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:47:44 | INFO     | src.main:initialize_game:454 | Game initialized successfully
+2025-08-06 10:47:54 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:47:54 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:47:54 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:47:54 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:47:54 | INFO     | src.main:initialize_game:455 | Game initialized successfully
+2025-08-06 10:48:04 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:48:04 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:48:04 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:48:04 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:48:04 | INFO     | src.main:initialize_game:456 | Game initialized successfully
+2025-08-06 10:48:15 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:48:15 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:48:15 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:48:15 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:48:15 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 10:49:00 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 10:49:00 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 10:49:00 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 10:49:00 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 10:49:00 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 10:55:20 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:204 | Starting prompt evaluation
+2025-08-06 10:55:28 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 8.0, 'breakdown': {'prompt_quality': 4.0, 'costar_usage': 2.0, 'creativity': 2.0, 'total': 8.0}}
+2025-08-06 10:55:28 | INFO     | src.evaluators.ragas_wrapper:evaluate_prompt_improvement:261 | Evaluation completed - Total score: 8.00/10
+2025-08-06 10:55:28 | INFO     | src.database.leaderboard_db:create_or_update_player:190 | Updated player: kzks
+2025-08-06 10:55:28 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks', 'final_score': 8.0, 'rounds_remaining': 2, 'is_completed': False}
+2025-08-06 11:00:16 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:00:16 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:00:16 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:00:16 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:00:16 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 11:00:23 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:00:23 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:00:23 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:00:23 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:00:23 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 11:00:36 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:00:36 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:00:36 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:00:36 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:00:36 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 11:02:02 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:02:02 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:02:02 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:02:02 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:02:02 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 11:02:29 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:02:29 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:02:29 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:02:29 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:02:29 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 11:04:16 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:04:16 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:04:16 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:04:16 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:04:16 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 11:04:47 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:04:47 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:04:47 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:04:47 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:04:47 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 11:05:32 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:05:32 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:05:32 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:05:32 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:05:32 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 11:06:59 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:06:59 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:06:59 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:06:59 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:06:59 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 11:07:23 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:07:23 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:07:23 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:07:23 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:07:23 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 11:07:29 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:07:29 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:07:29 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:07:29 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:07:29 | INFO     | src.main:initialize_game:457 | Game initialized successfully
+2025-08-06 11:07:38 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:07:38 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:07:38 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:07:38 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:07:38 | INFO     | src.main:initialize_game:458 | Game initialized successfully
+2025-08-06 11:07:42 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:07:42 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:07:42 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:07:42 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:07:42 | INFO     | src.main:initialize_game:458 | Game initialized successfully
+2025-08-06 11:22:32 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:22:32 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:22:32 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:22:32 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:22:32 | INFO     | src.main:initialize_game:458 | Game initialized successfully
+2025-08-06 11:24:57 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:24:57 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:24:57 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:24:57 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:24:57 | INFO     | src.main:initialize_game:470 | Game initialized successfully
+2025-08-06 11:25:07 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:25:07 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:25:07 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:25:07 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:25:07 | INFO     | src.main:initialize_game:482 | Game initialized successfully
+2025-08-06 11:25:23 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:25:23 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:25:23 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:25:23 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:25:23 | INFO     | src.main:initialize_game:492 | Game initialized successfully
+2025-08-06 11:25:30 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:25:30 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:25:30 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:25:30 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:25:30 | INFO     | src.main:initialize_game:502 | Game initialized successfully
+2025-08-06 11:25:37 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:25:37 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:25:37 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:25:37 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:25:37 | INFO     | src.main:initialize_game:512 | Game initialized successfully
+2025-08-06 11:25:44 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:25:44 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:25:44 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:25:44 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:25:44 | INFO     | src.main:initialize_game:522 | Game initialized successfully
+2025-08-06 11:26:40 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:26:40 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:26:40 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:26:40 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:26:40 | INFO     | src.main:initialize_game:554 | Game initialized successfully
+2025-08-06 11:28:31 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:28:31 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:28:31 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:28:31 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:28:31 | INFO     | src.main:initialize_game:547 | Game initialized successfully
+2025-08-06 11:28:53 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:28:53 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:28:53 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:28:53 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:28:53 | INFO     | src.main:initialize_game:547 | Game initialized successfully
+2025-08-06 11:29:04 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:29:04 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:29:04 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:29:04 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:29:04 | INFO     | src.main:initialize_game:547 | Game initialized successfully
+2025-08-06 11:29:25 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:29:25 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:29:25 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:29:25 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:29:25 | INFO     | src.main:initialize_game:547 | Game initialized successfully
+2025-08-06 11:39:48 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:39:48 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:39:48 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:39:48 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:39:48 | INFO     | src.main:initialize_game:547 | Game initialized successfully
+2025-08-06 11:42:29 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:42:29 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:42:29 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:42:29 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:42:29 | INFO     | src.main:initialize_game:564 | Game initialized successfully
+2025-08-06 11:45:22 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:45:22 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:45:22 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:45:22 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:45:22 | INFO     | src.main:initialize_game:561 | Game initialized successfully
+2025-08-06 11:46:15 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:46:15 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:46:15 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:46:15 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:46:15 | INFO     | src.main:initialize_game:561 | Game initialized successfully
+2025-08-06 11:48:20 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:48:20 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:48:20 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:48:20 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:48:20 | INFO     | src.main:initialize_game:557 | Game initialized successfully
+2025-08-06 11:48:36 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:48:36 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:48:36 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:48:36 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:48:36 | INFO     | src.main:initialize_game:557 | Game initialized successfully
+2025-08-06 11:49:02 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:49:02 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:49:02 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:49:02 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:49:02 | INFO     | src.main:initialize_game:557 | Game initialized successfully
+2025-08-06 11:49:09 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:49:09 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:49:09 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:49:09 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:49:09 | INFO     | src.main:initialize_game:557 | Game initialized successfully
+2025-08-06 11:49:43 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 11:49:43 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 11:49:43 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 11:49:43 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 11:49:43 | INFO     | src.main:initialize_game:557 | Game initialized successfully
+2025-08-06 13:37:40 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 13:37:40 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 13:37:40 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 13:37:40 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 13:37:40 | INFO     | src.main:initialize_game:557 | Game initialized successfully
+2025-08-06 13:37:44 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 13:37:44 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 13:37:44 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 13:37:44 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 13:37:44 | INFO     | src.main:initialize_game:557 | Game initialized successfully
+2025-08-06 13:37:48 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 13:37:48 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 13:37:48 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 13:37:48 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 13:37:48 | INFO     | src.main:initialize_game:557 | Game initialized successfully
+2025-08-06 13:38:36 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 13:38:36 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 13:38:36 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 13:38:36 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 13:38:36 | INFO     | src.main:initialize_game:557 | Game initialized successfully
+2025-08-06 13:55:21 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 13:55:21 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 13:55:21 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 13:55:21 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 13:55:21 | INFO     | src.main:initialize_game:557 | Game initialized successfully
+2025-08-06 13:57:12 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 13:57:12 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 13:57:12 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 13:57:12 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 13:57:12 | INFO     | src.main:initialize_game:573 | Game initialized successfully
+2025-08-06 13:57:36 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 13:57:36 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 13:57:36 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 13:57:36 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 13:57:36 | INFO     | src.main:initialize_game:573 | Game initialized successfully
+2025-08-06 13:57:49 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 13:57:49 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 13:57:49 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 13:57:49 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 13:57:49 | INFO     | src.main:initialize_game:573 | Game initialized successfully
+2025-08-06 13:58:03 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 13:58:03 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 13:58:03 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 13:58:03 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 13:58:03 | INFO     | src.main:initialize_game:573 | Game initialized successfully
+2025-08-06 13:58:14 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 13:58:14 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 13:58:14 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 13:58:14 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 13:58:14 | INFO     | src.main:initialize_game:573 | Game initialized successfully
+2025-08-06 14:01:50 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 14:01:50 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 14:01:50 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 14:01:50 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 14:01:50 | INFO     | src.main:initialize_game:567 | Game initialized successfully
+2025-08-06 14:01:55 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 14:01:55 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 14:01:55 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 14:01:55 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 14:01:55 | INFO     | src.main:initialize_game:567 | Game initialized successfully
+2025-08-06 14:02:18 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 14:02:18 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 14:02:18 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 14:02:18 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 14:02:18 | INFO     | src.main:initialize_game:567 | Game initialized successfully
+2025-08-06 14:03:24 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 14:03:24 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 14:03:24 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 14:03:24 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 14:03:24 | INFO     | src.main:initialize_game:567 | Game initialized successfully
+2025-08-06 14:03:29 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 14:03:29 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 14:03:29 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 14:03:29 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 14:03:29 | INFO     | src.main:initialize_game:567 | Game initialized successfully
+2025-08-06 14:05:32 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 14:05:32 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 14:05:32 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 14:05:32 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 14:05:32 | INFO     | src.main:initialize_game:567 | Game initialized successfully
+2025-08-06 14:05:50 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 14:05:50 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 14:05:50 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 14:05:50 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 14:05:50 | INFO     | src.main:initialize_game:567 | Game initialized successfully
+2025-08-06 14:05:52 | INFO     | src.prompts.loader:_load_prompts:45 | Loaded 10 bad prompts from data/bad_prompts.json
+2025-08-06 14:05:52 | INFO     | src.components.session_manager:__init__:25 | Session manager initialized
+2025-08-06 14:05:52 | INFO     | src.evaluators.ragas_wrapper:__init__:109 | Initialized LLM evaluator with model: gpt-4o-mini
+2025-08-06 14:05:52 | INFO     | src.components.game:__init__:47 | Game initialized with model: gpt-4o-mini
+2025-08-06 14:05:52 | INFO     | src.main:initialize_game:567 | Game initialized successfully

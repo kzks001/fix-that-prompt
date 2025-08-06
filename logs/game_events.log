@@ -68,3 +68,90 @@
 2025-08-05 10:08:45 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 5.0, 'breakdown': {'prompt_quality': 2.0, 'costar_usage': 2.0, 'creativity': 1.0, 'total': 5.0}}
 2025-08-05 10:08:45 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: main, Round: 1, Score: 5.00
 2025-08-05 10:08:45 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'main', 'round': 1, 'score': 5.0, 'category': 'Academic Writing'}
+2025-08-06 08:39:34 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks, Action: duplicate_username_attempt, Details: 
+2025-08-06 08:39:37 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: duplicate_username_attempt, Details: 
+2025-08-06 08:39:41 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks3, Action: duplicate_username_attempt, Details: 
+2025-08-06 08:40:42 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: stat, Action: session_started, Details: 
+2025-08-06 08:40:42 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: stat, Action: prompt_selected, Details: ID: basic_recipe, Category: Cooking
+2025-08-06 08:41:05 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: stat, Action: round_submitted, Details: Round 1
+2025-08-06 08:41:29 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 8.0, 'breakdown': {'prompt_quality': 4.0, 'costar_usage': 2.0, 'creativity': 2.0, 'total': 8.0}}
+2025-08-06 08:41:29 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: stat, Round: 1, Score: 8.00
+2025-08-06 08:41:29 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'stat', 'round': 1, 'score': 8.0, 'category': 'Cooking'}
+2025-08-06 09:32:37 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1, Action: session_started, Details: 
+2025-08-06 09:32:37 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1, Action: prompt_selected, Details: ID: generic_email, Category: Business Communication
+2025-08-06 09:33:03 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1, Action: round_submitted, Details: Round 1
+2025-08-06 09:33:10 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 9.0, 'breakdown': {'prompt_quality': 5.0, 'costar_usage': 2.0, 'creativity': 2.0, 'total': 9.0}}
+2025-08-06 09:33:10 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testing1, Round: 1, Score: 9.00
+2025-08-06 09:33:10 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testing1', 'round': 1, 'score': 9.0, 'category': 'Business Communication'}
+2025-08-06 09:34:16 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1, Action: prompt_selected, Details: ID: unclear_travel, Category: Travel Planning
+2025-08-06 09:42:39 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testying2, Action: session_started, Details: 
+2025-08-06 09:42:39 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testying2, Action: prompt_selected, Details: ID: generic_email, Category: Business Communication
+2025-08-06 09:42:51 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testying2, Action: round_submitted, Details: Round 1
+2025-08-06 09:43:07 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 9.0, 'breakdown': {'prompt_quality': 5.0, 'costar_usage': 2.0, 'creativity': 2.0, 'total': 9.0}}
+2025-08-06 09:43:07 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testying2, Round: 1, Score: 9.00
+2025-08-06 09:43:07 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testying2', 'round': 1, 'score': 9.0, 'category': 'Business Communication'}
+2025-08-06 09:44:17 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testying2, Action: prompt_selected, Details: ID: basic_recipe, Category: Cooking
+2025-08-06 09:44:30 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testying2, Action: round_submitted, Details: Round 2
+2025-08-06 09:44:35 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 09:44:35 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testying2, Round: 2, Score: 0.00
+2025-08-06 09:44:35 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testying2', 'round': 2, 'score': 0.0, 'category': 'Cooking'}
+2025-08-06 09:44:38 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'testying2', 'final_score': 9.0, 'rounds_played': 2}
+2025-08-06 09:44:38 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testying2, Action: session_ended, Details: Final score: 9.00, Rounds: 2
+2025-08-06 09:44:38 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'testying2', 'final_score': 9.0, 'rank': 1}
+2025-08-06 09:49:23 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing123, Action: session_started, Details: 
+2025-08-06 09:49:23 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing123, Action: prompt_selected, Details: ID: basic_recipe, Category: Cooking
+2025-08-06 09:49:26 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing123, Action: round_submitted, Details: Round 1
+2025-08-06 09:49:29 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 09:49:29 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testing123, Round: 1, Score: 0.00
+2025-08-06 09:49:29 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testing123', 'round': 1, 'score': 0.0, 'category': 'Cooking'}
+2025-08-06 09:49:43 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing123, Action: prompt_selected, Details: ID: vague_essay, Category: Academic Writing
+2025-08-06 09:49:49 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing123, Action: round_submitted, Details: Round 2
+2025-08-06 09:49:54 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 09:49:54 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testing123, Round: 2, Score: 0.00
+2025-08-06 09:49:54 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testing123', 'round': 2, 'score': 0.0, 'category': 'Academic Writing'}
+2025-08-06 09:49:58 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'testing123', 'final_score': 0.0, 'rounds_played': 2}
+2025-08-06 09:49:58 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing123, Action: session_ended, Details: Final score: 0.00, Rounds: 2
+2025-08-06 09:49:58 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'testing123', 'final_score': 0.0, 'rank': 6}
+2025-08-06 09:56:35 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1234, Action: session_started, Details: 
+2025-08-06 09:56:35 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1234, Action: prompt_selected, Details: ID: weak_marketing, Category: Marketing
+2025-08-06 09:56:40 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1234, Action: round_submitted, Details: Round 1
+2025-08-06 09:56:43 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 1.0, 'breakdown': {'prompt_quality': 1.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 1.0}}
+2025-08-06 09:56:43 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testing1234, Round: 1, Score: 1.00
+2025-08-06 09:56:43 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testing1234', 'round': 1, 'score': 1.0, 'category': 'Marketing'}
+2025-08-06 09:57:37 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'testing1234', 'final_score': 1.0, 'rounds_played': 1}
+2025-08-06 09:57:37 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing1234, Action: session_ended, Details: Final score: 1.00, Rounds: 1
+2025-08-06 09:57:37 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'testing1234', 'final_score': 1.0, 'rank': 6}
+2025-08-06 10:02:30 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing12345, Action: session_started, Details: 
+2025-08-06 10:02:30 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing12345, Action: prompt_selected, Details: ID: basic_recipe, Category: Cooking
+2025-08-06 10:02:32 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing12345, Action: round_submitted, Details: Round 1
+2025-08-06 10:02:35 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 10:02:35 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: testing12345, Round: 1, Score: 0.00
+2025-08-06 10:02:35 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'testing12345', 'round': 1, 'score': 0.0, 'category': 'Cooking'}
+2025-08-06 10:02:37 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'testing12345', 'final_score': 0.0, 'rounds_played': 1}
+2025-08-06 10:02:37 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: testing12345, Action: session_ended, Details: Final score: 0.00, Rounds: 1
+2025-08-06 10:02:37 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'testing12345', 'final_score': 0.0, 'rank': 8}
+2025-08-06 10:08:42 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: session_started, Details: 
+2025-08-06 10:08:42 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: prompt_selected, Details: ID: vague_essay, Category: Academic Writing
+2025-08-06 10:08:44 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: round_submitted, Details: Round 1
+2025-08-06 10:08:49 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 10:08:49 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks1, Round: 1, Score: 0.00
+2025-08-06 10:08:49 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks1', 'round': 1, 'score': 0.0, 'category': 'Academic Writing'}
+2025-08-06 10:08:59 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: prompt_selected, Details: ID: simple_explanation, Category: Education
+2025-08-06 10:09:02 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: round_submitted, Details: Round 2
+2025-08-06 10:09:08 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 10:09:08 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks1, Round: 2, Score: 0.00
+2025-08-06 10:09:08 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks1', 'round': 2, 'score': 0.0, 'category': 'Education'}
+2025-08-06 10:09:28 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: prompt_selected, Details: ID: basic_recipe, Category: Cooking
+2025-08-06 10:09:32 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: round_submitted, Details: Round 3
+2025-08-06 10:09:36 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 10:09:36 | INFO     | src.utils.logger:log_score_event:120 | Score event - Username: kzks1, Round: 3, Score: 0.00
+2025-08-06 10:09:36 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: round_completed, Data: {'username': 'kzks1', 'round': 3, 'score': 0.0, 'category': 'Cooking'}
+2025-08-06 10:09:36 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_score_added, Data: {'username': 'kzks1', 'final_score': 0.0, 'rounds_played': 3}
+2025-08-06 10:09:36 | INFO     | src.utils.logger:log_player_action:92 | Player action - Username: kzks1, Action: session_ended, Details: Final score: 0.00, Rounds: 3
+2025-08-06 10:09:36 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: game_ended, Data: {'username': 'kzks1', 'final_score': 0.0, 'rank': 1}
+2025-08-06 10:26:23 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks2', 'final_score': 0.0, 'rounds_remaining': 3, 'is_completed': False}
+2025-08-06 10:27:01 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 0.0, 'breakdown': {'prompt_quality': 0.0, 'costar_usage': 0.0, 'creativity': 0.0, 'total': 0.0}}
+2025-08-06 10:27:01 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks2', 'final_score': 0.0, 'rounds_remaining': 2, 'is_completed': False}
+2025-08-06 10:36:30 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks', 'final_score': 0.0, 'rounds_remaining': 3, 'is_completed': False}
+2025-08-06 10:55:28 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: prompt_evaluated, Data: {'total_score': 8.0, 'breakdown': {'prompt_quality': 4.0, 'costar_usage': 2.0, 'creativity': 2.0, 'total': 8.0}}
+2025-08-06 10:55:28 | INFO     | src.utils.logger:log_game_event:107 | Game event - Type: player_updated, Data: {'username': 'kzks', 'final_score': 8.0, 'rounds_remaining': 2, 'is_completed': False}

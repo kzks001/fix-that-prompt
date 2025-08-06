@@ -1,8 +1,10 @@
 """Chainlit UI for Fix That Prompt game."""
 
+import asyncio
 import os
 
 import chainlit as cl
+from chainlit import Action
 from dotenv import load_dotenv
 from loguru import logger
 
@@ -20,6 +22,542 @@ setup_logging(os.getenv("LOG_LEVEL", "INFO"))
 game: FixThatPromptGame | None = None
 
 
+async def clear_previous_message():
+    """Clear the previous assistant message for clean navigation."""
+    main_message = cl.user_session.get("main_message")
+    if main_message:
+        try:
+            await main_message.remove()
+            await asyncio.sleep(0.1)  # Small delay to ensure removal is processed
+        except Exception as e:
+            logger.warning(f"Could not remove main message: {e}")
+
+
+# Action handlers for buttons
+@cl.action_callback("help")
+async def help_action(action):
+    """Handle help button clicks."""
+    # Clear previous message for clean navigation
+    await clear_previous_message()
+
+    help_msg = """
+# 🎮 Fix That Prompt - Game Guide
+
+## 🎯 **How It Works:**
+Each round, you receive a **poorly written prompt** with its **weak AI response**. Your job is to **improve the prompt** using the **COSTAR framework** to generate a better response. The more improvement you achieve, the higher your score!
+
+## 📊 **Detailed Scoring:**
+- **Prompt Quality (0-5 points):** Clarity, specificity, completeness
+- **COSTAR Usage (0-3 points):** Framework adherence
+- **Creativity Bonus (0-2 points):** Innovation and uniqueness
+- **Maximum:** 10 points per round
+
+## 🏆 **Game Rules:**
+- Each username can play only **once**
+- Up to **3 rounds** per game
+- You can **stop after any round**
+- Your **best round score** becomes your final score
+- Top 10 players make the **leaderboard**
+
+**Use the buttons below to navigate through the game!**
+"""
+
+    new_message = await cl.Message(
+        content=help_msg,
+        actions=[
+            Action(
+                name="back_to_menu",
+                payload={"action": "back_to_menu"},
+                label="🏠 Back to Menu",
+            ),
+            Action(
+                name="leaderboard",
+                payload={"action": "leaderboard"},
+                label="🏆 Leaderboard",
+            ),
+            Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+        ],
+    ).send()
+
+    cl.user_session.set("main_message", new_message)
+
+
+@cl.action_callback("leaderboard")
+async def leaderboard_action(action):
+    """Handle leaderboard button clicks."""
+    # Clear previous message for clean navigation
+    await clear_previous_message()
+
+    top_players = game.get_leaderboard(10)
+
+    if not top_players:
+        leaderboard_msg = """
+# 🏆 Leaderboard
+
+**No players yet!** Be the first to set a score and make your mark on the leaderboard.
+
+🎮 **Ready to play?** Use the buttons below to navigate!
+"""
+        new_message = await cl.Message(
+            content=leaderboard_msg,
+            actions=[
+                Action(
+                    name="back_to_menu",
+                    payload={"action": "back_to_menu"},
+                    label="🏠 Back to Menu",
+                ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
+                ),
+            ],
+        ).send()
+
+        cl.user_session.set("main_message", new_message)
+    else:
+        game_status = ""
+        game_state = cl.user_session.get("game_state", "main_menu")
+        username = cl.user_session.get("username")
+        if game_state == "waiting_for_round_decision" and username:
+            game_status = "🎮 **YOUR GAME IS STILL ACTIVE** 🎮\n\n"
+
+        leaderboard_msg = f"""
+# 🏆 Top 10 Leaderboard
+
+{game_status}"""
+
+        for i, player in enumerate(top_players, 1):
+            emoji = "🥇" if i == 1 else "🥈" if i == 2 else "🥉" if i == 3 else f"#{i}"
+            leaderboard_msg += f"{emoji} **{player['username']}** - {player['final_score']:.1f}/10 ({player['rounds_played']} rounds)\n"
+
+        game_stats = game.get_game_stats()
+        leaderboard_msg += f"""
+
+## 📊 Game Statistics:
+- **Total Players:** {game_stats['total_players']}
+- **Average Score:** {game_stats['average_score']:.1f}/10
+- **Active Players:** {len(game_stats['active_players'])}
+
+🎮 **Ready to continue?** Click the 'Back to Menu' button to return to your game!
+"""
+
+        new_message = await cl.Message(
+            content=leaderboard_msg,
+            actions=[
+                Action(
+                    name="back_to_menu",
+                    payload={"action": "back_to_menu"},
+                    label="🏠 Back to Menu",
+                ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
+                ),
+            ],
+        ).send()
+
+        cl.user_session.set("main_message", new_message)
+
+
+@cl.action_callback("stats")
+async def stats_action(action):
+    """Handle stats button clicks."""
+    # Clear previous message for clean navigation
+    await clear_previous_message()
+
+    game_stats = game.get_game_stats()
+    stats_msg = f"""
+# 📊 Game Statistics
+
+## 🎮 **Overall Stats:**
+- **Prompt Categories:** {len(game_stats['prompt_categories'])}
+- **Total Players:** {game_stats['total_players']}
+- **Average Score:** {game_stats['average_score']:.1f}/10
+- **Currently Active:** {game_stats['active_sessions']} players
+
+**Categories Available:**
+{', '.join(game_stats['prompt_categories'])}
+
+**Ready to continue? Click the 'Back to Menu' button to return to your game!**
+"""
+
+    new_message = await cl.Message(
+        content=stats_msg,
+        actions=[
+            Action(
+                name="back_to_menu",
+                payload={"action": "back_to_menu"},
+                label="🏠 Back to Menu",
+            ),
+            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+            Action(
+                name="leaderboard",
+                payload={"action": "leaderboard"},
+                label="🏆 Leaderboard",
+            ),
+        ],
+    ).send()
+
+    cl.user_session.set("main_message", new_message)
+
+
+@cl.action_callback("next")
+async def next_action(action):
+    """Handle next round button clicks."""
+    # Clear any previous messages
+    main_message = cl.user_session.get("main_message")
+    if main_message:
+        await main_message.remove()
+
+    username = cl.user_session.get("username")
+    player_data = cl.user_session.get("player_data")
+
+    if username and player_data:
+        # Refresh player data from database to ensure we have the latest state
+        updated_player_data = game.leaderboard_db.get_player_history(username)
+        cl.user_session.set("player_data", updated_player_data)
+
+        if updated_player_data and updated_player_data.can_play_more_rounds:
+            await start_new_round(username)
+        else:
+            await show_completed_user_menu(updated_player_data)
+
+
+@cl.action_callback("stop")
+async def stop_action(action):
+    """Handle stop game button clicks."""
+    # Clear any previous messages
+    main_message = cl.user_session.get("main_message")
+    if main_message:
+        await main_message.remove()
+
+    username = cl.user_session.get("username")
+    player_data = cl.user_session.get("player_data")
+
+    if username and player_data:
+        # Refresh player data from database
+        updated_player_data = game.leaderboard_db.get_player_history(username)
+        cl.user_session.set("player_data", updated_player_data)
+
+        if updated_player_data:
+            if (
+                updated_player_data.is_completed
+                or updated_player_data.rounds_played == 0
+            ):
+                # Show completed menu or back to main menu if no rounds played
+                if updated_player_data.rounds_played > 0:
+                    await show_completed_user_menu(updated_player_data)
+                else:
+                    await show_active_user_menu(updated_player_data)
+            else:
+                # Show in-progress menu
+                await show_active_user_menu(updated_player_data)
+
+
+@cl.action_callback("back_to_menu")
+async def back_to_menu_action(action):
+    """Handle back to menu button clicks - shows appropriate menu based on user status."""
+    # Clear any previous messages
+    main_message = cl.user_session.get("main_message")
+    if main_message:
+        await main_message.remove()
+
+    username = cl.user_session.get("username")
+
+    if not username:
+        # No username in session, restart the app
+        username_message = await cl.Message(
+            content="👤 **Enter your SingLife email name:**\n\n💡 *eg. sk01 if email is sk01@singlife.com*"
+        ).send()
+        cl.user_session.set("main_message", username_message)
+        cl.user_session.set("game_state", "waiting_for_username")
+        return
+
+    # Get player data and show appropriate menu
+    player_data = game.leaderboard_db.get_player_history(username)
+    if not player_data:
+        # User doesn't exist, create them
+        player_data = game.leaderboard_db.get_or_create_player(username)
+
+    # Update session with latest data
+    cl.user_session.set("player_data", player_data)
+
+    # Show appropriate menu based on completion status
+    if player_data.is_completed:
+        await show_completed_user_menu(player_data)
+    else:
+        await show_active_user_menu(player_data)
+
+
+@cl.action_callback("play_round")
+async def play_round_action(action):
+    """Handle play round button clicks."""
+    # Clear any previous messages
+    main_message = cl.user_session.get("main_message")
+    if main_message:
+        await main_message.remove()
+
+    username = cl.user_session.get("username")
+    player_data = cl.user_session.get("player_data")
+
+    if not username or not player_data:
+        error_message = await cl.Message(
+            content="❌ **Error:** Session expired. Please refresh and enter your username again."
+        ).send()
+        cl.user_session.set("main_message", error_message)
+        return
+
+    if not player_data.can_play_more_rounds:
+        error_message = await cl.Message(
+            content="❌ **You have no rounds remaining!** You've completed all 3 rounds."
+        ).send()
+        cl.user_session.set("main_message", error_message)
+        return
+
+    # Start the round
+    await start_new_round(username)
+
+
+@cl.action_callback("user_history")
+async def user_history_action(action):
+    """Handle user history button clicks."""
+    # Clear any previous messages
+    main_message = cl.user_session.get("main_message")
+    if main_message:
+        await main_message.remove()
+
+    username = cl.user_session.get("username")
+    if not username:
+        error_message = await cl.Message(
+            content="❌ **Error:** No user session found. Please start a new game first.",
+            actions=[
+                Action(
+                    name="back_to_menu",
+                    payload={"action": "back_to_menu"},
+                    label="🏠 Back to Menu",
+                ),
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
+                ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+            ],
+        ).send()
+        cl.user_session.set("main_message", error_message)
+        return
+
+    # Get user's game session data (active or completed)
+    session = game.get_session_for_history(username)
+    if not session or not session.rounds:
+        no_history_message = await cl.Message(
+            content=f"📜 **No game history found for {username}.**\n\nStart playing to build your history!",
+            actions=[
+                Action(
+                    name="back_to_menu",
+                    payload={"action": "back_to_menu"},
+                    label="🏠 Back to Menu",
+                ),
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
+                ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+            ],
+        ).send()
+        cl.user_session.set("main_message", no_history_message)
+        return
+
+    history_msg = f"""
+# 📜 **Game History for {username}**
+
+## 🎮 **Game Summary:**
+- **Total Rounds Played:** {len(session.rounds)}
+- **Final Score:** {session.best_score:.1f}/10
+- **Game Status:** {"Completed" if not session.can_play_more_rounds else "In Progress"}
+
+---
+"""
+
+    for round_data in session.rounds:
+        history_msg += f"""
+## 🔄 **Round {round_data.round_number}**
+
+### 📝 **Original Bad Prompt:**
+```
+{round_data.bad_prompt.bad_prompt}
+```
+
+### 💬 **Weak Response:**
+```
+{round_data.bad_prompt.weak_response}
+```
+
+### ✨ **Your Improved Prompt:**
+```
+{round_data.improved_prompt}
+```
+
+### 🎯 **Improved Response:**
+```
+{round_data.improved_response}
+```
+
+### 📊 **Score: {round_data.ragas_score:.1f}/10**
+{round_data.feedback}
+
+---
+"""
+
+    history_message = await cl.Message(
+        content=history_msg,
+        actions=[
+            Action(
+                name="back_to_menu",
+                payload={"action": "back_to_menu"},
+                label="🏠 Back to Menu",
+            ),
+            Action(
+                name="leaderboard",
+                payload={"action": "leaderboard"},
+                label="🏆 Leaderboard",
+            ),
+            Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+        ],
+    ).send()
+    cl.user_session.set("main_message", history_message)
+
+
+@cl.action_callback("top_leaderboard_prompt")
+async def top_leaderboard_prompt_action(action):
+    """Handle top leaderboard prompt button clicks."""
+    # Clear any previous messages
+    main_message = cl.user_session.get("main_message")
+    if main_message:
+        await main_message.remove()
+
+    top_players = game.get_leaderboard(1)
+
+    if not top_players:
+        no_players_message = await cl.Message(
+            content="🏆 **No players on the leaderboard yet!**\n\nBe the first to play and claim the top spot!",
+            actions=[
+                Action(
+                    name="back_to_menu",
+                    payload={"action": "back_to_menu"},
+                    label="🏠 Back to Menu",
+                ),
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
+                ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+            ],
+        ).send()
+        cl.user_session.set("main_message", no_players_message)
+        return
+
+    top_player = top_players[0]
+    top_username = top_player["username"]
+
+    # Get the top player's session data (active or completed)
+    top_session = game.get_session_for_history(top_username)
+    if not top_session or not top_session.rounds:
+        error_message = await cl.Message(
+            content=f"❌ **Error:** Could not retrieve game data for top player {top_username}.",
+            actions=[
+                Action(
+                    name="back_to_menu",
+                    payload={"action": "back_to_menu"},
+                    label="🏠 Back to Menu",
+                ),
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
+                ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+            ],
+        ).send()
+        cl.user_session.set("main_message", error_message)
+        return
+
+    # Find their best round (highest scoring round)
+    best_round = max(top_session.rounds, key=lambda r: r.ragas_score)
+
+    top_prompt_msg = f"""
+# 🎯 **Top Leaderboard Prompt**
+
+## 🏆 **#{1} {top_username} - {top_player['final_score']:.1f}/10**
+
+### 🌟 **Best Round: #{best_round.round_number}**
+**Score: {best_round.ragas_score:.1f}/10**
+
+---
+
+### 📝 **Original Bad Prompt:**
+```
+{best_round.bad_prompt.bad_prompt}
+```
+
+### 💬 **Original Weak Response:**
+```
+{best_round.bad_prompt.weak_response}
+```
+
+### ✨ **Top Player's Improved Prompt:**
+```
+{best_round.improved_prompt}
+```
+
+### 🎯 **Resulting Improved Response:**
+```
+{best_round.improved_response}
+```
+
+### 📊 **Evaluation Feedback:**
+{best_round.feedback}
+
+---
+
+💡 **Learn from the best!** Study how the top player structured their prompt using the COSTAR framework.
+"""
+
+    top_prompt_message = await cl.Message(
+        content=top_prompt_msg,
+        actions=[
+            Action(
+                name="back_to_menu",
+                payload={"action": "back_to_menu"},
+                label="🏠 Back to Menu",
+            ),
+            Action(
+                name="leaderboard",
+                payload={"action": "leaderboard"},
+                label="🏆 Leaderboard",
+            ),
+            Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+        ],
+    ).send()
+    cl.user_session.set("main_message", top_prompt_message)
+
+
 def initialize_game() -> FixThatPromptGame:
     """Initialize the game instance."""
     global game
@@ -35,7 +573,7 @@ def initialize_game() -> FixThatPromptGame:
 
 @cl.on_chat_start
 async def start():
-    """Handle chat start - welcome message and username input."""
+    """Initialize the game and ask for username immediately."""
 
     # Initialize game
     try:
@@ -43,65 +581,40 @@ async def start():
     except Exception as e:
         await cl.Message(
             content=f"❌ **Error initializing game:** {str(e)}\n\n"
-            "Please check your configuration and try again.\n\n"
-            "💡 **Need help?** Type **'help'** for instructions.\n"
-            "🏆 **Want to see the leaderboard?** Type **'leaderboard'**."
+            "Please check your configuration and try again."
         ).send()
         return
 
-    # Welcome message
-    welcome_msg = """
-# 🎮 Welcome to Fix That Prompt!
-
-**The Ultimate Prompt Engineering Challenge Game!**
-
-## 🎯 How to Play:
-1. **Enter a unique username** to start your game
-2. **Play up to 3 rounds** - each round presents:
-   - A bad prompt and its weak response
-   - COSTAR framework guidance
-   - Your chance to improve the prompt
-3. **Get scored** using RAGAS evaluation (max 10 points)
-4. **Climb the leaderboard** with your best score!
-
-## 📊 Scoring Breakdown:
-- **Prompt Quality (0-5 points):** Clarity, specificity, completeness
-- **COSTAR Usage (0-3 points):** Framework adherence
-- **Creativity Bonus (0-2 points):** Innovation and uniqueness
-
-## 🏆 Rules:
-- Each username can play only **once**
-- You can stop after any round
-- Your **best round score** is your final score
-- Top 10 players make the leaderboard!
-
----
-
-**Ready to become a prompt engineering master? Let's start!**
-"""
-
-    await cl.Message(content=welcome_msg).send()
-
-    # Initialize user session
+    # Set initial game state - ask for username first
     cl.user_session.set("game_state", "waiting_for_username")
     cl.user_session.set("username", None)
-    cl.user_session.set("current_round", 0)
-    cl.user_session.set("current_bad_prompt", None)
+    cl.user_session.set("player_data", None)
 
-    # Ask for username
-    await cl.Message(
-        content="👤 **Please enter your unique username to start playing:**"
+    # Ask for username immediately
+    main_message = await cl.Message(
+        content="""
+# 🎮 **Welcome to Fix That Prompt!**
+*Transform bad prompts into brilliant ones using AI and the COSTAR framework*
+
+👤 **Enter your SingLife email name:**
+
+💡 *eg. sk01 if email is sk01@singlife.com*
+"""
     ).send()
+
+    cl.user_session.set("main_message", main_message)
 
 
 @cl.on_message
 async def main(message: cl.Message):
     """Handle incoming messages based on game state."""
 
-    game_state = cl.user_session.get("game_state", "waiting_for_username")
+    game_state = cl.user_session.get("game_state", "main_menu")
     username = cl.user_session.get("username")
 
-    if game_state == "waiting_for_username":
+    if game_state == "main_menu":
+        await handle_main_menu_input(message.content)
+    elif game_state == "waiting_for_username":
         await handle_username_input(message.content)
     elif game_state == "waiting_for_round_decision":
         await handle_round_decision(message.content, username)
@@ -111,74 +624,289 @@ async def main(message: cl.Message):
         await handle_post_game(message.content)
     else:
         await cl.Message(
-            content="🤔 I'm not sure what to do with that. Try typing 'help' or 'leaderboard'."
+            content="🤔 I'm not sure what to do with that. Please use the buttons below to navigate.",
+            actions=[
+                Action(name="help", payload={"action": "help"}, label="❓ Help"),
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 Game Stats"
+                ),
+            ],
         ).send()
+
+
+async def handle_main_menu_input(message_content: str):
+    """Handle input from the main menu - only accepts special commands."""
+
+    content = message_content.lower().strip()
+    main_message = cl.user_session.get("main_message")
+
+    if not main_message:
+        return
+
+    # Handle special commands by triggering the appropriate action
+    if content in ["help", "info"]:
+        await help_action(None)
+    elif content in ["leaderboard", "board", "rankings"]:
+        await leaderboard_action(None)
+    elif content in ["stats", "statistics"]:
+        await stats_action(None)
+    else:
+        # For any other input, show main menu options
+        await main_message.remove()
+
+        new_message = await cl.Message(
+            content="""🎮 **Please use the navigation buttons below:**""",
+            actions=[
+                Action(
+                    name="back_to_menu",
+                    payload={"action": "back_to_menu"},
+                    label="🏠 Back to Menu",
+                ),
+                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
+                ),
+            ],
+        ).send()
+
+        cl.user_session.set("main_message", new_message)
 
 
 async def handle_username_input(username_input: str):
-    """Handle username input and start the game."""
+    """Handle username input and show appropriate menu based on user status."""
 
     username = username_input.strip()
 
-    # Special commands
-    if username.lower() in ["help", "leaderboard", "stats"]:
-        await handle_special_commands(username.lower())
-        return
-
     if not username:
-        await cl.Message(
-            content="❌ **Username cannot be empty.** Please enter a valid username.\n\n"
-            "💡 Or type **'help'** for instructions, **'leaderboard'** to see rankings, or **'stats'** for game info."
-        ).send()
+        # Clear and replace with error message
+        main_message = cl.user_session.get("main_message")
+        if main_message:
+            await main_message.update(
+                content="❌ **Username cannot be empty.** Please enter a valid SingLife email name."
+            )
+        else:
+            new_message = await cl.Message(
+                content="❌ **Username cannot be empty.** Please enter a valid SingLife email name."
+            ).send()
+            cl.user_session.set("main_message", new_message)
         return
 
-    # Try to start new game
-    success, message, session = await game.start_new_game(username)
+    # Get or create user in database
+    player_data = game.leaderboard_db.get_or_create_player(username)
 
-    if not success:
-        await cl.Message(
-            content=f"❌ **{message}**\n\n"
-            "Please choose a different username or type 'leaderboard' to see current players:"
-        ).send()
-        return
-
-    # Successfully started game
+    # Store user data in session
     cl.user_session.set("username", username)
-    cl.user_session.set("game_state", "waiting_for_round_decision")
+    cl.user_session.set("player_data", player_data)
+    cl.user_session.set("game_state", "main_menu")
 
-    await cl.Message(
-        content=f"🎉 **{message}**\n\n"
-        "You can play up to **3 rounds**. Your best score will be your final score!\n\n"
-        "🚀 **Starting your first round now...**"
-    ).send()
+    # Clear the initial message and show the appropriate menu
+    main_message = cl.user_session.get("main_message")
+    if main_message:
+        try:
+            await main_message.remove()
+            # Small delay to ensure message removal is processed
+            await asyncio.sleep(0.1)
+        except Exception as e:
+            logger.warning(f"Could not remove main message: {e}")
 
-    await start_new_round(username)
+    # Show different menus based on user status
+    if player_data.is_completed:
+        # User has completed all 3 rounds - show read-only menu
+        await show_completed_user_menu(player_data)
+    else:
+        # User can still play - show game menu
+        await show_active_user_menu(player_data)
+
+
+async def show_active_user_menu(player_data):
+    """Show menu for users who can still play rounds."""
+
+    if player_data.rounds_played == 0:
+        # New user
+        status_msg = f"""
+# 🎮 **Welcome {player_data.username}!**
+
+**You're ready to start your prompt engineering challenge!**
+
+## 🎯 **How It Works:**
+- You'll get **3 rounds** to show your prompt improvement skills
+- Each round: Fix a bad prompt using the **COSTAR framework**
+- Your **best round score** becomes your final leaderboard score
+- You can stop after any round or play all 3
+
+## 📊 **Your Status:**
+- **Rounds Remaining:** {player_data.rounds_remaining}/3
+- **Current Best Score:** {player_data.final_score:.1f}/10
+
+Ready to become a prompt master?
+"""
+
+        actions = [
+            Action(
+                name="play_round",
+                payload={"action": "play_round"},
+                label="🚀 Start Round 1",
+            ),
+            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+            Action(
+                name="leaderboard",
+                payload={"action": "leaderboard"},
+                label="🏆 Leaderboard",
+            ),
+            Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+        ]
+    else:
+        # Returning user with some progress
+        status_msg = f"""
+# 🎮 **Welcome back {player_data.username}!**
+
+**Your Progress So Far:**
+
+## 📊 **Current Stats:**
+- **Rounds Played:** {player_data.rounds_played}/3
+- **Rounds Remaining:** {player_data.rounds_remaining}
+- **Current Best Score:** {player_data.final_score:.1f}/10
+- **Last Played:** {player_data.last_played.strftime('%Y-%m-%d %H:%M')}
+
+## 🎯 **What's Next:**
+{f"Continue with Round {player_data.rounds_played + 1}!" if player_data.can_play_more_rounds else "You've used all your rounds!"}
+
+Ready to continue your prompt engineering journey?
+"""
+
+        if player_data.can_play_more_rounds:
+            actions = [
+                Action(
+                    name="play_round",
+                    payload={"action": "play_round"},
+                    label=f"🚀 Play Round {player_data.rounds_played + 1}",
+                ),
+                Action(
+                    name="user_history",
+                    payload={"action": "user_history"},
+                    label="📜 My History",
+                ),
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
+                ),
+            ]
+        else:
+            # This shouldn't happen as completed users go to the other menu, but just in case
+            actions = [
+                Action(
+                    name="user_history",
+                    payload={"action": "user_history"},
+                    label="📜 My History",
+                ),
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
+                ),
+            ]
+
+    main_message = await cl.Message(content=status_msg, actions=actions).send()
+    cl.user_session.set("main_message", main_message)
+
+
+async def show_completed_user_menu(player_data):
+    """Show menu for users who have completed all 3 rounds."""
+
+    # Get their rank
+    top_players = game.get_leaderboard(50)  # Get enough to find their rank
+    rank = "Not found"
+    for i, player in enumerate(top_players):
+        if player["username"].lower() == player_data.username.lower():
+            rank = f"#{i+1}"
+            break
+
+    status_msg = f"""
+# 🏆 **Welcome back {player_data.username}!**
+
+**You've completed your prompt engineering challenge!**
+
+## 📊 **Your Final Results:**
+- **Rounds Played:** {player_data.rounds_played}/3 ✅
+- **Final Score:** {player_data.final_score:.1f}/10
+- **Leaderboard Rank:** {rank}
+- **Completed:** {player_data.last_played.strftime('%Y-%m-%d %H:%M')}
+
+## 🎯 **Explore & Learn:**
+Since you've used all your rounds, explore the leaderboard and learn from top performers!
+
+Thanks for playing **Fix That Prompt!**
+"""
+
+    actions = [
+        Action(
+            name="leaderboard",
+            payload={"action": "leaderboard"},
+            label="🏆 View Leaderboard",
+        ),
+        Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+        Action(
+            name="user_history",
+            payload={"action": "user_history"},
+            label="📜 My History",
+        ),
+        Action(
+            name="top_leaderboard_prompt",
+            payload={"action": "top_leaderboard_prompt"},
+            label="🎯 Top Leaderboard Prompt",
+        ),
+    ]
+
+    main_message = await cl.Message(content=status_msg, actions=actions).send()
+    cl.user_session.set("main_message", main_message)
 
 
 async def start_new_round(username: str):
     """Start a new round for the player."""
 
-    session = game.get_current_session(username)
-    if not session or not session.can_play_more_rounds:
-        await end_game(username)
+    player_data = cl.user_session.get("player_data")
+    if not player_data or not player_data.can_play_more_rounds:
+        await show_completed_user_menu(player_data)
         return
 
-    # Get bad prompt for this round
-    bad_prompt = game.get_current_round_prompt(username)
+    # Get a random bad prompt for this round
+    bad_prompt = game.prompt_loader.get_random_prompt()
     if not bad_prompt:
         await cl.Message(
-            content="❌ **Error getting prompt for this round.** Something went wrong.\n\n"
-            "🔄 **Try typing:** **'next'** to try starting a round again\n"
-            "🛑 **Or type:** **'stop'** to end your game\n"
-            "📊 **Or type:** **'stats'** to see your current progress"
+            content="❌ **Error getting prompt for this round.** Something went wrong.",
+            actions=[
+                Action(name="next", payload={"action": "next"}, label="🔄 Try Again"),
+                Action(name="stop", payload={"action": "stop"}, label="🛑 Stop Game"),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 View Stats"
+                ),
+            ],
         ).send()
         return
 
     cl.user_session.set("current_bad_prompt", bad_prompt)
 
     # Display round information
+    current_round_number = player_data.rounds_played + 1
     round_msg = f"""
-## 🎯 Round {session.current_round} of {session.max_rounds}
+## 🎯 Round {current_round_number} of 3
 
 ### 📂 **Category:** {bad_prompt.category}
 
@@ -217,17 +945,23 @@ async def handle_improved_prompt(improved_prompt: str, username: str):
     if not improved_prompt.strip():
         await cl.Message(
             content="❌ **Your improved prompt cannot be empty.** Please try again.\n\n"
-            "💡 **Need help?** Remember to use the COSTAR framework to improve the prompt!\n"
-            "🛑 **Want to stop playing?** Type **'stop'** to end your game."
+            "💡 **Need help?** Remember to use the COSTAR framework to improve the prompt!",
+            actions=[
+                Action(name="stop", payload={"action": "stop"}, label="🛑 Stop Game"),
+            ],
         ).send()
         return
 
     bad_prompt = cl.user_session.get("current_bad_prompt")
     if not bad_prompt:
         await cl.Message(
-            content="❌ **Error: No current prompt found.** Something went wrong.\n\n"
-            "🔄 **Try typing:** **'next'** to start a new round\n"
-            "🛑 **Or type:** **'stop'** to end your game"
+            content="❌ **Error: No current prompt found.** Something went wrong.",
+            actions=[
+                Action(
+                    name="next", payload={"action": "next"}, label="🔄 Try New Round"
+                ),
+                Action(name="stop", payload={"action": "stop"}, label="🛑 Stop Game"),
+            ],
         ).send()
         return
 
@@ -240,31 +974,74 @@ async def handle_improved_prompt(improved_prompt: str, username: str):
         "*This may take a moment...*"
     ).send()
 
-    # Submit the round
-    success, message, game_round = await game.submit_round(
-        username, bad_prompt, improved_prompt
-    )
+    try:
+        # Get player data
+        player_data = cl.user_session.get("player_data")
+        current_round_number = player_data.rounds_played + 1
 
-    # Remove processing message
-    await processing_msg.remove()
+        # Generate improved response
+        improved_response = await game.generate_improved_response(improved_prompt)
 
-    if not success:
+        # Evaluate the improvement
+        evaluation = await game.evaluator.evaluate_prompt_improvement(
+            original_prompt=bad_prompt.bad_prompt,
+            improved_prompt=improved_prompt,
+            improved_response=improved_response,
+            context=bad_prompt.context,
+        )
+
+        # Create game round
+        game_round = GameRound(
+            round_number=current_round_number,
+            bad_prompt=bad_prompt,
+            original_prompt=bad_prompt.bad_prompt,
+            improved_prompt=improved_prompt,
+            improved_response=improved_response,
+            ragas_score=evaluation.total_score,
+            feedback=evaluation.feedback,
+        )
+
+        # Update player in database immediately
+        success = game.leaderboard_db.update_player_after_round(username, game_round)
+
+        # Remove processing message
+        await processing_msg.remove()
+
+        if not success:
+            await cl.Message(
+                content="❌ **Error saving round results.** Please try again.",
+                actions=[
+                    Action(
+                        name="stop", payload={"action": "stop"}, label="🛑 Stop Game"
+                    ),
+                ],
+            ).send()
+            return
+
+        # Update player data in session
+        updated_player_data = game.leaderboard_db.get_player_history(username)
+        cl.user_session.set("player_data", updated_player_data)
+
+        # Display results
+        await display_round_results(game_round, username, updated_player_data)
+
+    except Exception as e:
+        # Remove processing message
+        await processing_msg.remove()
+
         await cl.Message(
-            content=f"❌ **Error:** {message}\n\n"
-            "Please try submitting your improved prompt again.\n\n"
-            "💡 **Need help?** Use the COSTAR framework to improve the prompt!\n"
-            "🛑 **Want to stop?** Type **'stop'** to end your game."
+            content=f"❌ **Error processing round:** {str(e)}\n\n"
+            "Please try submitting your improved prompt again.",
+            actions=[
+                Action(name="stop", payload={"action": "stop"}, label="🛑 Stop Game"),
+            ],
         ).send()
+        logger.error(f"Error processing round for {username}: {e}")
         return
 
-    # Display results
-    await display_round_results(game_round, username)
 
-
-async def display_round_results(game_round: GameRound, username: str):
+async def display_round_results(game_round: GameRound, username: str, player_data):
     """Display the results of a completed round."""
-
-    session = game.get_current_session(username)
 
     results_msg = f"""
 ## 🎉 Round {game_round.round_number} Complete!
@@ -287,29 +1064,28 @@ async def display_round_results(game_round: GameRound, username: str):
 
 ---
 
-### 📈 **Session Progress:**
-- **Current Round:** {session.current_round - 1} of {session.max_rounds} completed
-- **Best Score This Game:** {session.best_score:.1f}/10
-- **Rounds Remaining:** {session.max_rounds - (session.current_round - 1)}
+### 📈 **Your Progress:**
+- **Rounds Played:** {player_data.rounds_played} of 3
+- **Best Score So Far:** {player_data.final_score:.1f}/10
+- **Rounds Remaining:** {player_data.rounds_remaining}
 """
 
-    await cl.Message(content=results_msg).send()
-
-    # Check if more rounds are available
-    if session.can_play_more_rounds:
+    # Check if more rounds are available and add appropriate buttons
+    if player_data.can_play_more_rounds:
         await cl.Message(
-            content="🎮 **What would you like to do next?**\n\n"
-            "Type:\n"
-            "- **'next'** to play another round\n"
-            "- **'stop'** to end the game now\n"
-            "- **'stats'** to see your current stats"
+            content=results_msg,
+            actions=[
+                Action(name="next", payload={"action": "next"}, label="🚀 Next Round"),
+                Action(name="stop", payload={"action": "stop"}, label="🛑 End Game"),
+            ],
         ).send()
         cl.user_session.set("game_state", "waiting_for_round_decision")
     else:
+        await cl.Message(content=results_msg).send()
         await cl.Message(
-            content="🎊 **You've completed all 3 rounds!** Let's see your final results..."
+            content="🎊 **You've completed all 3 rounds!** Showing your final results..."
         ).send()
-        await end_game(username)
+        await show_completed_user_menu(player_data)
 
 
 async def handle_round_decision(decision: str, username: str):
@@ -321,17 +1097,13 @@ async def handle_round_decision(decision: str, username: str):
         await start_new_round(username)
     elif decision in ["stop", "end", "quit", "finish"]:
         await end_game(username)
-    elif decision in ["stats", "status", "summary"]:
-        await show_session_stats(username, in_game=True)
-    elif decision in ["leaderboard", "board", "rankings"]:
-        await show_leaderboard(in_game=True, username=username)
     else:
         await cl.Message(
-            content="🤔 **Please choose:**\n\n"
-            "- **'next'** to play another round\n"
-            "- **'stop'** to end the game\n"
-            "- **'stats'** to see your stats\n"
-            "- **'leaderboard'** to see rankings"
+            content="🤔 **Please choose an action:**",
+            actions=[
+                Action(name="next", payload={"action": "next"}, label="🚀 Next Round"),
+                Action(name="stop", payload={"action": "stop"}, label="🛑 End Game"),
+            ],
         ).send()
 
 
@@ -342,10 +1114,18 @@ async def end_game(username: str):
 
     if not success:
         await cl.Message(
-            content=f"❌ **Error ending game:** {message}\n\n"
-            "🎮 **Want to start a new game?** Enter a different username!\n"
-            "🏆 **Check the leaderboard:** Type **'leaderboard'**\n"
-            "💡 **Need help?** Type **'help'** for instructions"
+            content=f"❌ **Error ending game:** {message}",
+            actions=[
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 View Leaderboard",
+                ),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
+                ),
+                Action(name="help", payload={"action": "help"}, label="❓ Help"),
+            ],
         ).send()
         return
 
@@ -379,14 +1159,29 @@ async def end_game(username: str):
 
 ## 🎮 **Game Stats:**
 Thanks for playing **Fix That Prompt!**
-
-🎮 **Want to play again?** Enter a different username to start a new game!
-
-🔄 **Type 'leaderboard'** to see the current rankings anytime.
-💡 **Type 'help'** for game instructions.
 """
 
-    await cl.Message(content=final_msg).send()
+    await cl.Message(
+        content=final_msg,
+        actions=[
+            Action(
+                name="leaderboard",
+                payload={"action": "leaderboard"},
+                label="🏆 View Leaderboard",
+            ),
+            Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+            Action(
+                name="user_history",
+                payload={"action": "user_history"},
+                label="📜 User's History",
+            ),
+            Action(
+                name="top_leaderboard_prompt",
+                payload={"action": "top_leaderboard_prompt"},
+                label="🎯 Top Leaderboard Prompt",
+            ),
+        ],
+    ).send()
 
     cl.user_session.set("game_state", "game_ended")
 
@@ -398,8 +1193,15 @@ async def show_session_stats(username: str, in_game: bool = False):
     if not summary:
         await cl.Message(
             content="❌ **No active session found.**\n\n"
-            "🎮 **Ready to start playing?** Enter your unique username!\n"
-            "💡 Type **'help'** for instructions or **'leaderboard'** to see rankings."
+            "🎮 **Ready to start playing?** Enter your unique username!",
+            actions=[
+                Action(name="help", payload={"action": "help"}, label="❓ Help"),
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+            ],
         ).send()
         return
 
@@ -422,38 +1224,43 @@ async def show_session_stats(username: str, in_game: bool = False):
     for round_info in summary["rounds"]:
         stats_msg += f"- **Round {round_info['round_number']}:** {round_info['score']:.1f}/10 ({round_info['category']})\n"
 
-    # Different navigation based on context
+    stats_msg += "\n\n---\n\n"
+
+    # Add appropriate buttons based on context
+    actions = []
     if in_game and summary["can_play_more"]:
-        stats_msg += """
-
----
-
-🚀 **CONTINUE YOUR GAME:**
-- Type **'next'** to play your next round
-- Type **'stop'** to end your game now
-- Type **'leaderboard'** to see current rankings
-"""
+        actions = [
+            Action(name="next", payload={"action": "next"}, label="🚀 Next Round"),
+            Action(name="stop", payload={"action": "stop"}, label="🛑 End Game"),
+            Action(
+                name="leaderboard",
+                payload={"action": "leaderboard"},
+                label="🏆 Leaderboard",
+            ),
+        ]
+        stats_msg += "🚀 **CONTINUE YOUR GAME:** Use the buttons below!"
     elif in_game and not summary["can_play_more"]:
-        stats_msg += """
-
----
-
-🎊 **Game Complete!**
-- Type **'stop'** to see your final results
-- Type **'leaderboard'** to see current rankings
-"""
+        actions = [
+            Action(name="stop", payload={"action": "stop"}, label="🏆 Final Results"),
+            Action(
+                name="leaderboard",
+                payload={"action": "leaderboard"},
+                label="🏆 Leaderboard",
+            ),
+        ]
+        stats_msg += "🎊 **Game Complete!** View your final results!"
     else:
-        stats_msg += """
+        actions = [
+            Action(
+                name="leaderboard",
+                payload={"action": "leaderboard"},
+                label="🏆 Leaderboard",
+            ),
+            Action(name="help", payload={"action": "help"}, label="❓ Help"),
+        ]
+        stats_msg += "🎮 **What's next?** Use the buttons below!"
 
----
-
-🎮 **What's next?**
-- Type **'next'** to continue playing
-- Type **'stop'** to end your game
-- Type **'leaderboard'** to see rankings
-"""
-
-    await cl.Message(content=stats_msg).send()
+    await cl.Message(content=stats_msg, actions=actions).send()
 
 
 async def show_leaderboard(in_game: bool = False, username: str = None):
@@ -465,14 +1272,26 @@ async def show_leaderboard(in_game: bool = False, username: str = None):
         if in_game:
             await cl.Message(
                 content="🏆 **Leaderboard is empty!** You could be the first!\n\n"
-                "🎮 **YOUR GAME IS STILL ACTIVE** - Type **'next'** to continue playing!\n"
-                "🛑 Or type **'stop'** to end your game now."
+                "🎮 **YOUR GAME IS STILL ACTIVE** - Continue playing below!",
+                actions=[
+                    Action(
+                        name="next", payload={"action": "next"}, label="🚀 Next Round"
+                    ),
+                    Action(
+                        name="stop", payload={"action": "stop"}, label="🛑 End Game"
+                    ),
+                ],
             ).send()
         else:
             await cl.Message(
                 content="🏆 **Leaderboard is empty!** Be the first to play and set a score!\n\n"
-                "🎮 **Ready to start?** Enter your unique username to begin playing!\n"
-                "💡 Type **'help'** for detailed game instructions."
+                "🎮 **Ready to start?** Enter your unique username to begin playing!",
+                actions=[
+                    Action(name="help", payload={"action": "help"}, label="❓ Help"),
+                    Action(
+                        name="stats", payload={"action": "stats"}, label="📊 Game Stats"
+                    ),
+                ],
             ).send()
         return
 
@@ -508,29 +1327,44 @@ async def show_leaderboard(in_game: bool = False, username: str = None):
 ---
 """
 
+    leaderboard_msg += "\n---\n\n"
+
     # Different navigation based on context
+    actions = []
     if in_game:
         session = game.get_current_session(username) if username else None
         if session and session.can_play_more_rounds:
-            leaderboard_msg += """
-🚀 **CONTINUE YOUR GAME:**
-- Type **'next'** to play your next round
-- Type **'stop'** to end your game now
-- Type **'stats'** to see your current progress
-"""
+            actions = [
+                Action(name="next", payload={"action": "next"}, label="🚀 Next Round"),
+                Action(name="stop", payload={"action": "stop"}, label="🛑 End Game"),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 View Stats"
+                ),
+            ]
+            leaderboard_msg += "🚀 **CONTINUE YOUR GAME:** Use the buttons below!"
         else:
-            leaderboard_msg += """
-🎊 **FINISH YOUR GAME:**
-- Type **'stop'** to see your final results and ranking
-- Type **'stats'** to see your game summary
-"""
+            actions = [
+                Action(
+                    name="stop", payload={"action": "stop"}, label="🏆 Final Results"
+                ),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 View Stats"
+                ),
+            ]
+            leaderboard_msg += "🎊 **FINISH YOUR GAME:** See your final results!"
     else:
-        leaderboard_msg += """
-🎮 **Ready to play?** Enter your unique username to start your game!
-💡 Type **'help'** for detailed game instructions.
-"""
+        actions = [
+            Action(
+                name="back_to_menu",
+                payload={"action": "back_to_menu"},
+                label="🏠 Back to Menu",
+            ),
+            Action(name="help", payload={"action": "help"}, label="❓ Help"),
+            Action(name="stats", payload={"action": "stats"}, label="📊 Game Stats"),
+        ]
+        leaderboard_msg += "🎮 **Ready to continue?** Click the 'Back to Menu' button to return to your game!"
 
-    await cl.Message(content=leaderboard_msg).send()
+    await cl.Message(content=leaderboard_msg, actions=actions).send()
 
 
 async def handle_special_commands(command: str):
@@ -538,30 +1372,51 @@ async def handle_special_commands(command: str):
 
     if command == "help":
         help_msg = """
-# 🎮 Fix That Prompt - Help
+# 🎮 Fix That Prompt - Game Guide
 
-## 🎯 **Game Commands:**
-- **Username** - Start a new game
-- **'next'** - Play another round (during game)
-- **'stop'** - End current game
-- **'stats'** - Show your session stats
-- **'leaderboard'** - Show top 10 players
+## 🎯 **How It Works:**
+Each round, you receive a **poorly written prompt** with its **weak AI response**. Your job is to **improve the prompt** using the **COSTAR framework** to generate a better response. The more improvement you achieve, the higher your score!
 
-## 📖 **How Scoring Works:**
-- **Prompt Quality (0-5):** Clarity and completeness
-- **COSTAR Usage (0-3):** Framework adherence
-- **Creativity (0-2):** Innovation bonus
-- **Total:** Up to 10 points per round
+## 📊 **Detailed Scoring:**
+- **Prompt Quality (0-5 points):** Clarity, specificity, completeness
+- **COSTAR Usage (0-3 points):** Framework adherence
+- **Creativity Bonus (0-2 points):** Innovation and uniqueness
+- **Maximum:** 10 points per round
 
 ## 🏆 **Game Rules:**
-- Each username plays only once
-- Up to 3 rounds per game
-- Best round score = final score
-- Stop anytime after any round
+- Each username can play only **once**
+- Up to **3 rounds** per game
+- You can **stop after any round**
+- Your **best round score** becomes your final score
+- Top 10 players make the **leaderboard**
 
-**Ready to play? Enter your username!**
+## 🎮 **Navigation:**
+- **'🏠 Back to Menu'** - Return to your personal menu
+- **'next'** - Play another round (during game)
+- **'stop'** - End current game
+- **'stats'** - View game statistics
+- **'leaderboard'** - See top players
+
+**Ready to continue? Click the 'Back to Menu' button to return to your game!**
 """
-        await cl.Message(content=help_msg).send()
+        await cl.Message(
+            content=help_msg,
+            actions=[
+                Action(
+                    name="back_to_menu",
+                    payload={"action": "back_to_menu"},
+                    label="🏠 Back to Menu",
+                ),
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+                Action(
+                    name="stats", payload={"action": "stats"}, label="📊 Game Stats"
+                ),
+            ],
+        ).send()
 
     elif command == "leaderboard":
         await show_leaderboard()
@@ -580,9 +1435,24 @@ async def handle_special_commands(command: str):
 **Categories Available:**
 {', '.join(game_stats['prompt_categories'])}
 
-**Enter your username to start playing!**
+**Ready to continue? Click the 'Back to Menu' button to return to your game!**
 """
-        await cl.Message(content=stats_msg).send()
+        await cl.Message(
+            content=stats_msg,
+            actions=[
+                Action(
+                    name="back_to_menu",
+                    payload={"action": "back_to_menu"},
+                    label="🏠 Back to Menu",
+                ),
+                Action(name="help", payload={"action": "help"}, label="❓ Help"),
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+            ],
+        ).send()
 
 
 async def handle_post_game(message_content: str):
@@ -594,35 +1464,40 @@ async def handle_post_game(message_content: str):
         await show_leaderboard()
     elif content in ["help", "info"]:
         await cl.Message(
-            content="🎮 **Game ended!** To play again, enter a different username.\n\n"
-            "Type 'leaderboard' to see current rankings."
+            content="🎮 **Use the buttons below to continue!**",
+            actions=[
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+                Action(
+                    name="back_to_menu",
+                    payload={"action": "back_to_menu"},
+                    label="🏠 Back to Menu",
+                ),
+            ],
         ).send()
     elif content in ["stats"]:
         await handle_special_commands("stats")
     else:
-        # Check if this could be a new username attempt
-        username = message_content.strip()
-        if (
-            username
-            and len(username) > 0
-            and username.lower()
-            not in ["leaderboard", "board", "rankings", "help", "info", "stats"]
-        ):
-            # Reset game state to allow new game
-            cl.user_session.set("game_state", "waiting_for_username")
-            cl.user_session.set("username", None)
-            cl.user_session.set("current_round", 0)
-            cl.user_session.set("current_bad_prompt", None)
-
-            # Handle as new username input
-            await handle_username_input(username)
-        else:
-            await cl.Message(
-                content="🏁 **Your game has ended!** \n\n"
-                "🎮 **Ready for another game?** Enter a different username to start!\n"
-                "🏆 Type **'leaderboard'** to see current rankings.\n"
-                "💡 Type **'help'** for game instructions."
-            ).send()
+        # For any other input, guide user to use buttons
+        await cl.Message(
+            content="🏁 **Use the buttons below to continue!**",
+            actions=[
+                Action(
+                    name="back_to_menu",
+                    payload={"action": "back_to_menu"},
+                    label="🏠 Back to Menu",
+                ),
+                Action(
+                    name="leaderboard",
+                    payload={"action": "leaderboard"},
+                    label="🏆 Leaderboard",
+                ),
+                Action(name="help", payload={"action": "help"}, label="❓ Help"),
+            ],
+        ).send()
 
 
 if __name__ == "__main__":
