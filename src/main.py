@@ -22,23 +22,10 @@ setup_logging(os.getenv("LOG_LEVEL", "INFO"))
 game: FixThatPromptGame | None = None
 
 
-async def clear_previous_message():
-    """Clear the previous assistant message for clean navigation."""
-    main_message = cl.user_session.get("main_message")
-    if main_message:
-        try:
-            await main_message.remove()
-            await asyncio.sleep(0.1)  # Small delay to ensure removal is processed
-        except Exception as e:
-            logger.warning(f"Could not remove main message: {e}")
-
-
 # Action handlers for buttons
 @cl.action_callback("help")
 async def help_action(action):
     """Handle help button clicks."""
-    # Clear previous message for clean navigation
-    await clear_previous_message()
 
     help_msg = """
 # 🎮 Fix That Prompt - Game Guide
@@ -91,8 +78,6 @@ Each round, you receive a **poorly written prompt** with its **weak AI response*
 @cl.action_callback("leaderboard")
 async def leaderboard_action(action):
     """Handle leaderboard button clicks."""
-    # Clear previous message for clean navigation
-    await clear_previous_message()
 
     top_players = game.get_leaderboard(10)
 
@@ -174,8 +159,6 @@ async def leaderboard_action(action):
 @cl.action_callback("stats")
 async def stats_action(action):
     """Handle stats button clicks."""
-    # Clear previous message for clean navigation
-    await clear_previous_message()
 
     game_stats = game.get_game_stats()
     stats_msg = f"""
@@ -222,8 +205,6 @@ async def stats_action(action):
 @cl.action_callback("logout")
 async def logout_action(action):
     """Handle logout button clicks - return to username prompt."""
-    # Clear previous message for clean navigation
-    await clear_previous_message()
 
     # Reset all session data
     cl.user_session.set("game_state", "waiting_for_username")
@@ -253,8 +234,6 @@ async def show_username_prompt():
 @cl.action_callback("next")
 async def next_action(action):
     """Handle next round button clicks."""
-    # Clear previous message for clean navigation
-    await clear_previous_message()
 
     username = cl.user_session.get("username")
     player_data = cl.user_session.get("player_data")
@@ -273,8 +252,6 @@ async def next_action(action):
 @cl.action_callback("stop")
 async def stop_action(action):
     """Handle stop game button clicks."""
-    # Clear previous message for clean navigation
-    await clear_previous_message()
 
     username = cl.user_session.get("username")
     player_data = cl.user_session.get("player_data")
@@ -302,8 +279,6 @@ async def stop_action(action):
 @cl.action_callback("back_to_menu")
 async def back_to_menu_action(action):
     """Handle back to menu button clicks - shows appropriate menu based on user status."""
-    # Clear previous message for clean navigation
-    await clear_previous_message()
 
     username = cl.user_session.get("username")
 
@@ -335,8 +310,6 @@ async def back_to_menu_action(action):
 @cl.action_callback("play_round")
 async def play_round_action(action):
     """Handle play round button clicks."""
-    # Clear previous message for clean navigation
-    await clear_previous_message()
 
     username = cl.user_session.get("username")
     player_data = cl.user_session.get("player_data")
@@ -362,8 +335,6 @@ async def play_round_action(action):
 @cl.action_callback("user_history")
 async def user_history_action(action):
     """Handle user history button clicks."""
-    # Clear previous message for clean navigation
-    await clear_previous_message()
 
     username = cl.user_session.get("username")
     if not username:
@@ -496,8 +467,6 @@ async def user_history_action(action):
 @cl.action_callback("top_leaderboard_prompt")
 async def top_leaderboard_prompt_action(action):
     """Handle top leaderboard prompt button clicks."""
-    # Clear previous message for clean navigation
-    await clear_previous_message()
 
     top_players = game.get_leaderboard(1)
 
@@ -973,7 +942,7 @@ async def start_new_round(username: str):
     # Get a random bad prompt for this round
     bad_prompt = game.prompt_loader.get_random_prompt()
     if not bad_prompt:
-        await cl.Message(
+        error_message = await cl.Message(
             content="❌ **Error getting prompt for this round.** Something went wrong.",
             actions=[
                 Action(name="next", payload={"action": "next"}, label="🔄 Try Again"),
@@ -983,6 +952,7 @@ async def start_new_round(username: str):
                 ),
             ],
         ).send()
+        cl.user_session.set("main_message", error_message)
         return
 
     cl.user_session.set("current_bad_prompt", bad_prompt)
@@ -1019,7 +989,8 @@ Now it's time to improve this prompt! Write a better version that addresses the 
 **Type your improved prompt below:**
 """
 
-    await cl.Message(content=round_msg).send()
+    round_message = await cl.Message(content=round_msg).send()
+    cl.user_session.set("main_message", round_message)
     cl.user_session.set("game_state", "waiting_for_improved_prompt")
 
 
@@ -1027,18 +998,19 @@ async def handle_improved_prompt(improved_prompt: str, username: str):
     """Handle the user's improved prompt submission."""
 
     if not improved_prompt.strip():
-        await cl.Message(
+        empty_prompt_message = await cl.Message(
             content="❌ **Your improved prompt cannot be empty.** Please try again.\n\n"
             "💡 **Need help?** Remember to use the COSTAR framework to improve the prompt!",
             actions=[
                 Action(name="stop", payload={"action": "stop"}, label="🛑 Stop Game"),
             ],
         ).send()
+        cl.user_session.set("main_message", empty_prompt_message)
         return
 
     bad_prompt = cl.user_session.get("current_bad_prompt")
     if not bad_prompt:
-        await cl.Message(
+        no_prompt_message = await cl.Message(
             content="❌ **Error: No current prompt found.** Something went wrong.",
             actions=[
                 Action(
@@ -1047,6 +1019,7 @@ async def handle_improved_prompt(improved_prompt: str, username: str):
                 Action(name="stop", payload={"action": "stop"}, label="🛑 Stop Game"),
             ],
         ).send()
+        cl.user_session.set("main_message", no_prompt_message)
         return
 
     # Show processing message
@@ -1115,13 +1088,14 @@ async def handle_improved_prompt(improved_prompt: str, username: str):
         # Remove processing message
         await processing_msg.remove()
 
-        await cl.Message(
+        error_processing_message = await cl.Message(
             content=f"❌ **Error processing round:** {str(e)}\n\n"
             "Please try submitting your improved prompt again.",
             actions=[
                 Action(name="stop", payload={"action": "stop"}, label="🛑 Stop Game"),
             ],
         ).send()
+        cl.user_session.set("main_message", error_processing_message)
         logger.error(f"Error processing round for {username}: {e}")
         return
 
@@ -1158,13 +1132,14 @@ async def display_round_results(game_round: GameRound, username: str, player_dat
 
     # Check if more rounds are available and add appropriate buttons
     if player_data.can_play_more_rounds:
-        await cl.Message(
+        results_message = await cl.Message(
             content=results_msg,
             actions=[
                 Action(name="next", payload={"action": "next"}, label="🚀 Next Round"),
                 Action(name="stop", payload={"action": "stop"}, label="🛑 End Game"),
             ],
         ).send()
+        cl.user_session.set("main_message", results_message)
         cl.user_session.set("game_state", "waiting_for_round_decision")
     else:
         await cl.Message(content=results_msg).send()
@@ -1184,13 +1159,14 @@ async def handle_round_decision(decision: str, username: str):
     elif decision in ["stop", "end", "quit", "finish"]:
         await end_game(username)
     else:
-        await cl.Message(
+        choice_message = await cl.Message(
             content="🤔 **Please choose an action:**",
             actions=[
                 Action(name="next", payload={"action": "next"}, label="🚀 Next Round"),
                 Action(name="stop", payload={"action": "stop"}, label="🛑 End Game"),
             ],
         ).send()
+        cl.user_session.set("main_message", choice_message)
 
 
 async def end_game(username: str):
@@ -1247,7 +1223,7 @@ async def end_game(username: str):
 Thanks for playing **Fix That Prompt!**
 """
 
-    await cl.Message(
+    final_message = await cl.Message(
         content=final_msg,
         actions=[
             Action(
@@ -1269,6 +1245,7 @@ Thanks for playing **Fix That Prompt!**
         ],
     ).send()
 
+    cl.user_session.set("main_message", final_message)
     cl.user_session.set("game_state", "game_ended")
 
 
@@ -1346,7 +1323,8 @@ async def show_session_stats(username: str, in_game: bool = False):
         ]
         stats_msg += "🎮 **What's next?** Use the buttons below!"
 
-    await cl.Message(content=stats_msg, actions=actions).send()
+    stats_message = await cl.Message(content=stats_msg, actions=actions).send()
+    cl.user_session.set("main_message", stats_message)
 
 
 async def show_leaderboard(in_game: bool = False, username: str = None):
@@ -1450,7 +1428,10 @@ async def show_leaderboard(in_game: bool = False, username: str = None):
         ]
         leaderboard_msg += "🎮 **Ready to continue?** Click the 'Back to Menu' button to return to your game!"
 
-    await cl.Message(content=leaderboard_msg, actions=actions).send()
+    leaderboard_message = await cl.Message(
+        content=leaderboard_msg, actions=actions
+    ).send()
+    cl.user_session.set("main_message", leaderboard_message)
 
 
 async def handle_special_commands(command: str):
