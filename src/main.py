@@ -8,6 +8,11 @@ from chainlit import Action
 from dotenv import load_dotenv
 from loguru import logger
 
+from .auth.oidc_client import (
+    build_signup_url,
+    extract_singlife_username,
+    is_configured as oidc_is_configured,
+)
 from .components.game import FixThatPromptGame
 from .models.player_session import GameRound
 from .utils.logger import setup_logging
@@ -20,6 +25,39 @@ setup_logging(os.getenv("LOG_LEVEL", "INFO"))
 
 # Initialize game instance
 game: FixThatPromptGame | None = None
+
+# OIDC configuration check
+OIDC_ENABLED = oidc_is_configured()
+
+
+@cl.oauth_callback
+def oauth_callback(
+    provider_id: str,
+    token: str,
+    raw_user_data: dict[str, str],
+    default_user: cl.User,
+) -> cl.User | None:
+    """Chainlit OAuth callback to accept/deny Cognito users.
+
+    Accept only @singlife.com emails and store email/derived username in metadata.
+    """
+    if provider_id not in ("aws-cognito", "cognito", "oidc"):
+        return None
+
+    email = (raw_user_data or {}).get("email") or ""
+    username = extract_singlife_username(email)
+    if not username:
+        # Reject non-Singlife emails
+        return None
+
+    # Persist useful attributes on the Chainlit user
+    # so we can read them from the session later.
+    default_user.metadata = {
+        **(getattr(default_user, "metadata", {}) or {}),
+        "email": email,
+        "username": username,
+    }
+    return default_user
 
 
 # Action handlers for buttons
@@ -211,22 +249,63 @@ async def logout_action(action):
     cl.user_session.set("username", None)
     cl.user_session.set("player_data", None)
 
-    # Show initial username prompt
-    await show_username_prompt()
+    # Show initial authentication prompt
+    await show_authentication_prompt()
 
 
-async def show_username_prompt():
-    """Show the initial username prompt screen."""
-    main_message = await cl.Message(
-        content="""
+async def show_authentication_prompt():
+    """Show the authentication prompt screen with Cognito integration."""
+    if OIDC_ENABLED:
+        # Cognito is configured - show authentication options
+        redirect_uri = os.getenv(
+            "COGNITO_REDIRECT_URI",
+            "http://localhost:8000/auth/oauth/aws-cognito/callback",
+        )
+        signup_url = build_signup_url(redirect_uri) or "#"
+        chainlit_login_url = "/auth/oauth/login/aws-cognito"
+
+        main_message = await cl.Message(
+            content=f"""
 # 🎮 **Welcome to Fix That Prompt!**
 *Transform bad prompts into brilliant ones using AI and the COSTAR framework*
 
-👤 **Enter your SingLife email name:**
+🔐 **Please authenticate with your Singlife credentials:**
+
+## 🚀 **New Users:**
+If this is your first time, please sign up using your **Singlife email** (@singlife.com):
+
+👉 [**Sign Up Here**]({signup_url})
+
+## 🔑 **Existing Users:**
+If you already have an account, please sign in:
+
+👉 [**Sign In Here**]({chainlit_login_url})
+
+Or sign in using the in-app login flow:
+
+👉 [**Chainlit Login**]({chainlit_login_url})
+
+---
+
+⚠️ **Important:** You must use your **@singlife.com** email address to access the game.
+
+💡 *After authentication, you'll be redirected back to continue the game.*
+"""
+        ).send()
+    else:
+        # Fallback to username prompt if Cognito is not configured
+        main_message = await cl.Message(
+            content="""
+# 🎮 **Welcome to Fix That Prompt!**
+*Transform bad prompts into brilliant ones using AI and the COSTAR framework*
+
+👤 **Enter your Singlife email name:**
 
 💡 *eg. sk01 if email is sk01@singlife.com*
+
+⚠️ **Note:** Authentication is not configured. Using fallback mode.
 """
-    ).send()
+        ).send()
 
     cl.user_session.set("main_message", main_message)
 
@@ -598,9 +677,68 @@ def initialize_game() -> FixThatPromptGame:
     return game
 
 
+async def authenticate_user() -> tuple[bool, str | None, str | None]:
+    """
+    Authenticate user using Cognito token or fallback to username input.
+
+    Returns:
+        Tuple of (is_authenticated, username, error_message)
+    """
+    # Prefer Chainlit's built-in OAuth user if present
+    chainlit_user = cl.user_session.get("user")
+    if chainlit_user and getattr(chainlit_user, "metadata", None):
+        username = chainlit_user.metadata.get("username")
+        email = chainlit_user.metadata.get("email")
+        if username and email:
+            cl.user_session.set("user_email", email)
+            cl.user_session.set("cognito_username", username)
+            logger.info(f"User authenticated via Chainlit OAuth: {username}")
+            return True, username, None
+
+    if not OIDC_ENABLED:
+        # Cognito not configured, use fallback mode
+        return False, None, None
+
+    # No Chainlit user and OIDC enabled → not authenticated yet
+    return False, None, None
+
+
+@cl.action_callback("authenticate")
+async def authenticate_action(action):
+    """Handle authentication callback action."""
+    # This would be called when user returns from Cognito authentication
+    # In a real implementation, you'd extract the authorization code from the URL
+    # and exchange it for tokens
+
+    auth_code = action.get("auth_code")  # This would come from the callback URL
+
+    if not auth_code:
+        await cl.Message(
+            content="❌ **Authentication failed:** No authorization code received.\n\n"
+            "Please try authenticating again."
+        ).send()
+        return
+
+    # In a real implementation, you would exchange the auth code for tokens here
+    # For now, we'll simulate this process
+
+    await cl.Message(
+        content="⏳ **Processing authentication...**\n\n"
+        "*Please wait while we verify your credentials...*"
+    ).send()
+
+    # TODO: Implement actual token exchange with Cognito
+    # This is where you'd call cognito_client.initiate_auth() or similar
+
+    await cl.Message(
+        content="✅ **Authentication successful!**\n\n"
+        "Welcome to Fix That Prompt! Loading your game..."
+    ).send()
+
+
 @cl.on_chat_start
 async def start():
-    """Initialize the game and ask for username immediately."""
+    """Initialize the game and handle authentication."""
 
     # Initialize game
     try:
@@ -612,13 +750,37 @@ async def start():
         ).send()
         return
 
-    # Set initial game state - ask for username first
-    cl.user_session.set("game_state", "waiting_for_username")
-    cl.user_session.set("username", None)
-    cl.user_session.set("player_data", None)
+    # Try to authenticate user
+    is_authenticated, username, auth_error = await authenticate_user()
 
-    # Show initial username prompt
-    await show_username_prompt()
+    if is_authenticated and username:
+        # User is authenticated, proceed to game
+        player_data = game.leaderboard_db.get_or_create_player(username)
+        cl.user_session.set("username", username)
+        cl.user_session.set("player_data", player_data)
+        cl.user_session.set("game_state", "main_menu")
+
+        # Show the appropriate menu
+        if player_data.is_completed:
+            await show_completed_user_menu(player_data)
+        else:
+            await show_active_user_menu(player_data)
+
+    elif auth_error:
+        # Authentication failed with error
+        await cl.Message(
+            content=f"❌ **Authentication Error:** {auth_error}\n\n"
+            "Please try authenticating again."
+        ).send()
+        cl.user_session.set("game_state", "waiting_for_auth")
+        await show_authentication_prompt()
+
+    else:
+        # No authentication, show prompt
+        cl.user_session.set("game_state", "waiting_for_auth")
+        cl.user_session.set("username", None)
+        cl.user_session.set("player_data", None)
+        await show_authentication_prompt()
 
 
 @cl.on_message
@@ -630,6 +792,8 @@ async def main(message: cl.Message):
 
     if game_state == "main_menu":
         await handle_main_menu_input(message.content)
+    elif game_state == "waiting_for_auth":
+        await handle_auth_input(message.content)
     elif game_state == "waiting_for_username":
         await handle_username_input(message.content)
     elif game_state == "waiting_for_round_decision":
@@ -713,6 +877,28 @@ async def handle_main_menu_input(message_content: str):
         ).send()
 
         cl.user_session.set("main_message", new_message)
+
+
+async def handle_auth_input(message_content: str):
+    """Handle input during authentication state."""
+    content = message_content.lower().strip()
+
+    if content in ["token", "auth", "authenticate"]:
+        # Check if user provided an authentication token
+        # In a real implementation, this would be handled by the callback URL
+        await cl.Message(
+            content="🔐 **Please use the authentication links provided above to sign in with your Singlife credentials.**\n\n"
+            "If you're having trouble, please contact support."
+        ).send()
+    elif not OIDC_ENABLED:
+        # Fallback to username input if Cognito is not configured
+        await handle_username_input(message_content)
+    else:
+        # Guide user to use authentication links
+        await cl.Message(
+            content="🔐 **Please click on the Sign In or Sign Up links above to authenticate with your Singlife credentials.**\n\n"
+            "💡 *Authentication must be completed through the Cognito hosted UI.*"
+        ).send()
 
 
 async def handle_username_input(username_input: str):

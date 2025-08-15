@@ -7,6 +7,10 @@ langchain-openai>=0.3.28
 loguru>=0.7.3
 pillow>=10.0.0
 python-dotenv>=1.1.1
+boto3>=1.35.0
+pyjwt[crypto]>=2.8.0
+requests>=2.31.0
+authlib>=1.3.0
 
 # Development dependencies
 ruff>=0.12.7
