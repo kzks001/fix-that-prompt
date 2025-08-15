@@ -6,8 +6,9 @@ import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
 import * as elbv2 from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import * as logs from 'aws-cdk-lib/aws-logs';
-import * as cognito from 'aws-cdk-lib/aws-cognito';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
+import * as cloudwatch from 'aws-cdk-lib/aws-cloudwatch';
+import * as autoscaling from 'aws-cdk-lib/aws-autoscaling';
 import { Construct } from 'constructs';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
@@ -29,115 +30,30 @@ export class CdkStack extends cdk.Stack {
     });
 
     // Create DynamoDB table for leaderboard
-    const leaderboardTable = new dynamodb.Table(this, 'FixThatPromptLeaderboard', {
-      tableName: 'fix-that-prompt-leaderboard',
-      partitionKey: { name: 'username', type: dynamodb.AttributeType.STRING },
-      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST, // On-demand pricing for variable workloads
-      pointInTimeRecoverySpecification: {
-        pointInTimeRecoveryEnabled: true, // Enable backup and restore
+    const leaderboardTable = new dynamodb.Table(
+      this,
+      'FixThatPromptLeaderboard',
+      {
+        tableName: 'fix-that-prompt-leaderboard',
+        partitionKey: { name: 'username', type: dynamodb.AttributeType.STRING },
+        billingMode: dynamodb.BillingMode.PAY_PER_REQUEST, // On-demand pricing
+        pointInTimeRecoverySpecification: {
+          pointInTimeRecoveryEnabled: true, // Enable backup and restore
+        },
+        removalPolicy: cdk.RemovalPolicy.RETAIN, // Keep data when stack is deleted
       },
-      removalPolicy: cdk.RemovalPolicy.RETAIN, // Keep data when stack is deleted
-    });
+    );
 
     // Add Global Secondary Index for querying by score
     leaderboardTable.addGlobalSecondaryIndex({
       indexName: 'score-index',
-      partitionKey: { name: 'game_status', type: dynamodb.AttributeType.STRING }, // 'completed' or 'active'
+      partitionKey: {
+        name: 'game_status',
+        type: dynamodb.AttributeType.STRING, // 'completed' or 'active'
+      },
       sortKey: { name: 'final_score', type: dynamodb.AttributeType.NUMBER },
       projectionType: dynamodb.ProjectionType.ALL,
     });
-
-    // Create Cognito User Pool
-    const userPool = new cognito.UserPool(this, 'FixThatPromptUserPool', {
-      userPoolName: 'fix-that-prompt-user-pool',
-      // Sign-in options
-      signInAliases: {
-        email: true,
-        username: true,
-      },
-      // Self sign-up configuration
-      selfSignUpEnabled: true,
-      // Email verification
-      userVerification: {
-        emailSubject: 'Verify your email for Fix That Prompt',
-        emailBody: 'Thank you for signing up to Fix That Prompt! Your verification code is {####}',
-        emailStyle: cognito.VerificationEmailStyle.CODE,
-      },
-      // Password policy
-      passwordPolicy: {
-        minLength: 8,
-        requireLowercase: true,
-        requireUppercase: true,
-        requireDigits: true,
-        requireSymbols: false,
-      },
-      // Account recovery
-      accountRecovery: cognito.AccountRecovery.EMAIL_ONLY,
-      // Standard attributes
-      standardAttributes: {
-        email: {
-          required: true,
-          mutable: true,
-        },
-        givenName: {
-          required: false,
-          mutable: true,
-        },
-        familyName: {
-          required: false,
-          mutable: true,
-        },
-      },
-      // Remove users after 7 days if not confirmed
-      removalPolicy: cdk.RemovalPolicy.DESTROY, // For development
-    });
-
-    // Create User Pool Client (for web applications)
-    const userPoolClient = new cognito.UserPoolClient(this, 'FixThatPromptUserPoolClient', {
-      userPool,
-      userPoolClientName: 'fix-that-prompt-web-client',
-      // Authentication flows
-      authFlows: {
-        userSrp: true, // Secure Remote Password protocol
-        userPassword: true, // Allow username/password auth
-        adminUserPassword: true, // Allow admin to set passwords
-      },
-      // OAuth settings
-      oAuth: {
-        flows: {
-          authorizationCodeGrant: true,
-          implicitCodeGrant: false, // Not recommended for production
-        },
-        scopes: [
-          cognito.OAuthScope.EMAIL,
-          cognito.OAuthScope.OPENID,
-          cognito.OAuthScope.PROFILE,
-        ],
-        callbackUrls: [
-          'http://localhost:8000/auth/oauth/aws-cognito/callback', // Chainlit OAuth callback (port 8000)
-        ],
-        logoutUrls: [
-          'http://localhost:8000/', // For local Chainlit development
-        ],
-      },
-      // Token validity periods
-      accessTokenValidity: cdk.Duration.hours(1),
-      idTokenValidity: cdk.Duration.hours(1),
-      refreshTokenValidity: cdk.Duration.days(30),
-      // Security settings
-      preventUserExistenceErrors: true,
-      generateSecret: true, // Set to true for server-side applications
-    });
-
-    // Create User Pool Domain for hosted UI
-    const userPoolDomain = new cognito.UserPoolDomain(this, 'FixThatPromptUserPoolDomain', {
-      userPool,
-      cognitoDomain: {
-        domainPrefix: `fix-that-prompt-${cdk.Stack.of(this).account}-${cdk.Stack.of(this).region}`,
-      },
-    });
-
-    // Identity Pool removed: backend-only access to AWS resources. Users do not need direct AWS credentials.
 
     // Create ECR repository
     const repository = new ecr.Repository(this, 'FixThatPromptRepository', {
@@ -149,58 +65,85 @@ export class CdkStack extends cdk.Stack {
     const cluster = new ecs.Cluster(this, 'FixThatPromptCluster', {
       vpc,
       clusterName: 'fix-that-prompt-cluster',
+      enableFargateCapacityProviders: true,
     });
 
-    // Create CloudWatch Log Group
-    const logGroup = new logs.LogGroup(this, 'FixThatPromptLogGroup', {
-      logGroupName: '/ecs/fix-that-prompt-stack',
-      retention: logs.RetentionDays.ONE_WEEK,
+    // Create CloudWatch Log Groups with enhanced retention
+    const applicationLogGroup = new logs.LogGroup(
+      this,
+      'FixThatPromptApplicationLogs',
+      {
+        logGroupName: '/ecs/fix-that-prompt-stack/application',
+        retention: logs.RetentionDays.THREE_MONTHS,
+        removalPolicy: cdk.RemovalPolicy.DESTROY,
+      },
+    );
+
+    const errorLogGroup = new logs.LogGroup(this, 'FixThatPromptErrorLogs', {
+      logGroupName: '/ecs/fix-that-prompt-stack/errors',
+      retention: logs.RetentionDays.ONE_YEAR,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
-    // Create Task Definition
-    const taskDefinition = new ecs.FargateTaskDefinition(this, 'FixThatPromptTaskDef', {
-      memoryLimitMiB: 512,
-      cpu: 256,
-    });
+    const dynamodbLogGroup = new logs.LogGroup(
+      this,
+      'FixThatPromptDynamoDBLogs',
+      {
+        logGroupName: '/ecs/fix-that-prompt-stack/dynamodb',
+        retention: logs.RetentionDays.ONE_YEAR,
+        removalPolicy: cdk.RemovalPolicy.DESTROY,
+      },
+    );
+
+    // Create Task Definition with enhanced resources
+    const taskDefinition = new ecs.FargateTaskDefinition(
+      this,
+      'FixThatPromptTaskDef',
+      {
+        memoryLimitMiB: 1024,
+        cpu: 512,
+      },
+    );
+
+    // Grant DynamoDB permissions to the task (least privilege)
+    leaderboardTable.grantReadWriteData(taskDefinition.taskRole);
 
     // Add container to task definition
     const currentTimestamp = Date.now().toString();
     const imageTag = process.env.IMAGE_TAG || 'latest';
-    // Optional: Provide Cognito Client Secret at deploy time (for confidential client flows)
-    const cognitoClientSecretParam = new cdk.CfnParameter(this, 'CognitoClientSecret', {
-      type: 'String',
-      noEcho: true,
-      description:
-        'Cognito App Client Secret for OAuth token exchange. Leave empty if using public client + PKCE.',
-      default: '',
-    });
-    // Chainlit auth secret for signing session cookies/tokens
-    const chainlitAuthSecretParam = new cdk.CfnParameter(this, 'ChainlitAuthSecret', {
-      type: 'String',
-      noEcho: true,
-      description: 'Secret used by Chainlit to sign auth tokens (generate with `chainlit create-secret`).',
-      default: '',
-    });
-    const container = taskDefinition.addContainer('FixThatPromptContainer', {
-      image: ecs.ContainerImage.fromEcrRepository(repository, imageTag),
-      logging: ecs.LogDrivers.awsLogs({
-        streamPrefix: 'fix-that-prompt-stack',
-        logGroup,
-      }),
-      portMappings: [
-        {
-          containerPort: 8080,
-          protocol: ecs.Protocol.TCP,
+
+    const container = taskDefinition.addContainer(
+      'FixThatPromptContainer',
+      {
+        image: ecs.ContainerImage.fromEcrRepository(repository, imageTag),
+        logging: ecs.LogDrivers.awsLogs({
+          streamPrefix: 'fix-that-prompt-stack',
+          logGroup: applicationLogGroup,
+        }),
+        portMappings: [
+          {
+            containerPort: 8080,
+            protocol: ecs.Protocol.TCP,
+          },
+        ],
+        environment: {
+          PORT: '8080',
+          DEPLOYMENT_TIME: currentTimestamp,
+          VERSION: currentTimestamp,
+          IMAGE_TAG: imageTag,
+          LOG_LEVEL: 'INFO',
+          ENVIRONMENT: 'production',
+          DYNAMODB_TABLE_NAME: leaderboardTable.tableName,
         },
-      ],
-      environment: {
-        'PORT': '8080',
-        'DEPLOYMENT_TIME': currentTimestamp, // Force new deployment with timestamp
-        'VERSION': currentTimestamp, // Additional versioning
-        'IMAGE_TAG': imageTag, // Track which image tag is being used
+        healthCheck: {
+          command: ['CMD-SHELL', 'curl -f http://localhost:8080/ || exit 1'],
+          interval: cdk.Duration.seconds(30),
+          timeout: cdk.Duration.seconds(5),
+          retries: 3,
+          startPeriod: cdk.Duration.seconds(60),
+        },
       },
-    });
+    );
 
     // Create Security Group for ECS tasks
     const ecsSecurityGroup = new ec2.SecurityGroup(this, 'EcsSecurityGroup', {
@@ -220,14 +163,21 @@ export class CdkStack extends cdk.Stack {
     albSecurityGroup.addIngressRule(
       ec2.Peer.anyIpv4(),
       ec2.Port.tcp(80),
-      'Allow HTTP traffic from anywhere'
+      'Allow HTTP traffic from anywhere',
+    );
+
+    // Allow HTTPS traffic from anywhere to ALB (for future use)
+    albSecurityGroup.addIngressRule(
+      ec2.Peer.anyIpv4(),
+      ec2.Port.tcp(443),
+      'Allow HTTPS traffic from anywhere',
     );
 
     // Allow traffic from ALB to ECS tasks
     ecsSecurityGroup.addIngressRule(
       albSecurityGroup,
       ec2.Port.tcp(8080),
-      'Allow traffic from ALB to ECS tasks'
+      'Allow traffic from ALB to ECS tasks',
     );
 
     // Create Application Load Balancer
@@ -236,24 +186,30 @@ export class CdkStack extends cdk.Stack {
       internetFacing: true,
       securityGroup: albSecurityGroup,
       loadBalancerName: 'fix-that-prompt-alb',
+      idleTimeout: cdk.Duration.seconds(300), // 5 minutes for WebSocket connections
     });
 
-    // Create Target Group
-    const targetGroup = new elbv2.ApplicationTargetGroup(this, 'FixThatPromptTargetGroup', {
-      vpc,
-      port: 8080,
-      protocol: elbv2.ApplicationProtocol.HTTP,
-      targetType: elbv2.TargetType.IP,
-      healthCheck: {
-        enabled: true,
-        path: '/',
-        healthyHttpCodes: '200-299',
-        interval: cdk.Duration.seconds(30),
-        timeout: cdk.Duration.seconds(5),
-        healthyThresholdCount: 2,
-        unhealthyThresholdCount: 5,
+    // Create Target Group with enhanced health checks
+    const targetGroup = new elbv2.ApplicationTargetGroup(
+      this,
+      'FixThatPromptTargetGroup',
+      {
+        vpc,
+        port: 8080,
+        protocol: elbv2.ApplicationProtocol.HTTP,
+        targetType: elbv2.TargetType.IP,
+        healthCheck: {
+          enabled: true,
+          path: '/',
+          healthyHttpCodes: '200-299',
+          interval: cdk.Duration.seconds(15), // Faster health checks
+          timeout: cdk.Duration.seconds(5),
+          healthyThresholdCount: 2,
+          unhealthyThresholdCount: 3,
+        },
+        deregistrationDelay: cdk.Duration.seconds(30), // Faster instance removal
       },
-    });
+    );
 
     // Add listener to ALB
     alb.addListener('FixThatPromptListener', {
@@ -261,82 +217,168 @@ export class CdkStack extends cdk.Stack {
       defaultTargetGroups: [targetGroup],
     });
 
-    // Create ECS Service
+    // Create ECS Service with auto-scaling
     const service = new ecs.FargateService(this, 'FixThatPromptService', {
       cluster,
       taskDefinition,
-      desiredCount: 1,
+      desiredCount: 2, // Start with 2 instances for high availability
       assignPublicIp: true, // Required for public subnets without NAT
       securityGroups: [ecsSecurityGroup],
       serviceName: 'fix-that-prompt-service',
+      enableExecuteCommand: true, // Enable ECS Exec for debugging
+      circuitBreaker: { rollback: true }, // Auto-rollback on deployment failures
+      minHealthyPercent: 100,
+      maxHealthyPercent: 200,
     });
 
     // Attach service to target group
     service.attachToApplicationTargetGroup(targetGroup);
 
-    // Create CloudFront distribution
-    // Using ALB DNS name as origin with WebSocket support for Chainlit
-    const distribution = new cloudfront.Distribution(this, 'FixThatPromptDistribution', {
-      defaultBehavior: {
-        origin: new origins.HttpOrigin(alb.loadBalancerDnsName, {
-          protocolPolicy: cloudfront.OriginProtocolPolicy.HTTP_ONLY,
-        }),
-        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-        allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
-        cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED, // Disable caching for dynamic app
-        originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER, // Forward all headers, query strings, and cookies
-        responseHeadersPolicy: cloudfront.ResponseHeadersPolicy.CORS_ALLOW_ALL_ORIGINS,
-      },
-      comment: 'Fix That Prompt Stack CloudFront Distribution with WebSocket support',
+    // Create Auto Scaling for the service
+    const scaling = service.autoScaleTaskCount({
+      minCapacity: 2, // Minimum 2 instances for HA
+      maxCapacity: 10, // Maximum 10 instances
     });
 
-    const hostedUiBaseUrl = userPoolDomain.baseUrl();
-    container.addEnvironment('CHAINLIT_URL',
-      `https://${distribution.distributionDomainName}`);
-    container.addEnvironment('COGNITO_REDIRECT_URI',
-      `https://${distribution.distributionDomainName}/auth/oauth/aws-cognito/callback`);
-    // Provide IDs for app runtime helpers
-    container.addEnvironment('COGNITO_USER_POOL_ID', userPool.userPoolId);
-    container.addEnvironment('COGNITO_CLIENT_ID', userPoolClient.userPoolClientId);
-    container.addEnvironment('COGNITO_USER_POOL_DOMAIN', userPoolDomain.domainName);
-    container.addEnvironment('AWS_REGION', cdk.Stack.of(this).region);
-    container.addEnvironment('OAUTH_COGNITO_SCOPE', 'openid email profile');
-    container.addEnvironment('OAUTH_COGNITO_CLIENT_ID', userPoolClient.userPoolClientId);
-    // If using a confidential client (has secret), Chainlit/your OAuth handler must send HTTP Basic auth.
-    // Provide the secret via a secure stack parameter at deploy time.
-    container.addEnvironment('OAUTH_COGNITO_CLIENT_SECRET', cognitoClientSecretParam.valueAsString);
-    // Use *base URL* (not bare host) so your app can append /oauth2/authorize etc.
-    container.addEnvironment('OAUTH_COGNITO_BASE_URL', hostedUiBaseUrl);
-    // If your code needs prebuilt endpoints, export them explicitly:
-    container.addEnvironment('OAUTH_COGNITO_AUTHORIZE_URL',
-      `${hostedUiBaseUrl}/oauth2/authorize`);
-    container.addEnvironment('OAUTH_COGNITO_TOKEN_URL',
-      `${hostedUiBaseUrl}/oauth2/token`);
-    container.addEnvironment('OAUTH_COGNITO_USERINFO_URL',
-      `${hostedUiBaseUrl}/oauth2/userInfo`);
+    // Scale up based on CPU utilization
+    scaling.scaleOnCpuUtilization('CpuScaling', {
+      targetUtilizationPercent: 70,
+      scaleInCooldown: cdk.Duration.seconds(60),
+      scaleOutCooldown: cdk.Duration.seconds(60),
+    });
 
-    // Chainlit OAuth provider configuration (aws-cognito)
-    container.addEnvironment('CHAINLIT_AUTH_OAUTH_PROVIDER_ID', 'aws-cognito');
-    container.addEnvironment('CHAINLIT_AUTH_OAUTH_CLIENT_ID', userPoolClient.userPoolClientId);
-    container.addEnvironment('CHAINLIT_AUTH_OAUTH_CLIENT_SECRET', cognitoClientSecretParam.valueAsString);
-    container.addEnvironment('CHAINLIT_AUTH_OAUTH_AUTHORIZATION_URL', `${hostedUiBaseUrl}/oauth2/authorize`);
-    container.addEnvironment('CHAINLIT_AUTH_OAUTH_TOKEN_URL', `${hostedUiBaseUrl}/oauth2/token`);
-    container.addEnvironment('CHAINLIT_AUTH_OAUTH_USER_INFO_URL', `${hostedUiBaseUrl}/oauth2/userInfo`);
-    container.addEnvironment('CHAINLIT_AUTH_OAUTH_SCOPES', 'openid email profile');
-    container.addEnvironment('CHAINLIT_AUTH_OAUTH_REDIRECT_URL',
-      `https://${distribution.distributionDomainName}/auth/oauth/aws-cognito/callback`);
-    container.addEnvironment('CHAINLIT_AUTH_SECRET', chainlitAuthSecretParam.valueAsString);
+    // Scale up based on memory utilization
+    scaling.scaleOnMemoryUtilization('MemoryScaling', {
+      targetUtilizationPercent: 80,
+      scaleInCooldown: cdk.Duration.seconds(60),
+      scaleOutCooldown: cdk.Duration.seconds(60),
+    });
 
-    // Ensure Cognito App Client also accepts CloudFront callback/logout URLs
-    const cfnUserPoolClient = userPoolClient.node.defaultChild as cognito.CfnUserPoolClient;
-    cfnUserPoolClient.callbackUrLs = [
-      ...(cfnUserPoolClient.callbackUrLs || []),
-      `https://${distribution.distributionDomainName}/auth/oauth/aws-cognito/callback`,
-    ];
-    cfnUserPoolClient.logoutUrLs = [
-      ...(cfnUserPoolClient.logoutUrLs || []),
-      `https://${distribution.distributionDomainName}/`,
-    ];
+    // Scale up based on custom metric (fix: use full names)
+    scaling.scaleOnMetric('CustomScaling', {
+      metric: new cloudwatch.Metric({
+        namespace: 'AWS/ApplicationELB',
+        metricName: 'RequestCount',
+        dimensionsMap: {
+          LoadBalancer: alb.loadBalancerFullName,
+          TargetGroup: targetGroup.targetGroupFullName,
+        },
+        statistic: 'Sum',
+        period: cdk.Duration.minutes(1),
+      }),
+      scalingSteps: [
+        { upper: 10, change: -1 },
+        { lower: 20, change: +1 },
+      ],
+      adjustmentType: autoscaling.AdjustmentType.CHANGE_IN_CAPACITY,
+    });
+
+    // Create CloudFront distribution
+    const distribution = new cloudfront.Distribution(
+      this,
+      'FixThatPromptDistribution',
+      {
+        defaultBehavior: {
+          origin: new origins.HttpOrigin(alb.loadBalancerDnsName, {
+            protocolPolicy: cloudfront.OriginProtocolPolicy.HTTP_ONLY,
+          }),
+          viewerProtocolPolicy:
+            cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
+          cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED, // Dynamic app
+          originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER, // Fwd all
+          responseHeadersPolicy:
+            cloudfront.ResponseHeadersPolicy.CORS_ALLOW_ALL_ORIGINS,
+        },
+        comment:
+          'Fix That Prompt Stack CloudFront Distribution with WebSocket support',
+      },
+    );
+
+    // Create CloudWatch Alarms for monitoring
+    const cpuAlarm = new cloudwatch.Alarm(this, 'HighCPUAlarm', {
+      metric: service.metricCpuUtilization(),
+      threshold: 80,
+      evaluationPeriods: 2,
+      alarmDescription: 'High CPU utilization on Fix That Prompt service',
+    });
+
+    const memoryAlarm = new cloudwatch.Alarm(this, 'HighMemoryAlarm', {
+      metric: service.metricMemoryUtilization(),
+      threshold: 85,
+      evaluationPeriods: 2,
+      alarmDescription: 'High memory utilization on Fix That Prompt service',
+    });
+
+    // Fix deprecation: use new metrics API for unhealthy hosts
+    const unhealthyHostAlarm = new cloudwatch.Alarm(
+      this,
+      'UnhealthyHostAlarm',
+      {
+        metric: targetGroup.metrics.unhealthyHostCount(),
+        threshold: 1,
+        evaluationPeriods: 1,
+        alarmDescription:
+          'Unhealthy hosts in Fix That Prompt target group',
+      },
+    );
+
+    // Create DynamoDB monitoring alarms
+    // Fix deprecation: use per-operation throttled metrics + math expression
+    const ddbThrottlePut = leaderboardTable
+      .metricThrottledRequestsForOperation('PutItem', {
+        period: cdk.Duration.minutes(1),
+      });
+    const ddbThrottleGet = leaderboardTable
+      .metricThrottledRequestsForOperation('GetItem', {
+        period: cdk.Duration.minutes(1),
+      });
+    const ddbThrottleUpdate = leaderboardTable
+      .metricThrottledRequestsForOperation('UpdateItem', {
+        period: cdk.Duration.minutes(1),
+      });
+    const ddbThrottleQuery = leaderboardTable
+      .metricThrottledRequestsForOperation('Query', {
+        period: cdk.Duration.minutes(1),
+      });
+    const ddbThrottleScan = leaderboardTable
+      .metricThrottledRequestsForOperation('Scan', {
+        period: cdk.Duration.minutes(1),
+      });
+
+    const ddbThrottleAll = new cloudwatch.MathExpression({
+      expression: 'put + get + upd + qry + scn',
+      period: cdk.Duration.minutes(1),
+      usingMetrics: {
+        put: ddbThrottlePut,
+        get: ddbThrottleGet,
+        upd: ddbThrottleUpdate,
+        qry: ddbThrottleQuery,
+        scn: ddbThrottleScan,
+      },
+    });
+
+    const dynamoDBThrottledRequestsAlarm = new cloudwatch.Alarm(
+      this,
+      'DynamoDBThrottledRequestsAlarm',
+      {
+        metric: ddbThrottleAll,
+        threshold: 1,
+        evaluationPeriods: 1,
+        alarmDescription: 'DynamoDB throttled requests detected',
+      },
+    );
+
+    const dynamoDBUserErrorsAlarm = new cloudwatch.Alarm(
+      this,
+      'DynamoDBUserErrorsAlarm',
+      {
+        metric: leaderboardTable.metricUserErrors(),
+        threshold: 1,
+        evaluationPeriods: 1,
+        alarmDescription: 'DynamoDB user errors detected',
+      },
+    );
 
     // Output important values
     new cdk.CfnOutput(this, 'RepositoryUri', {
@@ -360,7 +402,7 @@ export class CdkStack extends cdk.Stack {
     });
 
     new cdk.CfnOutput(this, 'CloudFrontDomainName', {
-      value: distribution.distributionDomainName,
+      value: distribution.domainName,
       description: 'CloudFront Domain Name',
     });
 
@@ -374,24 +416,6 @@ export class CdkStack extends cdk.Stack {
       description: 'VPC ID',
     });
 
-    // Cognito outputs
-    new cdk.CfnOutput(this, 'UserPoolId', {
-      value: userPool.userPoolId,
-      description: 'Cognito User Pool ID',
-    });
-
-    new cdk.CfnOutput(this, 'UserPoolClientId', {
-      value: userPoolClient.userPoolClientId,
-      description: 'Cognito User Pool Client ID',
-    });
-
-    new cdk.CfnOutput(this, 'UserPoolDomain', {
-      value: userPoolDomain.domainName,
-      description: 'Cognito User Pool Domain',
-    });
-
-    // Identity Pool outputs removed
-
     // DynamoDB outputs
     new cdk.CfnOutput(this, 'LeaderboardTableName', {
       value: leaderboardTable.tableName,
@@ -403,11 +427,20 @@ export class CdkStack extends cdk.Stack {
       description: 'DynamoDB table ARN for leaderboard',
     });
 
-    // The code that defines your stack goes here
+    // Log group outputs
+    new cdk.CfnOutput(this, 'ApplicationLogGroup', {
+      value: applicationLogGroup.logGroupName,
+      description: 'Application CloudWatch Log Group',
+    });
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'CdkQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    new cdk.CfnOutput(this, 'ErrorLogGroup', {
+      value: errorLogGroup.logGroupName,
+      description: 'Error CloudWatch Log Group',
+    });
+
+    new cdk.CfnOutput(this, 'DynamoDBLogGroup', {
+      value: dynamodbLogGroup.logGroupName,
+      description: 'DynamoDB CloudWatch Log Group',
+    });
   }
 }

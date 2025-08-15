@@ -1,19 +1,18 @@
 """Leaderboard database implementation with DynamoDB and JSON fallback."""
 
-import os
 import json
-from pathlib import Path
-from typing import Optional
+import os
 from datetime import datetime
+from pathlib import Path
 
 from loguru import logger
 
-from ..models.player_session import PlayerScore, GameRound, BadPrompt
+from ..models.player_session import BadPrompt, GameRound, PlayerScore
 from ..utils.logger import log_game_event
 
 
 class LeaderboardDB:
-    """Manages leaderboard persistence using DynamoDB with JSON fallback."""
+    """Manages leaderboard persistence using DynamoDB with JSON fallback for local development."""
 
     def __init__(
         self, db_file: str = "data/leaderboard.json", use_dynamodb: bool | None = None
@@ -22,13 +21,22 @@ class LeaderboardDB:
         Initialize the leaderboard database.
 
         Args:
-            db_file: Path to the JSON file for storing leaderboard data (fallback)
+            db_file: Path to the JSON file for storing leaderboard data (local development only)
             use_dynamodb: Force DynamoDB usage (None = auto-detect from environment)
         """
         # Determine which backend to use
         if use_dynamodb is None:
-            # Auto-detect: use DynamoDB if table name is configured
-            use_dynamodb = bool(os.getenv("DYNAMODB_TABLE_NAME"))
+            # Check if we're running in AWS environment
+            is_aws = bool(
+                os.getenv("AWS_REGION")
+                or os.getenv("AWS_ACCESS_KEY_ID")
+                or os.getenv("AWS_SECRET_ACCESS_KEY")
+                or os.getenv("ECS_CONTAINER_METADATA_URI")  # ECS environment
+                or os.getenv("AWS_EXECUTION_ENV")  # Lambda environment
+            )
+
+            # Only use DynamoDB if we're in AWS environment AND table name is configured
+            use_dynamodb = is_aws and bool(os.getenv("DYNAMODB_TABLE_NAME"))
 
         self.use_dynamodb = use_dynamodb
 
@@ -39,16 +47,19 @@ class LeaderboardDB:
                 self._backend = DynamoDBLeaderboard()
                 logger.info("Using DynamoDB backend for leaderboard")
             except Exception as e:
-                logger.warning(f"Failed to initialize DynamoDB backend: {e}")
-                logger.info("Falling back to JSON backend")
-                self.use_dynamodb = False
+                # Since we only try DynamoDB in AWS environment, fail hard if it's not available
+                logger.error(f"Failed to initialize DynamoDB backend: {e}")
+                raise ConnectionError(
+                    f"Could not connect to DynamoDB table. "
+                    f"This is required for AWS deployment. Error: {e}"
+                )
 
         if not self.use_dynamodb:
-            # Use JSON backend
+            # Use JSON backend (local development only)
             self.db_file = Path(db_file)
             self.db_file.parent.mkdir(exist_ok=True)
             self._ensure_db_exists()
-            logger.info("Using JSON file backend for leaderboard")
+            logger.info("Using JSON file backend for leaderboard (local development)")
 
     def _ensure_db_exists(self) -> None:
         """Ensure the database file exists with valid structure."""
@@ -67,7 +78,7 @@ class LeaderboardDB:
     def _read_data(self) -> dict:
         """Read data from the JSON file."""
         try:
-            with open(self.db_file, "r", encoding="utf-8") as f:
+            with open(self.db_file, encoding="utf-8") as f:
                 return json.load(f)
         except (FileNotFoundError, json.JSONDecodeError) as e:
             logger.error(f"Error reading leaderboard data: {e}")

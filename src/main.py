@@ -8,11 +8,7 @@ from chainlit import Action
 from dotenv import load_dotenv
 from loguru import logger
 
-from .auth.oidc_client import (
-    build_signup_url,
-    extract_singlife_username,
-    is_configured as oidc_is_configured,
-)
+
 from .components.game import FixThatPromptGame
 from .models.player_session import GameRound
 from .utils.logger import setup_logging
@@ -25,39 +21,6 @@ setup_logging(os.getenv("LOG_LEVEL", "INFO"))
 
 # Initialize game instance
 game: FixThatPromptGame | None = None
-
-# OIDC configuration check
-OIDC_ENABLED = oidc_is_configured()
-
-
-@cl.oauth_callback
-def oauth_callback(
-    provider_id: str,
-    token: str,
-    raw_user_data: dict[str, str],
-    default_user: cl.User,
-) -> cl.User | None:
-    """Chainlit OAuth callback to accept/deny Cognito users.
-
-    Accept only @singlife.com emails and store email/derived username in metadata.
-    """
-    if provider_id not in ("aws-cognito", "cognito", "oidc"):
-        return None
-
-    email = (raw_user_data or {}).get("email") or ""
-    username = extract_singlife_username(email)
-    if not username:
-        # Reject non-Singlife emails
-        return None
-
-    # Persist useful attributes on the Chainlit user
-    # so we can read them from the session later.
-    default_user.metadata = {
-        **(getattr(default_user, "metadata", {}) or {}),
-        "email": email,
-        "username": username,
-    }
-    return default_user
 
 
 # Action handlers for buttons
@@ -87,27 +50,37 @@ Each round, you receive a **poorly written prompt** with its **weak AI response*
 **Use the buttons below to navigate through the game!**
 """
 
+    # Build actions list - only show Top Prompt if user has completed all rounds
+    actions = [
+        Action(
+            name="back_to_menu",
+            payload={"action": "back_to_menu"},
+            label="🏠 Back to Menu",
+        ),
+        Action(
+            name="leaderboard",
+            payload={"action": "leaderboard"},
+            label="🏆 Leaderboard",
+        ),
+        Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+    ]
+
+    # Check if current user has completed all rounds
+    username = cl.user_session.get("username")
+    if username:
+        player_data = cl.user_session.get("player_data")
+        if player_data and not player_data.can_play_more_rounds:
+            actions.append(
+                Action(
+                    name="top_leaderboard_prompt",
+                    payload={"action": "top_leaderboard_prompt"},
+                    label="🎯 Top Prompt",
+                )
+            )
+
     new_message = await cl.Message(
         content=help_msg,
-        actions=[
-            Action(
-                name="back_to_menu",
-                payload={"action": "back_to_menu"},
-                label="🏠 Back to Menu",
-            ),
-            Action(
-                name="leaderboard",
-                payload={"action": "leaderboard"},
-                label="🏆 Leaderboard",
-            ),
-            Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
-            Action(
-                name="top_leaderboard_prompt",
-                payload={"action": "top_leaderboard_prompt"},
-                label="🎯 Top Prompt",
-            ),
-            Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
-        ],
+        actions=actions,
     ).send()
 
     cl.user_session.set("main_message", new_message)
@@ -170,25 +143,33 @@ async def leaderboard_action(action):
 🎮 **Ready to continue?** Click the 'Back to Menu' button to return to your game!
 """
 
+        # Build actions list - only show Top Prompt if user has completed all rounds
+        actions = [
+            Action(
+                name="back_to_menu",
+                payload={"action": "back_to_menu"},
+                label="🏠 Back to Menu",
+            ),
+            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+            Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+        ]
+
+        # Check if current user has completed all rounds
+        username = cl.user_session.get("username")
+        if username:
+            player_data = cl.user_session.get("player_data")
+            if player_data and not player_data.can_play_more_rounds:
+                actions.append(
+                    Action(
+                        name="top_leaderboard_prompt",
+                        payload={"action": "top_leaderboard_prompt"},
+                        label="🎯 Top Prompt",
+                    )
+                )
+
         new_message = await cl.Message(
             content=leaderboard_msg,
-            actions=[
-                Action(
-                    name="back_to_menu",
-                    payload={"action": "back_to_menu"},
-                    label="🏠 Back to Menu",
-                ),
-                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
-                Action(
-                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
-                ),
-                Action(
-                    name="top_leaderboard_prompt",
-                    payload={"action": "top_leaderboard_prompt"},
-                    label="🎯 Top Prompt",
-                ),
-                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
-            ],
+            actions=actions,
         ).send()
 
         cl.user_session.set("main_message", new_message)
@@ -214,98 +195,54 @@ async def stats_action(action):
 **Ready to continue? Click the 'Back to Menu' button to return to your game!**
 """
 
+    # Build actions list - only show Top Prompt if user has completed all rounds
+    actions = [
+        Action(
+            name="back_to_menu",
+            payload={"action": "back_to_menu"},
+            label="🏠 Back to Menu",
+        ),
+        Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+        Action(
+            name="leaderboard",
+            payload={"action": "leaderboard"},
+            label="🏆 Leaderboard",
+        ),
+    ]
+
+    # Check if current user has completed all rounds
+    username = cl.user_session.get("username")
+    if username:
+        player_data = cl.user_session.get("player_data")
+        if player_data and not player_data.can_play_more_rounds:
+            actions.append(
+                Action(
+                    name="top_leaderboard_prompt",
+                    payload={"action": "top_leaderboard_prompt"},
+                    label="🎯 Top Prompt",
+                )
+            )
+
     new_message = await cl.Message(
         content=stats_msg,
-        actions=[
-            Action(
-                name="back_to_menu",
-                payload={"action": "back_to_menu"},
-                label="🏠 Back to Menu",
-            ),
-            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
-            Action(
-                name="leaderboard",
-                payload={"action": "leaderboard"},
-                label="🏆 Leaderboard",
-            ),
-            Action(
-                name="top_leaderboard_prompt",
-                payload={"action": "top_leaderboard_prompt"},
-                label="🎯 Top Prompt",
-            ),
-            Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
-        ],
+        actions=actions,
     ).send()
 
     cl.user_session.set("main_message", new_message)
 
 
-@cl.action_callback("logout")
-async def logout_action(action):
-    """Handle logout button clicks - return to username prompt."""
-
-    # Reset all session data
-    cl.user_session.set("game_state", "waiting_for_username")
-    cl.user_session.set("username", None)
-    cl.user_session.set("player_data", None)
-
-    # Show initial authentication prompt
-    await show_authentication_prompt()
-
-
 async def show_authentication_prompt():
-    """Show the authentication prompt screen with Cognito integration."""
-    if OIDC_ENABLED:
-        # Cognito is configured - show authentication options
-        redirect_uri = os.getenv(
-            "COGNITO_REDIRECT_URI",
-            "http://localhost:8000/auth/oauth/aws-cognito/callback",
-        )
-        signup_url = build_signup_url(redirect_uri) or "#"
-        chainlit_login_url = "/auth/oauth/login/aws-cognito"
-
-        main_message = await cl.Message(
-            content=f"""
+    """Show the authentication prompt screen."""
+    main_message = await cl.Message(
+        content="""
 # 🎮 **Welcome to Fix That Prompt!**
 *Transform bad prompts into brilliant ones using AI and the COSTAR framework*
 
-🔐 **Please authenticate with your Singlife credentials:**
+👤 **Enter your Singlife email:**
 
-## 🚀 **New Users:**
-If this is your first time, please sign up using your **Singlife email** (@singlife.com):
-
-👉 [**Sign Up Here**]({signup_url})
-
-## 🔑 **Existing Users:**
-If you already have an account, please sign in:
-
-👉 [**Sign In Here**]({chainlit_login_url})
-
-Or sign in using the in-app login flow:
-
-👉 [**Chainlit Login**]({chainlit_login_url})
-
----
-
-⚠️ **Important:** You must use your **@singlife.com** email address to access the game.
-
-💡 *After authentication, you'll be redirected back to continue the game.*
+💡 *eg. sk01@singlife.com*
 """
-        ).send()
-    else:
-        # Fallback to username prompt if Cognito is not configured
-        main_message = await cl.Message(
-            content="""
-# 🎮 **Welcome to Fix That Prompt!**
-*Transform bad prompts into brilliant ones using AI and the COSTAR framework*
-
-👤 **Enter your Singlife email name:**
-
-💡 *eg. sk01 if email is sk01@singlife.com*
-
-⚠️ **Note:** Authentication is not configured. Using fallback mode.
-"""
-        ).send()
+    ).send()
 
     cl.user_session.set("main_message", main_message)
 
@@ -364,7 +301,7 @@ async def back_to_menu_action(action):
     if not username:
         # No username in session, restart the app
         username_message = await cl.Message(
-            content="👤 **Enter your SingLife email name:**\n\n💡 *eg. sk01 if email is sk01@singlife.com*"
+            content="👤 **Enter your SingLife email:**\n\n💡 *eg. sk01@singlife.com*"
         ).send()
         cl.user_session.set("main_message", username_message)
         cl.user_session.set("game_state", "waiting_for_username")
@@ -395,7 +332,7 @@ async def play_round_action(action):
 
     if not username or not player_data:
         error_message = await cl.Message(
-            content="❌ **Error:** Session expired. Please refresh and enter your username again."
+            content="❌ **Error:** Session expired. Please refresh your browser page (F5 or Ctrl+R) to start over.",
         ).send()
         cl.user_session.set("main_message", error_message)
         return
@@ -434,12 +371,6 @@ async def user_history_action(action):
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
-                Action(
-                    name="top_leaderboard_prompt",
-                    payload={"action": "top_leaderboard_prompt"},
-                    label="🎯 Top Prompt",
-                ),
-                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ],
         ).send()
         cl.user_session.set("main_message", error_message)
@@ -465,12 +396,6 @@ async def user_history_action(action):
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
-                Action(
-                    name="top_leaderboard_prompt",
-                    payload={"action": "top_leaderboard_prompt"},
-                    label="🎯 Top Prompt",
-                ),
-                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ],
         ).send()
         cl.user_session.set("main_message", no_history_message)
@@ -517,28 +442,35 @@ async def user_history_action(action):
 ---
 """
 
-    history_message = await cl.Message(
-        content=history_msg,
-        actions=[
-            Action(
-                name="back_to_menu",
-                payload={"action": "back_to_menu"},
-                label="🏠 Back to Menu",
-            ),
-            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
-            Action(
-                name="leaderboard",
-                payload={"action": "leaderboard"},
-                label="🏆 Leaderboard",
-            ),
-            Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+    # Build actions list - only show Top Prompt if user has completed all rounds
+    actions = [
+        Action(
+            name="back_to_menu",
+            payload={"action": "back_to_menu"},
+            label="🏠 Back to Menu",
+        ),
+        Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+        Action(
+            name="leaderboard",
+            payload={"action": "leaderboard"},
+            label="🏆 Leaderboard",
+        ),
+        Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+    ]
+
+    # Only show Top Prompt button if user has completed all rounds
+    if not session.can_play_more_rounds:
+        actions.append(
             Action(
                 name="top_leaderboard_prompt",
                 payload={"action": "top_leaderboard_prompt"},
                 label="🎯 Top Prompt",
-            ),
-            Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
-        ],
+            )
+        )
+
+    history_message = await cl.Message(
+        content=history_msg,
+        actions=actions,
     ).send()
     cl.user_session.set("main_message", history_message)
 
@@ -567,7 +499,6 @@ async def top_leaderboard_prompt_action(action):
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
-                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ],
         ).send()
         cl.user_session.set("main_message", no_players_message)
@@ -596,7 +527,6 @@ async def top_leaderboard_prompt_action(action):
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
-                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ],
         ).send()
         cl.user_session.set("main_message", error_message)
@@ -658,7 +588,6 @@ async def top_leaderboard_prompt_action(action):
                 label="🏆 Leaderboard",
             ),
             Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
-            Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
         ],
     ).send()
     cl.user_session.set("main_message", top_prompt_message)
@@ -679,61 +608,13 @@ def initialize_game() -> FixThatPromptGame:
 
 async def authenticate_user() -> tuple[bool, str | None, str | None]:
     """
-    Authenticate user using Cognito token or fallback to username input.
+    Authenticate user using fallback to username input.
 
     Returns:
         Tuple of (is_authenticated, username, error_message)
     """
-    # Prefer Chainlit's built-in OAuth user if present
-    chainlit_user = cl.user_session.get("user")
-    if chainlit_user and getattr(chainlit_user, "metadata", None):
-        username = chainlit_user.metadata.get("username")
-        email = chainlit_user.metadata.get("email")
-        if username and email:
-            cl.user_session.set("user_email", email)
-            cl.user_session.set("cognito_username", username)
-            logger.info(f"User authenticated via Chainlit OAuth: {username}")
-            return True, username, None
-
-    if not OIDC_ENABLED:
-        # Cognito not configured, use fallback mode
-        return False, None, None
-
-    # No Chainlit user and OIDC enabled → not authenticated yet
+    # No authentication configured, use fallback mode
     return False, None, None
-
-
-@cl.action_callback("authenticate")
-async def authenticate_action(action):
-    """Handle authentication callback action."""
-    # This would be called when user returns from Cognito authentication
-    # In a real implementation, you'd extract the authorization code from the URL
-    # and exchange it for tokens
-
-    auth_code = action.get("auth_code")  # This would come from the callback URL
-
-    if not auth_code:
-        await cl.Message(
-            content="❌ **Authentication failed:** No authorization code received.\n\n"
-            "Please try authenticating again."
-        ).send()
-        return
-
-    # In a real implementation, you would exchange the auth code for tokens here
-    # For now, we'll simulate this process
-
-    await cl.Message(
-        content="⏳ **Processing authentication...**\n\n"
-        "*Please wait while we verify your credentials...*"
-    ).send()
-
-    # TODO: Implement actual token exchange with Cognito
-    # This is where you'd call cognito_client.initiate_auth() or similar
-
-    await cl.Message(
-        content="✅ **Authentication successful!**\n\n"
-        "Welcome to Fix That Prompt! Loading your game..."
-    ).send()
 
 
 @cl.on_chat_start
@@ -803,30 +684,38 @@ async def main(message: cl.Message):
     elif game_state == "game_ended":
         await handle_post_game(message.content)
     else:
+        # Build actions list - only show Top Prompt if user has completed all rounds
+        actions = [
+            Action(
+                name="back_to_menu",
+                payload={"action": "back_to_menu"},
+                label="🏠 Back to Menu",
+            ),
+            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+            Action(
+                name="leaderboard",
+                payload={"action": "leaderboard"},
+                label="🏆 Leaderboard",
+            ),
+            Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+        ]
+
+        # Check if current user has completed all rounds
+        username = cl.user_session.get("username")
+        if username:
+            player_data = cl.user_session.get("player_data")
+            if player_data and not player_data.can_play_more_rounds:
+                actions.append(
+                    Action(
+                        name="top_leaderboard_prompt",
+                        payload={"action": "top_leaderboard_prompt"},
+                        label="🎯 Top Prompt",
+                    )
+                )
+
         await cl.Message(
             content="🤔 I'm not sure what to do with that. Please use the buttons below to navigate.",
-            actions=[
-                Action(
-                    name="back_to_menu",
-                    payload={"action": "back_to_menu"},
-                    label="🏠 Back to Menu",
-                ),
-                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
-                Action(
-                    name="leaderboard",
-                    payload={"action": "leaderboard"},
-                    label="🏆 Leaderboard",
-                ),
-                Action(
-                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
-                ),
-                Action(
-                    name="top_leaderboard_prompt",
-                    payload={"action": "top_leaderboard_prompt"},
-                    label="🎯 Top Prompt",
-                ),
-                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
-            ],
+            actions=actions,
         ).send()
 
 
@@ -850,30 +739,38 @@ async def handle_main_menu_input(message_content: str):
         # For any other input, show main menu options
         await main_message.remove()
 
+        # Build actions list - only show Top Prompt if user has completed all rounds
+        actions = [
+            Action(
+                name="back_to_menu",
+                payload={"action": "back_to_menu"},
+                label="🏠 Back to Menu",
+            ),
+            Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
+            Action(
+                name="leaderboard",
+                payload={"action": "leaderboard"},
+                label="🏆 Leaderboard",
+            ),
+            Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
+        ]
+
+        # Check if current user has completed all rounds
+        username = cl.user_session.get("username")
+        if username:
+            player_data = cl.user_session.get("player_data")
+            if player_data and not player_data.can_play_more_rounds:
+                actions.append(
+                    Action(
+                        name="top_leaderboard_prompt",
+                        payload={"action": "top_leaderboard_prompt"},
+                        label="🎯 Top Prompt",
+                    )
+                )
+
         new_message = await cl.Message(
             content="""🎮 **Please use the navigation buttons below:**""",
-            actions=[
-                Action(
-                    name="back_to_menu",
-                    payload={"action": "back_to_menu"},
-                    label="🏠 Back to Menu",
-                ),
-                Action(name="help", payload={"action": "help"}, label="📖 Game Guide"),
-                Action(
-                    name="leaderboard",
-                    payload={"action": "leaderboard"},
-                    label="🏆 Leaderboard",
-                ),
-                Action(
-                    name="stats", payload={"action": "stats"}, label="📊 Statistics"
-                ),
-                Action(
-                    name="top_leaderboard_prompt",
-                    payload={"action": "top_leaderboard_prompt"},
-                    label="🎯 Top Prompt",
-                ),
-                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
-            ],
+            actions=actions,
         ).send()
 
         cl.user_session.set("main_message", new_message)
@@ -883,42 +780,53 @@ async def handle_auth_input(message_content: str):
     """Handle input during authentication state."""
     content = message_content.lower().strip()
 
-    if content in ["token", "auth", "authenticate"]:
-        # Check if user provided an authentication token
-        # In a real implementation, this would be handled by the callback URL
-        await cl.Message(
-            content="🔐 **Please use the authentication links provided above to sign in with your Singlife credentials.**\n\n"
-            "If you're having trouble, please contact support."
-        ).send()
-    elif not OIDC_ENABLED:
-        # Fallback to username input if Cognito is not configured
-        await handle_username_input(message_content)
-    else:
-        # Guide user to use authentication links
-        await cl.Message(
-            content="🔐 **Please click on the Sign In or Sign Up links above to authenticate with your Singlife credentials.**\n\n"
-            "💡 *Authentication must be completed through the Cognito hosted UI.*"
-        ).send()
+    # Fallback to username input
+    await handle_username_input(message_content)
+
+
+def extract_singlife_username(email: str) -> str | None:
+    """Extract username from Singlife email."""
+    if not email:
+        return None
+    email = email.strip().lower()
+    if email.endswith("@singlife.com"):
+        return email.split("@", 1)[0]
+    return None
 
 
 async def handle_username_input(username_input: str):
     """Handle username input and show appropriate menu based on user status."""
 
-    username = username_input.strip()
+    username_input = username_input.strip()
 
-    if not username:
+    if not username_input:
         # Show error message using main_message logic
         main_message = cl.user_session.get("main_message")
         if main_message:
             await main_message.update(
-                content="❌ **Username cannot be empty.** Please enter a valid SingLife email name."
+                content="❌ **Email cannot be empty.** Please enter a valid Singlife email address."
             )
         else:
             new_message = await cl.Message(
-                content="❌ **Username cannot be empty.** Please enter a valid SingLife email name."
+                content="❌ **Email cannot be empty.** Please enter a valid Singlife email address."
             ).send()
             cl.user_session.set("main_message", new_message)
 
+        return
+
+    # Only allow @singlife.com emails
+    if "@singlife.com" not in username_input.lower():
+        await cl.Message(
+            content="❌ **Invalid email domain.** Please enter a valid SingLife email address (@singlife.com)."
+        ).send()
+        return
+
+    # Extract username from @singlife.com email
+    username = extract_singlife_username(username_input)
+    if not username:
+        await cl.Message(
+            content="❌ **Invalid email format.** Please enter a valid SingLife email address."
+        ).send()
         return
 
     # Get or create user in database
@@ -981,12 +889,6 @@ Ready to become a prompt master?
                 label="🏆 Leaderboard",
             ),
             Action(name="stats", payload={"action": "stats"}, label="📊 Statistics"),
-            Action(
-                name="top_leaderboard_prompt",
-                payload={"action": "top_leaderboard_prompt"},
-                label="🎯 Top Prompt",
-            ),
-            Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
         ]
     else:
         # Returning user with some progress
@@ -1028,12 +930,6 @@ Ready to continue your prompt engineering journey?
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
-                Action(
-                    name="top_leaderboard_prompt",
-                    payload={"action": "top_leaderboard_prompt"},
-                    label="🎯 Top Prompt",
-                ),
-                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ]
         else:
             # This shouldn't happen as completed users go to the other menu, but just in case
@@ -1052,12 +948,6 @@ Ready to continue your prompt engineering journey?
                 Action(
                     name="stats", payload={"action": "stats"}, label="📊 Statistics"
                 ),
-                Action(
-                    name="top_leaderboard_prompt",
-                    payload={"action": "top_leaderboard_prompt"},
-                    label="🎯 Top Prompt",
-                ),
-                Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
             ]
 
     main_message = await cl.Message(content=status_msg, actions=actions).send()
@@ -1110,7 +1000,6 @@ Thanks for playing **Fix That Prompt!**
             payload={"action": "top_leaderboard_prompt"},
             label="🎯 Top Prompt",
         ),
-        Action(name="logout", payload={"action": "logout"}, label="🚪 Logout"),
     ]
 
     main_message = await cl.Message(content=status_msg, actions=actions).send()

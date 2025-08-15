@@ -1,18 +1,21 @@
 """DynamoDB-based leaderboard implementation for Fix That Prompt game."""
 
 import os
-import json
-from typing import Optional, Dict, Any
 from datetime import datetime
 from decimal import Decimal
+from typing import Any
 
 import boto3
 from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
 from loguru import logger
 
-from ..models.player_session import PlayerScore, GameRound, BadPrompt
-from ..utils.logger import log_game_event
+from ..models.player_session import BadPrompt, GameRound, PlayerScore
+from ..utils.logger import (
+    log_dynamodb_error,
+    log_dynamodb_operation,
+    log_game_event,
+)
 
 
 class DynamoDBLeaderboard:
@@ -45,12 +48,12 @@ class DynamoDBLeaderboard:
             )
 
         except Exception as e:
-            logger.error(f"Failed to initialize DynamoDB: {e}")
+            log_dynamodb_error("initialize", self.table_name, error=e)
             raise ConnectionError(
                 f"Could not connect to DynamoDB table '{self.table_name}': {e}"
             )
 
-    def _serialize_rounds(self, rounds: list[GameRound]) -> list[Dict[str, Any]]:
+    def _serialize_rounds(self, rounds: list[GameRound]) -> list[dict[str, Any]]:
         """Convert GameRound objects to DynamoDB-compatible dictionaries."""
         serialized_rounds = []
         for round_data in rounds:
@@ -76,7 +79,7 @@ class DynamoDBLeaderboard:
             serialized_rounds.append(round_dict)
         return serialized_rounds
 
-    def _deserialize_rounds(self, rounds_data: list[Dict[str, Any]]) -> list[GameRound]:
+    def _deserialize_rounds(self, rounds_data: list[dict[str, Any]]) -> list[GameRound]:
         """Convert DynamoDB dictionaries back to GameRound objects."""
         rounds = []
         for round_dict in rounds_data:
@@ -134,6 +137,10 @@ class DynamoDBLeaderboard:
             # Use put_item to create or replace the entire item
             self.table.put_item(Item=item)
 
+            log_dynamodb_operation(
+                "put_item", self.table_name, player_score.username, success=True
+            )
+
             log_game_event(
                 "player_updated",
                 {
@@ -148,10 +155,14 @@ class DynamoDBLeaderboard:
             return True
 
         except ClientError as e:
-            logger.error(f"Error saving player {player_score.username}: {e}")
+            log_dynamodb_error(
+                "put_item", self.table_name, player_score.username, error=e
+            )
             return False
         except Exception as e:
-            logger.error(f"Unexpected error saving player {player_score.username}: {e}")
+            log_dynamodb_error(
+                "put_item", self.table_name, player_score.username, error=e
+            )
             return False
 
     def add_player_score(self, player_score: PlayerScore) -> bool:
@@ -170,12 +181,14 @@ class DynamoDBLeaderboard:
         """
         try:
             response = self.table.get_item(Key={"username": username})
-            return "Item" in response
+            exists = "Item" in response
+            log_dynamodb_operation("get_item", self.table_name, username, success=True)
+            return exists
         except ClientError as e:
-            logger.error(f"Error checking username existence: {e}")
+            log_dynamodb_error("get_item", self.table_name, username, error=e)
             return False
 
-    def get_top_players(self, limit: int = 10) -> list[Dict[str, Any]]:
+    def get_top_players(self, limit: int = 10) -> list[dict[str, Any]]:
         """
         Get the top players by score using the GSI.
 
@@ -186,15 +199,30 @@ class DynamoDBLeaderboard:
             List of player dictionaries sorted by score (highest first)
         """
         try:
-            # Query the GSI to get completed players sorted by score
-            response = self.table.query(
+            # Get all players (both completed and active) and sort by score
+            all_players = []
+
+            # Query completed players
+            completed_response = self.table.query(
                 IndexName="score-index",
                 KeyConditionExpression=Key("game_status").eq("completed"),
-                ScanIndexForward=False,  # Sort in descending order (highest scores first)
-                Limit=limit,
+                ScanIndexForward=False,
             )
+            all_players.extend(completed_response.get("Items", []))
 
-            players = response.get("Items", [])
+            # Query active players
+            active_response = self.table.query(
+                IndexName="score-index",
+                KeyConditionExpression=Key("game_status").eq("active"),
+                ScanIndexForward=False,
+            )
+            all_players.extend(active_response.get("Items", []))
+
+            # Sort all players by final_score in descending order
+            all_players.sort(key=lambda x: float(x.get("final_score", 0)), reverse=True)
+
+            # Take the top 'limit' players
+            players = all_players[:limit]
 
             # Convert Decimal values back to float and add rank
             top_players = []
@@ -203,11 +231,13 @@ class DynamoDBLeaderboard:
                 player_dict["rank"] = i + 1
                 top_players.append(player_dict)
 
-            logger.debug(f"Retrieved top {len(top_players)} players")
+            logger.debug(
+                f"Retrieved top {len(top_players)} players (including active players)"
+            )
             return top_players
 
         except ClientError as e:
-            logger.error(f"Error getting top players: {e}")
+            log_dynamodb_error("query", self.table_name, error=e)
             return []
 
     def get_player_rank(self, username: str) -> int | None:
@@ -223,27 +253,40 @@ class DynamoDBLeaderboard:
         try:
             # Get the player's score first
             player = self.get_player_score(username)
-            if not player or not player.get("is_completed"):
+            if not player:
                 return None
 
             player_score = float(player["final_score"])
 
-            # Count how many completed players have a higher score
-            response = self.table.query(
+            # Count how many players (both completed and active) have a higher score
+            higher_score_count = 0
+
+            # Count completed players with higher scores
+            completed_response = self.table.query(
                 IndexName="score-index",
                 KeyConditionExpression=Key("game_status").eq("completed")
                 & Key("final_score").gt(Decimal(str(player_score))),
                 Select="COUNT",
             )
+            higher_score_count += completed_response["Count"]
+
+            # Count active players with higher scores
+            active_response = self.table.query(
+                IndexName="score-index",
+                KeyConditionExpression=Key("game_status").eq("active")
+                & Key("final_score").gt(Decimal(str(player_score))),
+                Select="COUNT",
+            )
+            higher_score_count += active_response["Count"]
 
             # Rank is the count of higher scores + 1
-            return response["Count"] + 1
+            return higher_score_count + 1
 
         except ClientError as e:
-            logger.error(f"Error getting player rank: {e}")
+            log_dynamodb_error("query", self.table_name, username, error=e)
             return None
 
-    def get_player_score(self, username: str) -> Dict[str, Any] | None:
+    def get_player_score(self, username: str) -> dict[str, Any] | None:
         """
         Get the score record for a specific player.
 
@@ -261,7 +304,7 @@ class DynamoDBLeaderboard:
             return None
 
         except ClientError as e:
-            logger.error(f"Error getting player score: {e}")
+            log_dynamodb_error("get_item", self.table_name, username, error=e)
             return None
 
     def get_total_players(self) -> int:
@@ -270,27 +313,38 @@ class DynamoDBLeaderboard:
             response = self.table.scan(Select="COUNT")
             return response["Count"]
         except ClientError as e:
-            logger.error(f"Error getting total players: {e}")
+            log_dynamodb_error("scan", self.table_name, error=e)
             return 0
 
     def get_average_score(self) -> float:
-        """Get the average score across all completed players."""
+        """Get the average score across all players (completed and active)."""
         try:
-            response = self.table.query(
+            all_players = []
+
+            # Get completed players
+            completed_response = self.table.query(
                 IndexName="score-index",
                 KeyConditionExpression=Key("game_status").eq("completed"),
                 ProjectionExpression="final_score",
             )
+            all_players.extend(completed_response.get("Items", []))
 
-            players = response.get("Items", [])
-            if not players:
+            # Get active players
+            active_response = self.table.query(
+                IndexName="score-index",
+                KeyConditionExpression=Key("game_status").eq("active"),
+                ProjectionExpression="final_score",
+            )
+            all_players.extend(active_response.get("Items", []))
+
+            if not all_players:
                 return 0.0
 
-            total_score = sum(float(player["final_score"]) for player in players)
-            return total_score / len(players)
+            total_score = sum(float(player["final_score"]) for player in all_players)
+            return total_score / len(all_players)
 
         except ClientError as e:
-            logger.error(f"Error getting average score: {e}")
+            log_dynamodb_error("query", self.table_name, error=e)
             return 0.0
 
     def clear_leaderboard(self) -> None:
@@ -309,7 +363,7 @@ class DynamoDBLeaderboard:
             logger.warning("DynamoDB leaderboard has been cleared!")
 
         except ClientError as e:
-            logger.error(f"Error clearing leaderboard: {e}")
+            log_dynamodb_error("scan", self.table_name, error=e)
 
     def get_or_create_player(self, username: str) -> PlayerScore:
         """
@@ -360,6 +414,9 @@ class DynamoDBLeaderboard:
         if completed_round.ragas_score > player.best_round_score:
             player.best_round_score = completed_round.ragas_score
             player.final_score = completed_round.ragas_score
+        else:
+            # Keep the current best score as final score
+            player.final_score = player.best_round_score
 
         return self.create_or_update_player(player)
 
@@ -404,10 +461,10 @@ class DynamoDBLeaderboard:
             )
 
         except ClientError as e:
-            logger.error(f"Error getting player history: {e}")
+            log_dynamodb_error("get_item", self.table_name, username, error=e)
             return None
 
-    def _convert_decimals_to_float(self, item: Dict[str, Any]) -> Dict[str, Any]:
+    def _convert_decimals_to_float(self, item: dict[str, Any]) -> dict[str, Any]:
         """Convert Decimal values in DynamoDB item to float for JSON serialization."""
         converted = {}
         for key, value in item.items():
