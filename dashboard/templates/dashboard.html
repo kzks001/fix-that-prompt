@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix That Prompt - Leaderboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: transform 0.2s ease-in-out;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+        }
+        .trophy-gold { color: #FFD700; }
+        .trophy-silver { color: #C0C0C0; }
+        .trophy-bronze { color: #CD7F32; }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-gamepad text-3xl"></i>
+                    <h1 class="text-3xl font-bold">Fix That Prompt</h1>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm opacity-90">Leaderboard Dashboard</p>
+                    <p class="text-xs opacity-75" id="lastUpdated">Last updated: Loading...</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Leaderboard (Top Priority) -->
+    <div class="container mx-auto px-6 py-4">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold text-gray-900">
+                        <i class="fas fa-trophy trophy-gold mr-2"></i>
+                        Leaderboard
+                    </h2>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-sm text-gray-500" id="autoRefreshStatus">Auto-refresh: 30s</span>
+                        <button onclick="refreshData()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+                            <i class="fas fa-sync-alt mr-2"></i>
+                            Refresh Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Player</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rounds</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Completed</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200" id="leaderboardBody">
+                        <tr>
+                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                                <i class="fas fa-spinner fa-spin mr-2"></i>
+                                Loading leaderboard...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards (Below Leaderboard) -->
+    <div class="container mx-auto px-6 py-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Total Players</p>
+                        <p class="text-2xl font-bold text-gray-900" id="totalPlayers">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-green-100 text-green-600">
+                        <i class="fas fa-check-circle text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Completed Games</p>
+                        <p class="text-2xl font-bold text-gray-900" id="completedGames">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+                        <i class="fas fa-play-circle text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Active Games</p>
+                        <p class="text-2xl font-bold text-gray-900" id="activeGames">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                        <i class="fas fa-chart-line text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Avg Score</p>
+                        <p class="text-2xl font-bold text-gray-900" id="avgScore">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-red-100 text-red-600">
+                        <i class="fas fa-trophy text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Top Score</p>
+                        <p class="text-2xl font-bold text-gray-900" id="topScore">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm opacity-75">
+                Fix That Prompt Leaderboard Dashboard
+                <span class="mx-2">•</span>
+                <span id="footerLastUpdated">Last updated: Loading...</span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        let refreshCountdown = 30;
+        let refreshInterval;
+        
+        // Start auto-refresh countdown with smart refresh
+        function startAutoRefresh() {
+            refreshInterval = setInterval(() => {
+                refreshCountdown--;
+                updateRefreshStatus();
+                
+                if (refreshCountdown <= 0) {
+                    refreshData();
+                    // Smart refresh: longer intervals when no activity
+                    const hasRecentActivity = checkRecentActivity();
+                    refreshCountdown = hasRecentActivity ? 30 : 120; // 30s if active, 2min if quiet
+                }
+            }, 1000);
+        }
+        
+        function checkRecentActivity() {
+            // Check if there are active games or recent completions
+            const activeGames = parseInt(document.getElementById('activeGames').textContent) || 0;
+            const lastUpdate = document.getElementById('lastUpdated').textContent;
+            
+            // If there are active games, refresh more frequently
+            return activeGames > 0;
+        }
+        
+        function updateRefreshStatus() {
+            const statusElement = document.getElementById('autoRefreshStatus');
+            if (statusElement) {
+                statusElement.textContent = `Auto-refresh: ${refreshCountdown}s`;
+            }
+        }
+        
+        function refreshData() {
+            // Show refreshing indicator
+            const refreshBtn = document.querySelector('button[onclick="refreshData()"]');
+            const originalText = refreshBtn.innerHTML;
+            refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Refreshing...';
+            refreshBtn.disabled = true;
+            
+            loadStats();
+            loadLeaderboard();
+            refreshCountdown = 30; // Reset countdown
+            updateRefreshStatus();
+            
+            // Reset button after a short delay
+            setTimeout(() => {
+                refreshBtn.innerHTML = originalText;
+                refreshBtn.disabled = false;
+            }, 2000);
+        }
+
+        function loadStats() {
+            fetch('/api/stats')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('totalPlayers').textContent = data.stats.total_completed_games;
+                        document.getElementById('completedGames').textContent = data.stats.total_completed_games;
+                        document.getElementById('activeGames').textContent = data.stats.active_games;
+                        document.getElementById('avgScore').textContent = data.stats.average_score;
+                        document.getElementById('topScore').textContent = data.stats.highest_score;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading stats:', error);
+                });
+        }
+
+        function loadLeaderboard() {
+            fetch('/api/leaderboard')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayLeaderboard(data.players);
+                        updateLastUpdated(data.last_updated);
+                    } else {
+                        document.getElementById('leaderboardBody').innerHTML = 
+                            '<tr><td colspan="5" class="px-6 py-4 text-center text-red-500">Error loading leaderboard</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading leaderboard:', error);
+                    document.getElementById('leaderboardBody').innerHTML = 
+                        '<tr><td colspan="5" class="px-6 py-4 text-center text-red-500">Error loading leaderboard</td></tr>';
+                });
+        }
+
+        function displayLeaderboard(players) {
+            const tbody = document.getElementById('leaderboardBody');
+            
+            if (players.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-4 text-center text-gray-500">No players yet!</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = players.map((player, index) => {
+                const rank = index + 1;
+                const trophyIcon = rank === 1 ? 'fas fa-trophy trophy-gold' : 
+                                 rank === 2 ? 'fas fa-trophy trophy-silver' : 
+                                 rank === 3 ? 'fas fa-trophy trophy-bronze' : 'fas fa-medal text-gray-400';
+                
+                const completedDate = player.completed_at ? new Date(player.completed_at).toLocaleDateString() : 'N/A';
+                
+                return `
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <i class="${trophyIcon} mr-2"></i>
+                                <span class="text-sm font-medium text-gray-900">${rank}</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">${player.username}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                ${player.final_score} pts
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${player.rounds_played} rounds
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${completedDate}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateLastUpdated(timestamp) {
+            const date = new Date(timestamp);
+            const formatted = date.toLocaleString();
+            document.getElementById('lastUpdated').textContent = `Last updated: ${formatted}`;
+            document.getElementById('footerLastUpdated').textContent = `Last updated: ${formatted}`;
+        }
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshData();
+            startAutoRefresh(); // Start the auto-refresh countdown
+        });
+    </script>
+</body>
+</html>
