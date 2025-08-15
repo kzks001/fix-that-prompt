@@ -165,11 +165,557 @@
           }
         }
       ]
+    },
+    {
+      "username": "yxw",
+      "rounds_remaining": 3,
+      "final_score": 0.0,
+      "rounds_played": 0,
+      "best_round_score": 0.0,
+      "total_rounds": 0,
+      "is_completed": false,
+      "created_at": "2025-08-06T16:28:37.781607",
+      "last_played": "2025-08-06T16:28:37.781610",
+      "rank": null,
+      "rounds": []
+    },
+    {
+      "username": "ywx",
+      "rounds_remaining": 2,
+      "final_score": 0.0,
+      "rounds_played": 1,
+      "best_round_score": 0.0,
+      "total_rounds": 1,
+      "is_completed": false,
+      "created_at": "2025-08-06T16:30:50.194857",
+      "last_played": "2025-08-06T16:33:00.182568",
+      "rank": null,
+      "rounds": [
+        {
+          "round_number": 1,
+          "original_prompt": "Explain science",
+          "improved_prompt": "eirgnbaeir",
+          "improved_response": "It looks like the prompt you provided might be a bit jumbled. If you're looking for help explaining photosynthesis to 5th-grade students, I'd be happy to assist! \n\nHere’s a simple way to explain photosynthesis:\n\n---\n\n**What is Photosynthesis?**\n\nPhotosynthesis is a process that plants use to make their own food. It’s like cooking for plants!\n\n**Here’s how it works:**\n\n1. **Ingredients Needed:**\n   - **Sunlight:** Plants need light from the sun.\n   - **Water:** Plants take in water through their roots.\n   - **Carbon Dioxide:** This is a gas that plants get from the air through tiny holes in their leaves.\n\n2. **The Cooking Process:**\n   - When sunlight hits the leaves, it helps the plant mix the water and carbon dioxide together.\n   - This happens in a part of the plant cell called the chloroplast, which contains a green pigment called chlorophyll. That’s what makes leaves green!\n\n3. **The Result:**\n   - The plant produces glucose (a type of sugar) which is its food. This is how plants get energy to grow.\n   - As a bonus, they release oxygen into the air, which is great for us because we need oxygen to breathe!\n\n**Why is Photosynthesis Important?**\n- It helps plants grow, which in turn helps us and other animals because plants are at the base of the food chain.\n- It produces oxygen, which is essential for life on Earth.\n\n**Fun Activity:**\nYou could do an experiment by planting seeds in soil and watering them daily while keeping one pot in the dark. After a week or two, compare the growth of the plants. This will help show how important sunlight is for photosynthesis!\n\n---\n\nFeel free to ask if you need more information or if there's a specific aspect of photosynthesis you want to focus on!",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"eirgnbaeir\" does not constitute a usable prompt for the task of explaining photosynthesis to 5th-grade students. It appears to be a random string of characters with no coherent meaning or relevance to the topic of science or photosynthesis. Therefore, it fails to meet any of the critical requirements for a usable prompt, and it does not improve upon the original bad prompt in any way.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"eirgnbaeir\" does not apply any elements of the COSTAR framework. It does not provide context, objectives, style, tone, audience, or response format. Instead, it appears to be a random string of characters that does not relate to the task of explaining photosynthesis to 5th-grade students. Therefore, there is no application of the COSTAR elements in this prompt.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"eirgnbaeir\" does not provide any meaningful direction or context for explaining photosynthesis to 5th-grade students. It appears to be a random string of characters rather than a usable prompt for the task at hand. Therefore, it lacks creativity and innovation in addressing the specific educational need.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-06T16:33:00.182102",
+          "bad_prompt": {
+            "id": "simple_explanation",
+            "category": "Education",
+            "bad_prompt": "Explain science",
+            "weak_response": "Science is about studying things. Scientists do experiments. They learn stuff. Science is important.",
+            "context": "Teacher needs to explain photosynthesis to 5th-grade students",
+            "expected_improvements": [
+              "Specify the exact scientific concept",
+              "Define the student age and grade level",
+              "Request age-appropriate language",
+              "Include examples and analogies",
+              "Ask for interactive elements"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "username": "sc1",
+      "rounds_remaining": 0,
+      "final_score": 0.0,
+      "rounds_played": 3,
+      "best_round_score": 0.0,
+      "total_rounds": 3,
+      "is_completed": true,
+      "created_at": "2025-08-07T15:54:48.248350",
+      "last_played": "2025-08-07T15:57:29.109320",
+      "rank": null,
+      "rounds": [
+        {
+          "round_number": 1,
+          "original_prompt": "How to cook food",
+          "improved_prompt": "asdlfknaslf",
+          "improved_response": "It seems like there might have been a mix-up with your message. Could you please clarify what specific dish you’re looking to prepare for your dinner party? I’d love to help you with recipes, cooking tips, or anything else you need to make your dinner a success!",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"asdlfknaslf\" does not meet any of the critical requirements for a usable prompt. It is a meaningless string of characters that does not provide any actionable information or direction for preparing a specific dish. It does not improve upon the original bad prompt \"How to cook food\" in any way, nor does it stay within the topic of cooking. Therefore, it cannot be considered a valid prompt for the intended task.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"asdlfknaslf\" does not apply any elements of the COSTAR framework. It does not provide context, objectives, style, tone, audience, or response format. Instead, it appears to be a random string of characters with no relevance to the task at hand. Therefore, there is no application of the COSTAR framework.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"asdlfknaslf\" does not provide any usable direction or creativity related to the task of preparing a specific dish for a dinner party. It appears to be a random string of characters rather than a coherent prompt. Therefore, it does not demonstrate any creativity or innovation in addressing the cooking task.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-07T15:55:07.542532",
+          "bad_prompt": {
+            "id": "basic_recipe",
+            "category": "Cooking",
+            "bad_prompt": "How to cook food",
+            "weak_response": "Put ingredients together. Cook them. Eat when done.",
+            "context": "Home cook wants to prepare a specific dish for a dinner party",
+            "expected_improvements": [
+              "Specify the exact dish and cuisine type",
+              "Include dietary restrictions and preferences",
+              "Request serving size and prep time",
+              "Ask for detailed step-by-step instructions",
+              "Include ingredient substitutions and tips"
+            ]
+          }
+        },
+        {
+          "round_number": 2,
+          "original_prompt": "How to cook food",
+          "improved_prompt": "ergerithbsd",
+          "improved_response": "It seems like your prompt may have been a bit jumbled. If you could provide me with the name of the dish you're looking to prepare for your dinner party or any specific details about what you're aiming to create, I’d be happy to help! Whether you need a recipe, cooking tips, or ideas for side dishes, just let me know!",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"ergerithbsd\" does not constitute a usable prompt for the task of cooking food or preparing a specific dish for a dinner party. It appears to be a random string of characters with no coherent meaning or relevance to the original task. Therefore, it fails to meet any of the critical requirements for a prompt that could guide an AI in providing useful information or instructions related to cooking. As such, it receives a score of 0.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"ergerithbsd\" does not apply any elements of the COSTAR framework. It does not provide context, objectives, style, tone, audience, or response format. Instead, it appears to be a random string of characters with no relevance to the task at hand. Therefore, it does not meet any criteria for scoring.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"ergerithbsd\" does not provide any usable information or direction related to the task of preparing a specific dish for a dinner party. It appears to be a random string of characters with no relevance to cooking or the context provided. Therefore, it lacks creativity and innovation in addressing the task at hand.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-07T15:55:43.438073",
+          "bad_prompt": {
+            "id": "basic_recipe",
+            "category": "Cooking",
+            "bad_prompt": "How to cook food",
+            "weak_response": "Put ingredients together. Cook them. Eat when done.",
+            "context": "Home cook wants to prepare a specific dish for a dinner party",
+            "expected_improvements": [
+              "Specify the exact dish and cuisine type",
+              "Include dietary restrictions and preferences",
+              "Request serving size and prep time",
+              "Ask for detailed step-by-step instructions",
+              "Include ingredient substitutions and tips"
+            ]
+          }
+        },
+        {
+          "round_number": 3,
+          "original_prompt": "Write an email",
+          "improved_prompt": "asdpsgormj",
+          "improved_response": "It seems that your prompt is not clear. Could you please provide a bit more detail about the follow-up email you need assistance with? For example, you might want to include information such as the key points discussed in the meeting, any action items, or specific details you’d like to highlight. This will help me craft a more effective follow-up email for you. Thank you!",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"asdpsgormj\" does not constitute a usable prompt for the task of writing a follow-up email after a client meeting. It appears to be a random string of characters with no coherent meaning or relevance to the context provided. Therefore, it fails to meet any of the critical requirements for improvement, as it does not provide any actionable guidance or clarity for the intended task.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"asdpsgormj\" does not apply any elements of the COSTAR framework. It does not provide context, objectives, style, tone, audience, or response format. The prompt appears to be a random string of characters and does not address the task of writing a follow-up email after a client meeting. Therefore, it does not meet the criteria for scoring any points.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"asdpsgormj\" does not provide any usable direction for writing a follow-up email after a client meeting. It appears to be a random string of characters rather than a coherent prompt. Therefore, it lacks creativity and does not address the task at hand.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-07T15:57:29.107512",
+          "bad_prompt": {
+            "id": "generic_email",
+            "category": "Business Communication",
+            "bad_prompt": "Write an email",
+            "weak_response": "Hi,\n\nI hope you are well. I wanted to reach out about something. Please let me know what you think.\n\nThanks,\nSender",
+            "context": "Professional needs to write a follow-up email after a client meeting",
+            "expected_improvements": [
+              "Specify the recipient and relationship",
+              "Define the email's specific purpose",
+              "Include relevant meeting details",
+              "Request specific action items",
+              "Set appropriate professional tone"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "username": "sc2",
+      "rounds_remaining": 2,
+      "final_score": 0.0,
+      "rounds_played": 1,
+      "best_round_score": 0.0,
+      "total_rounds": 1,
+      "is_completed": false,
+      "created_at": "2025-08-07T15:57:46.456236",
+      "last_played": "2025-08-07T15:58:44.668567",
+      "rank": null,
+      "rounds": [
+        {
+          "round_number": 1,
+          "original_prompt": "Sell this product",
+          "improved_prompt": "aisnfaoisngeoirngeq",
+          "improved_response": "It seems like your prompt got a bit jumbled. If you could provide some more details about the product you’re launching, such as its features, target audience, and any specific messaging you’d like to convey, I’d be happy to help you craft compelling marketing copy for the launch!",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"aisnfaoisngeoirngeq\" is not a usable prompt for the task of creating compelling copy for a product launch. It appears to be a random string of characters with no coherent meaning or direction. Therefore, it does not meet any of the critical requirements for a prompt that could be given to an AI to complete the task. It does not provide any specific guidance or context related to marketing or product promotion, making it completely ineffective for the intended purpose.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"aisnfaoisngeoirngeq\" does not apply any elements of the COSTAR framework. It does not provide context, objectives, style, tone, audience, or response format. Instead, it appears to be a random string of characters with no relevance to the task at hand. Therefore, it does not meet the criteria for scoring.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"aisnfaoisngeoirngeq\" does not provide any coherent or usable direction for the task of creating compelling copy for a product launch. It appears to be a random string of characters rather than a thoughtful or creative prompt. Therefore, it does not demonstrate any creativity or innovation in addressing the task at hand.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-07T15:58:44.668014",
+          "bad_prompt": {
+            "id": "weak_marketing",
+            "category": "Marketing",
+            "bad_prompt": "Sell this product",
+            "weak_response": "This product is good. You should buy it. It costs money. Available now.",
+            "context": "Marketing manager needs compelling copy for a new product launch",
+            "expected_improvements": [
+              "Define target customer demographics",
+              "Specify unique value propositions",
+              "Include competitive advantages",
+              "Request specific call-to-action",
+              "Define marketing channel and format"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "username": "colton",
+      "rounds_remaining": 0,
+      "final_score": 0.0,
+      "rounds_played": 3,
+      "best_round_score": 0.0,
+      "total_rounds": 3,
+      "is_completed": true,
+      "created_at": "2025-08-12T17:40:24.286067",
+      "last_played": "2025-08-12T18:08:18.430403",
+      "rank": null,
+      "rounds": [
+        {
+          "round_number": 1,
+          "original_prompt": "Write an email",
+          "improved_prompt": "asdkfjngwrth",
+          "improved_response": "It seems like there may have been a misunderstanding in your prompt. To assist you effectively with writing a follow-up email after a client meeting, could you please provide more details? For example, the main topics discussed during the meeting, any specific points you want to highlight, and the tone you wish to convey (formal, friendly, etc.)? This will help me tailor the email to your needs. Thank you!",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"asdkfjngwrth\" does not meet any of the critical requirements for a usable prompt. It is a random string of characters that does not provide any direction or context for writing a follow-up email after a client meeting. It does not improve upon the original bad prompt \"Write an email\" in any meaningful way, nor does it stay within the topic of writing a professional email. Therefore, it scores a 0 as it is not a usable prompt for the intended task.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"asdkfjngwrth\" does not apply any elements of the COSTAR framework. It lacks context, objective, style, tone, audience, and response specifications. Therefore, it does not meet the criteria for scoring.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"asdkfjngwrth\" does not provide any usable direction or creativity related to the task of writing a follow-up email after a client meeting. It appears to be a random string of characters rather than a coherent prompt. Therefore, it does not demonstrate any creativity or innovation in addressing the task at hand.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-12T17:40:39.208138",
+          "bad_prompt": {
+            "id": "generic_email",
+            "category": "Business Communication",
+            "bad_prompt": "Write an email",
+            "weak_response": "Hi,\n\nI hope you are well. I wanted to reach out about something. Please let me know what you think.\n\nThanks,\nSender",
+            "context": "Professional needs to write a follow-up email after a client meeting",
+            "expected_improvements": [
+              "Specify the recipient and relationship",
+              "Define the email's specific purpose",
+              "Include relevant meeting details",
+              "Request specific action items",
+              "Set appropriate professional tone"
+            ]
+          }
+        },
+        {
+          "round_number": 2,
+          "original_prompt": "Write about AI",
+          "improved_prompt": "arsghrwtj",
+          "improved_response": "It seems that your prompt is unclear. Could you please provide more specific details or a clearer prompt regarding your essay on artificial intelligence? For example, are you looking for a particular aspect of AI to focus on, such as its applications, ethical considerations, or future implications? Any additional information would help me assist you better in crafting your essay.",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"arsghrwtj\" does not constitute a usable prompt for the task of writing an academic essay about artificial intelligence. It appears to be a random string of characters with no coherent meaning or direction related to the topic. Therefore, it fails to meet any of the critical requirements for improvement over the original bad prompt. There is no clarity, specificity, or actionable content in this prompt, making it completely ineffective for the intended purpose.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"arsghrwtj\" does not apply any elements of the COSTAR framework. It does not provide context, objectives, style, tone, audience, or response format. Instead, it appears to be a random string of characters with no relevance to the task at hand. Therefore, it does not meet the criteria for scoring.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"arsghrwtj\" does not provide any meaningful direction or context for writing about artificial intelligence. It appears to be a random string of characters rather than a usable prompt for the task at hand. Therefore, it lacks creativity and innovation, as it does not contribute to the goal of helping a student write an academic essay on AI.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-12T18:07:39.726488",
+          "bad_prompt": {
+            "id": "vague_essay",
+            "category": "Academic Writing",
+            "bad_prompt": "Write about AI",
+            "weak_response": "AI is good. It helps people. There are many types of AI. Some people worry about AI. AI will change the future. The end.",
+            "context": "Student needs help writing an academic essay about artificial intelligence for a college course",
+            "expected_improvements": [
+              "Specify essay length and format requirements",
+              "Define specific aspects of AI to focus on",
+              "Indicate target audience and academic level",
+              "Request proper citations and references",
+              "Specify desired tone and writing style"
+            ]
+          }
+        },
+        {
+          "round_number": 3,
+          "original_prompt": "Sell this product",
+          "improved_prompt": "sadfht",
+          "improved_response": "It seems like your prompt may not have come through clearly. To assist you effectively with compelling copy for your new product launch, could you please provide more details? For example, what is the product, who is the target audience, and what key features or benefits would you like to highlight? This information will help me create impactful marketing copy tailored to your needs.",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"sadfht\" does not constitute a usable prompt for the task of creating compelling copy for a product launch. It is a meaningless string of characters that does not provide any direction or context for generating marketing copy. Therefore, it fails to meet any of the critical requirements for improvement over the original bad prompt \"Sell this product.\" As such, it receives a score of 0.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"sadfht\" does not apply any elements of the COSTAR framework. It lacks context, objective, style, tone, audience, and response specifications. The prompt is nonsensical and does not address the task of creating compelling copy for a product launch.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"sadfht\" does not provide any usable direction or creativity for the task of creating compelling copy for a product launch. It appears to be a random string of characters with no relevance to marketing or the context provided. Therefore, it does not demonstrate any creativity or innovation in addressing the task at hand.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-12T18:08:18.429776",
+          "bad_prompt": {
+            "id": "weak_marketing",
+            "category": "Marketing",
+            "bad_prompt": "Sell this product",
+            "weak_response": "This product is good. You should buy it. It costs money. Available now.",
+            "context": "Marketing manager needs compelling copy for a new product launch",
+            "expected_improvements": [
+              "Define target customer demographics",
+              "Specify unique value propositions",
+              "Include competitive advantages",
+              "Request specific call-to-action",
+              "Define marketing channel and format"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "username": "eargw",
+      "rounds_remaining": 3,
+      "final_score": 0.0,
+      "rounds_played": 0,
+      "best_round_score": 0.0,
+      "total_rounds": 0,
+      "is_completed": false,
+      "created_at": "2025-08-12T18:08:50.404007",
+      "last_played": "2025-08-12T18:08:50.404008",
+      "rank": null,
+      "rounds": []
+    },
+    {
+      "username": "asdgjan",
+      "rounds_remaining": 3,
+      "final_score": 0.0,
+      "rounds_played": 0,
+      "best_round_score": 0.0,
+      "total_rounds": 0,
+      "is_completed": false,
+      "created_at": "2025-08-12T18:13:37.423386",
+      "last_played": "2025-08-12T18:13:37.423387",
+      "rank": null,
+      "rounds": []
+    },
+    {
+      "username": "asdgjabga",
+      "rounds_remaining": 2,
+      "final_score": 0.0,
+      "rounds_played": 1,
+      "best_round_score": 0.0,
+      "total_rounds": 1,
+      "is_completed": false,
+      "created_at": "2025-08-12T18:13:50.014889",
+      "last_played": "2025-08-12T18:14:02.611557",
+      "rank": null,
+      "rounds": [
+        {
+          "round_number": 1,
+          "original_prompt": "Make a function",
+          "improved_prompt": "srh",
+          "improved_response": "It seems that your prompt \"srh\" is unclear, and I’m not able to determine the specific programming task you need help with. Could you please provide more details about the problem you're trying to solve or the functionality you need in your Python function? That way, I can assist you more effectively!",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"srh\" does not provide any meaningful instruction or context for creating a Python function. It is a meaningless phrase that does not relate to the task of developing a function to solve a specific problem. Therefore, it fails to meet any of the critical requirements for a usable prompt and does not improve upon the original bad prompt in any way.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"srh\" does not apply any elements of the COSTAR framework. It lacks context, objective, style, tone, audience, and response specifications. There is no indication that the user has attempted to improve the original prompt using the COSTAR elements.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"srh\" does not provide any meaningful direction or context for creating a Python function. It lacks clarity and specificity, making it impossible to determine what the user is asking for. Therefore, it does not demonstrate any creativity or innovation in addressing the task at hand.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-12T18:14:02.610892",
+          "bad_prompt": {
+            "id": "unclear_code",
+            "category": "Programming",
+            "bad_prompt": "Make a function",
+            "weak_response": "def func():\n    return True",
+            "context": "Developer needs a Python function to solve a specific problem",
+            "expected_improvements": [
+              "Specify what the function should do",
+              "Define input parameters and types",
+              "Specify expected output format",
+              "Include error handling requirements",
+              "Request documentation and examples"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "username": "kzksk1123",
+      "rounds_remaining": 2,
+      "final_score": 0.0,
+      "rounds_played": 1,
+      "best_round_score": 0.0,
+      "total_rounds": 1,
+      "is_completed": false,
+      "created_at": "2025-08-12T18:17:09.187128",
+      "last_played": "2025-08-12T18:17:31.981008",
+      "rank": null,
+      "rounds": [
+        {
+          "round_number": 1,
+          "original_prompt": "Write an email",
+          "improved_prompt": "ervna?",
+          "improved_response": "It seems that your prompt might be incomplete or unclear. However, if you are looking for guidance on how to write a follow-up email after a client meeting, here’s a template you can use:\n\n---\n\n**Subject:** Thank You for Our Meeting\n\nDear [Client's Name],\n\nI hope this message finds you well. I wanted to take a moment to thank you for our meeting on [date]. I truly appreciate the opportunity to discuss [specific topics or projects discussed] and learn more about your needs and goals.\n\nAs a follow-up, I wanted to summarize our key points and next steps:\n\n1. **Key Point 1:** [Brief description]\n2. **Key Point 2:** [Brief description]\n3. **Next Steps:** [Outline what will happen next, including any actions you or the client need to take]\n\nPlease feel free to reach out if you have any questions or need further clarification on anything discussed. I look forward to working together and am excited about the possibilities ahead.\n\nThank you once again for your time.\n\nBest regards,\n\n[Your Name]  \n[Your Position]  \n[Your Company]  \n[Your Contact Information]  \n\n---\n\nFeel free to modify any part of this email to better fit your style or the specifics of your meeting. If you need further assistance or have a different request, please let me know!",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"ervna?\" does not constitute a usable prompt for the task of writing a follow-up email after a client meeting. It appears to be a random string of characters or a typo rather than a coherent request or instruction. It fails to meet any of the critical requirements, as it does not provide any context or direction for the AI to generate a relevant email. Therefore, it does not improve upon the original bad prompt in any meaningful way.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"ervna?\" does not apply any elements of the COSTAR framework. There is no context, objective, style, tone, audience, or response specified in the prompt. It appears to be a nonsensical input rather than an attempt to improve the original prompt.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"ervna?\" does not provide any clear direction or context for writing a follow-up email after a client meeting. It appears to be a random string of characters rather than a usable prompt for the task at hand. Therefore, it lacks creativity and does not contribute to solving the actual task.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-12T18:17:31.980299",
+          "bad_prompt": {
+            "id": "generic_email",
+            "category": "Business Communication",
+            "bad_prompt": "Write an email",
+            "weak_response": "Hi,\n\nI hope you are well. I wanted to reach out about something. Please let me know what you think.\n\nThanks,\nSender",
+            "context": "Professional needs to write a follow-up email after a client meeting",
+            "expected_improvements": [
+              "Specify the recipient and relationship",
+              "Define the email's specific purpose",
+              "Include relevant meeting details",
+              "Request specific action items",
+              "Set appropriate professional tone"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "username": "kzks1234",
+      "rounds_remaining": 2,
+      "final_score": 0.0,
+      "rounds_played": 1,
+      "best_round_score": 0.0,
+      "total_rounds": 1,
+      "is_completed": false,
+      "created_at": "2025-08-12T18:21:53.724702",
+      "last_played": "2025-08-12T18:22:09.850261",
+      "rank": null,
+      "rounds": [
+        {
+          "round_number": 1,
+          "original_prompt": "Help me with my life",
+          "improved_prompt": "asdf",
+          "improved_response": "It seems like your prompt might have been unclear or perhaps a placeholder. However, I’d love to help you navigate your career transition after job loss. \n\nHere are some steps you can consider to help you through this journey:\n\n1. **Reflect on Your Skills and Interests**: Take some time to evaluate what you enjoyed about your previous job and what skills you excelled in. Consider how these can translate into new opportunities.\n\n2. **Explore New Career Paths**: Research industries or roles that align with your interests and skills. Look into growing fields that excite you and where your background could be an asset.\n\n3. **Networking**: Reach out to former colleagues, friends, and professionals in your desired field. Networking can open doors to opportunities you may not find through job boards.\n\n4. **Update Your Resume and LinkedIn Profile**: Highlight your skills and experiences relevant to the roles you’re interested in. Make sure your online presence reflects your career aspirations.\n\n5. **Consider Upskilling or Reskilling**: If there are gaps in your skills for the roles you’re considering, look into online courses, workshops, or certifications that can help you build your qualifications.\n\n6. **Set a Routine**: Job searching can be daunting, so create a daily routine that includes time for searching, networking, and self-care. This structure can help keep you motivated and focused.\n\n7. **Stay Positive and Resilient**: Job loss can be challenging emotionally. Practice self-care and stay connected with supportive friends and family. Remember that it’s okay to feel overwhelmed, but keep pushing forward.\n\n8. **Consider Professional Guidance**: If you’re feeling stuck, a career coach or mentor can provide personalized support and guidance tailored to your situation.\n\nIf you have specific questions or need more tailored advice, feel free to share! I’m here to help you through this transition.",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"asdf\" does not meet any of the critical requirements for a usable prompt. It is a meaningless string of characters that does not provide any context or direction for the AI to assist with the user's situation regarding a career transition after job loss. It does not improve upon the original bad prompt \"Help me with my life\" in any way, as it fails to convey a specific request or topic related to the user's needs. Therefore, it cannot be considered a usable prompt for the intended task.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"asdf\" does not apply any elements of the COSTAR framework. It lacks context, objective, style, tone, audience, and response specifications. The prompt is nonsensical and does not address the task of seeking guidance on a career transition after job loss. Therefore, it does not demonstrate any effective use of the COSTAR elements.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"asdf\" does not provide any meaningful direction or context for the task at hand, which is seeking guidance on a career transition after job loss. It lacks creativity, innovation, and relevance, making it ineffective as a prompt. Therefore, it scores 0 points.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-12T18:22:09.849609",
+          "bad_prompt": {
+            "id": "generic_advice",
+            "category": "Life Coaching",
+            "bad_prompt": "Help me with my life",
+            "weak_response": "Life is hard sometimes. Try to be positive. Things will get better. Stay strong.",
+            "context": "Person seeking guidance on career transition after job loss",
+            "expected_improvements": [
+              "Specify the exact life situation",
+              "Define specific goals and challenges",
+              "Request actionable steps and timeline",
+              "Include relevant personal context",
+              "Ask for resources and tools"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "username": "kzks123456",
+      "rounds_remaining": 0,
+      "final_score": 0.0,
+      "rounds_played": 3,
+      "best_round_score": 0.0,
+      "total_rounds": 3,
+      "is_completed": true,
+      "created_at": "2025-08-12T18:24:36.178113",
+      "last_played": "2025-08-12T18:41:24.161092",
+      "rank": null,
+      "rounds": [
+        {
+          "round_number": 1,
+          "original_prompt": "How to cook food",
+          "improved_prompt": "asdf",
+          "improved_response": "It seems like your message might have been a bit jumbled. If you could provide more details about the specific dish you’d like to prepare for your dinner party, I’d be happy to help with recipes, cooking tips, or any other information you might need!",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"asdf\" does not meet any of the critical requirements for a usable prompt. It is a meaningless string of characters that does not provide any context or direction for cooking food, nor does it specify a dish or any cooking method. Therefore, it fails to be an actual prompt that could be given to an AI to complete the task of preparing a specific dish for a dinner party. As such, it does not improve upon the original bad prompt in any way.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"asdf\" does not apply any elements of the COSTAR framework. It lacks context, objective, style, tone, audience, and response specifications. Therefore, it does not meet the criteria for effective prompt improvement.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"asdf\" does not provide any meaningful direction or creativity related to the task of preparing a specific dish for a dinner party. It appears to be a random string of characters with no relevance to cooking or the context provided. Therefore, it does not demonstrate any creativity or innovation in addressing the user's needs.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-12T18:24:44.114211",
+          "bad_prompt": {
+            "id": "basic_recipe",
+            "category": "Cooking",
+            "bad_prompt": "How to cook food",
+            "weak_response": "Put ingredients together. Cook them. Eat when done.",
+            "context": "Home cook wants to prepare a specific dish for a dinner party",
+            "expected_improvements": [
+              "Specify the exact dish and cuisine type",
+              "Include dietary restrictions and preferences",
+              "Request serving size and prep time",
+              "Ask for detailed step-by-step instructions",
+              "Include ingredient substitutions and tips"
+            ]
+          }
+        },
+        {
+          "round_number": 2,
+          "original_prompt": "Make a function",
+          "improved_prompt": "kasdldfmaskl",
+          "improved_response": "It seems like your prompt might be unclear or possibly a placeholder text. To assist you effectively, could you please provide more details about the Python function you need? Specifically, let me know what problem you're trying to solve or what functionality you're looking to implement. With more information, I'll be able to help you better!",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"kasdldfmaskl\" does not meet any of the critical requirements for a usable prompt. It is a meaningless string of characters that does not provide any specific instructions or context for creating a Python function. It does not address the original task of developing a function to solve a specific problem, nor does it offer any clarity or direction. Therefore, it fails to improve upon the original bad prompt in any meaningful way.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"kasdldfmaskl\" does not apply any elements of the COSTAR framework. It lacks context, objective, style, tone, audience, and response specifications. The prompt is nonsensical and does not address the task of creating a Python function, nor does it provide any relevant information or structure.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"kasdldfmaskl\" does not provide any meaningful direction or context for creating a Python function. It appears to be a random string of characters rather than a usable prompt for the task at hand. Therefore, it lacks creativity and innovation, as it does not contribute to solving the specific problem described in the context.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-12T18:29:40.020373",
+          "bad_prompt": {
+            "id": "unclear_code",
+            "category": "Programming",
+            "bad_prompt": "Make a function",
+            "weak_response": "def func():\n    return True",
+            "context": "Developer needs a Python function to solve a specific problem",
+            "expected_improvements": [
+              "Specify what the function should do",
+              "Define input parameters and types",
+              "Specify expected output format",
+              "Include error handling requirements",
+              "Request documentation and examples"
+            ]
+          }
+        },
+        {
+          "round_number": 3,
+          "original_prompt": "Help me with my life",
+          "improved_prompt": "asldkfnaselnklknlkn",
+          "improved_response": "It seems like your message got a bit jumbled! If you're seeking guidance on transitioning to a new career after losing your job, I'd love to help. \n\nHere are some steps you might consider taking:\n\n1. **Reflect on Your Interests and Skills**: Take some time to think about what you enjoy doing and what skills you possess. This can help you identify potential career paths that align with your passions and strengths.\n\n2. **Explore New Opportunities**: Research industries or roles that interest you. Look for job postings, attend networking events, or join professional groups to gain insights into different fields.\n\n3. **Update Your Resume and LinkedIn Profile**: Highlight your relevant experiences and skills. Tailor your resume to the jobs you’re applying for, and ensure your LinkedIn profile reflects your current career goals.\n\n4. **Seek Support**: Consider reaching out to a career coach or joining a support group for individuals in similar situations. Having a community can provide motivation and valuable insights.\n\n5. **Develop New Skills**: If you’re considering a significant change, think about taking courses or certifications that can help you build the necessary skills for your new career.\n\n6. **Set Short-term Goals**: Break down your transition into manageable steps. Set achievable goals for each week or month to keep you motivated and on track.\n\n7. **Stay Positive and Patient**: Career transitions can take time. It’s important to stay positive and be patient with yourself as you navigate this process.\n\nIf you have specific questions or areas where you need more guidance, feel free to share!",
+          "ragas_score": 0.0,
+          "feedback": "**🎯 Total Score: 0.0/10**\n\n**📝 Prompt Quality: 0.0/5.0**\nScore: 0\n\nThe user's improved prompt \"asldkfnaselnklknlkn\" does not constitute a usable prompt for the task of seeking guidance on a career transition after job loss. It is a random string of characters that lacks any coherent meaning or direction. Therefore, it fails to meet the critical requirements of being an actual prompt that could be given to an AI, significantly improving upon the original bad prompt, or staying within the same topic. As such, it does not provide any actionable guidance or clarity for the user’s situation.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt \"asldkfnaselnklknlkn\" does not apply any elements of the COSTAR framework. It lacks context, objective, style, tone, audience, and response specifications. The prompt is nonsensical and does not address the task of seeking guidance on a career transition after job loss. Therefore, it does not demonstrate any effective use of the COSTAR elements.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt \"asldkfnaselnklknlkn\" does not provide any meaningful content or direction related to the task of seeking guidance on a career transition after job loss. It appears to be a random string of characters rather than a usable prompt. Therefore, it lacks creativity and does not address the user's need for assistance in a constructive way.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-12T18:41:24.159518",
+          "bad_prompt": {
+            "id": "generic_advice",
+            "category": "Life Coaching",
+            "bad_prompt": "Help me with my life",
+            "weak_response": "Life is hard sometimes. Try to be positive. Things will get better. Stay strong.",
+            "context": "Person seeking guidance on career transition after job loss",
+            "expected_improvements": [
+              "Specify the exact life situation",
+              "Define specific goals and challenges",
+              "Request actionable steps and timeline",
+              "Include relevant personal context",
+              "Ask for resources and tools"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "username": "szkdnglsadf",
+      "rounds_remaining": 1,
+      "final_score": 5.0,
+      "rounds_played": 2,
+      "best_round_score": 5.0,
+      "total_rounds": 2,
+      "is_completed": false,
+      "created_at": "2025-08-12T18:49:11.345071",
+      "last_played": "2025-08-12T18:54:35.294313",
+      "rank": null,
+      "rounds": [
+        {
+          "round_number": 1,
+          "original_prompt": "How to cook food",
+          "improved_prompt": "Home cook wants to prepare a specific dish for a dinner party",
+          "improved_response": "To help you prepare a specific dish for your dinner party, I would need a little more information about what you're planning to make. Here are a few questions to guide you:\n\n1. **What dish are you planning to prepare?** If you have a specific cuisine or recipe in mind, please share it.\n2. **How many guests are you expecting?** This will help with portion sizes and planning.\n3. **Do you have any dietary restrictions or preferences to consider?** This might include vegetarian, vegan, gluten-free, etc.\n4. **What type of cooking skills do you possess?** Knowing your comfort level with cooking will help me tailor my suggestions.\n\nOnce I have more details, I can provide you with a recipe, cooking tips, and any preparation advice you might need!",
+          "ragas_score": 1.0,
+          "feedback": "**🎯 Total Score: 1.0/10**\n\n**📝 Prompt Quality: 1.0/5.0**\nScore: 1\n\nThe user's improved prompt, \"Home cook wants to prepare a specific dish for a dinner party,\" is not an actionable prompt that could be given to an AI to complete the task of cooking food. While it provides context about the situation, it lacks a clear directive or question that would guide an AI to provide useful information or instructions. It is essentially a statement rather than a prompt that asks for specific guidance on how to cook a particular dish. Therefore, it is only marginally better than the original bad prompt and does not meet the critical requirements for a usable prompt.\n\n**⭐ COSTAR Framework Usage: 0.0/3.0**\nScore: 0\n\nThe user's improved prompt does not apply any elements of the COSTAR framework. It simply repeats the context provided by the game without adding any specific goals, style, tone, audience, or response format. Therefore, there is no effective use of the COSTAR elements in the user's prompt.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt is simply a restatement of the context provided by the game and does not offer any specific guidance or creativity in addressing the task of cooking a specific dish for a dinner party. It lacks any innovative techniques, unique approaches, or novel formatting that would enhance the prompt's effectiveness. Therefore, it does not demonstrate creativity in solving the actual task.\n\n🎯 **Don't give up!** Review the COSTAR framework and try again!",
+          "timestamp": "2025-08-12T18:53:20.581946",
+          "bad_prompt": {
+            "id": "basic_recipe",
+            "category": "Cooking",
+            "bad_prompt": "How to cook food",
+            "weak_response": "Put ingredients together. Cook them. Eat when done.",
+            "context": "Home cook wants to prepare a specific dish for a dinner party",
+            "expected_improvements": [
+              "Specify the exact dish and cuisine type",
+              "Include dietary restrictions and preferences",
+              "Request serving size and prep time",
+              "Ask for detailed step-by-step instructions",
+              "Include ingredient substitutions and tips"
+            ]
+          }
+        },
+        {
+          "round_number": 2,
+          "original_prompt": "Help me with my life",
+          "improved_prompt": "Person seeking guidance on career transition after job loss, your job is to guide this person on their career trasition after job loss.",
+          "improved_response": "I'm here to support you through your career transition after job loss. It's a challenging time, but it can also be an opportunity for growth and discovery. Here’s a structured approach to help guide you through this transition:\n\n### 1. **Reflect on Your Experience**\n   - **Assess Your Skills:** Take some time to list your skills, strengths, and accomplishments from your previous job. Consider both hard skills (like technical abilities) and soft skills (like communication and teamwork).\n   - **Identify What You Enjoyed:** Think about the aspects of your past job that you loved. What tasks energized you? This can guide your next steps.\n\n### 2. **Evaluate Your Options**\n   - **Explore Different Industries:** Research fields that interest you. Look for industries that are growing or emerging where your skills could be transferable.\n   - **Consider Further Education or Training:** If there’s a field you’re passionate about that requires additional skills or qualifications, consider online courses, workshops, or certifications.\n\n### 3. **Network Actively**\n   - **Reach Out to Connections:** Inform your network that you’re looking for new opportunities. Networking can often lead to job openings that aren’t advertised.\n   - **Attend Industry Events:** Look for local or virtual events in your field of interest. Meeting people can give you insights and potentially open doors.\n\n### 4. **Update Your Resume and Online Presence**\n   - **Revise Your Resume:** Tailor your resume to highlight the skills and experiences relevant to the positions you’re interested in.\n   - **Optimize Your LinkedIn Profile:** Ensure your profile reflects your current status and aspirations. Engage with posts related to your desired field to increase your visibility.\n\n### 5. **Set Clear Goals**\n   - **Short-Term Goals:** Set achievable, short-term goals (e.g., applying to a certain number of jobs per week, attending networking events).\n   - **Long-Term Goals:** Think about where you want to be in the next few years. Create a roadmap that outlines the steps to reach those goals.\n\n### 6. **Stay Positive and Resilient**\n   - **Practice Self-Care:** Job transitions can be stressful. Make sure to take care of your mental and physical health during this time.\n   - **Seek Support:** Consider joining a support group or working with a coach to help you navigate this transition.\n\n### 7. **Prepare for Interviews**\n   - **Practice Common Questions:** Prepare answers for common interview questions, especially those that address your job loss. Focus on what you learned and how you’re ready to move forward.\n   - **Showcase Your Value:** Be ready to articulate how your skills and experiences make you a great fit for potential roles.\n\n### 8. **Stay Open-Minded**\n   - **Be Open to New Opportunities:** Sometimes the best paths are those we don’t initially consider. Stay flexible and open to various roles and industries.\n\nRemember, this transition is a process, and it’s okay to take your time. Each step you take will bring you closer to finding a fulfilling career path. If you need more personalized support or specific strategies, feel free to reach out!",
+          "ragas_score": 5.0,
+          "feedback": "**🎯 Total Score: 5.0/10**\n\n**📝 Prompt Quality: 3.0/5.0**\nScore: 3\n\nThe user's improved prompt does provide a clearer context for the task by specifying that the person is seeking guidance on a career transition after job loss. However, the phrasing \"your job is to guide this person\" makes it sound more like an instruction to an AI rather than a direct prompt for the AI to generate a response. While it is an improvement over the original vague request, it lacks the specificity and actionable nature that would make it truly effective. \n\nTo achieve a higher score, the prompt could be rephrased to directly ask for advice or steps the person should take in their career transition, making it more actionable and engaging. Overall, it is a decent attempt but could be refined further for clarity and effectiveness.\n\n**⭐ COSTAR Framework Usage: 2.0/3.0**\nScore: 2\n\nThe user's improved prompt incorporates the following COSTAR elements:\n\n- Context: The user provides relevant background by mentioning the person seeking guidance on career transition after job loss.\n- Audience: The user identifies the target audience as \"this person,\" referring to the individual needing guidance.\n\nHowever, the prompt lacks clear specifications for Objective, Style, Tone, and Response, which prevents it from achieving a higher score.\n\n**💡 Creativity Bonus: 0.0/2.0**\nScore: 0\n\nThe user's improved prompt does not demonstrate creativity or innovation. It essentially reiterates the context provided without adding any unique elements or approaches. The phrasing is redundant and does not enhance the original request for guidance on a career transition after job loss. Instead of offering a fresh perspective or a novel way to engage with the task, it simply states the task in a more verbose manner. Therefore, it lacks the creativity needed to score any points.\n\n👍 **Good job!** You're on the right track with prompt improvement!",
+          "timestamp": "2025-08-12T18:54:35.293471",
+          "bad_prompt": {
+            "id": "generic_advice",
+            "category": "Life Coaching",
+            "bad_prompt": "Help me with my life",
+            "weak_response": "Life is hard sometimes. Try to be positive. Things will get better. Stay strong.",
+            "context": "Person seeking guidance on career transition after job loss",
+            "expected_improvements": [
+              "Specify the exact life situation",
+              "Define specific goals and challenges",
+              "Request actionable steps and timeline",
+              "Include relevant personal context",
+              "Ask for resources and tools"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "username": "sk01",
+      "rounds_remaining": 3,
+      "final_score": 0.0,
+      "rounds_played": 0,
+      "best_round_score": 0.0,
+      "total_rounds": 0,
+      "is_completed": false,
+      "created_at": "2025-08-13T09:16:30.099287",
+      "last_played": "2025-08-13T09:16:30.099289",
+      "rank": null,
+      "rounds": []
     }
   ],
   "metadata": {
     "created_at": "2025-08-06T10:36:30.972347",
-    "last_updated": "2025-08-06T14:54:29.853778",
-    "total_games": 2
+    "last_updated": "2025-08-13T09:16:30.101730",
+    "total_games": 15
   }
 }

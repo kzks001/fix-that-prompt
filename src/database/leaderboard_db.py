@@ -1,8 +1,9 @@
-"""Leaderboard database implementation using JSON persistence."""
+"""Leaderboard database implementation with DynamoDB and JSON fallback."""
 
+import os
 import json
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 from datetime import datetime
 
 from loguru import logger
@@ -12,18 +13,42 @@ from ..utils.logger import log_game_event
 
 
 class LeaderboardDB:
-    """Manages leaderboard persistence using JSON storage."""
+    """Manages leaderboard persistence using DynamoDB with JSON fallback."""
 
-    def __init__(self, db_file: str = "data/leaderboard.json") -> None:
+    def __init__(
+        self, db_file: str = "data/leaderboard.json", use_dynamodb: bool | None = None
+    ) -> None:
         """
         Initialize the leaderboard database.
 
         Args:
-            db_file: Path to the JSON file for storing leaderboard data
+            db_file: Path to the JSON file for storing leaderboard data (fallback)
+            use_dynamodb: Force DynamoDB usage (None = auto-detect from environment)
         """
-        self.db_file = Path(db_file)
-        self.db_file.parent.mkdir(exist_ok=True)
-        self._ensure_db_exists()
+        # Determine which backend to use
+        if use_dynamodb is None:
+            # Auto-detect: use DynamoDB if table name is configured
+            use_dynamodb = bool(os.getenv("DYNAMODB_TABLE_NAME"))
+
+        self.use_dynamodb = use_dynamodb
+
+        if self.use_dynamodb:
+            try:
+                from .dynamodb_leaderboard import DynamoDBLeaderboard
+
+                self._backend = DynamoDBLeaderboard()
+                logger.info("Using DynamoDB backend for leaderboard")
+            except Exception as e:
+                logger.warning(f"Failed to initialize DynamoDB backend: {e}")
+                logger.info("Falling back to JSON backend")
+                self.use_dynamodb = False
+
+        if not self.use_dynamodb:
+            # Use JSON backend
+            self.db_file = Path(db_file)
+            self.db_file.parent.mkdir(exist_ok=True)
+            self._ensure_db_exists()
+            logger.info("Using JSON file backend for leaderboard")
 
     def _ensure_db_exists(self) -> None:
         """Ensure the database file exists with valid structure."""
@@ -99,7 +124,7 @@ class LeaderboardDB:
             logger.error(f"Error writing leaderboard data: {e}")
             raise
 
-    def _serialize_rounds(self, rounds: List[GameRound]) -> List[dict]:
+    def _serialize_rounds(self, rounds: list[GameRound]) -> list[dict]:
         """Convert GameRound objects to JSON-serializable dictionaries."""
         serialized_rounds = []
         for round_data in rounds:
@@ -123,7 +148,7 @@ class LeaderboardDB:
             serialized_rounds.append(round_dict)
         return serialized_rounds
 
-    def _deserialize_rounds(self, rounds_data: List[dict]) -> List[GameRound]:
+    def _deserialize_rounds(self, rounds_data: list[dict]) -> list[GameRound]:
         """Convert JSON dictionaries back to GameRound objects."""
         rounds = []
         for round_dict in rounds_data:
@@ -159,6 +184,10 @@ class LeaderboardDB:
         Returns:
             True if player was created/updated successfully
         """
+        if self.use_dynamodb:
+            return self._backend.create_or_update_player(player_score)
+
+        # JSON backend implementation
         data = self._read_data()
         data = self._ensure_data_structure(data)
 
@@ -210,6 +239,8 @@ class LeaderboardDB:
 
     def add_player_score(self, player_score: PlayerScore) -> bool:
         """Legacy method for backward compatibility - calls create_or_update_player."""
+        if self.use_dynamodb:
+            return self._backend.add_player_score(player_score)
         return self.create_or_update_player(player_score)
 
     def username_exists(self, username: str) -> bool:
@@ -222,12 +253,15 @@ class LeaderboardDB:
         Returns:
             True if username exists, False otherwise
         """
+        if self.use_dynamodb:
+            return self._backend.username_exists(username)
+
         data = self._read_data()
         return any(
             player["username"].lower() == username.lower() for player in data["players"]
         )
 
-    def get_top_players(self, limit: int = 10) -> List[dict]:
+    def get_top_players(self, limit: int = 10) -> list[dict]:
         """
         Get the top players by score.
 
@@ -237,6 +271,9 @@ class LeaderboardDB:
         Returns:
             List of player dictionaries sorted by score (highest first)
         """
+        if self.use_dynamodb:
+            return self._backend.get_top_players(limit)
+
         data = self._read_data()
         data = self._ensure_data_structure(data)
 
@@ -255,7 +292,7 @@ class LeaderboardDB:
         logger.debug(f"Retrieved top {len(top_players)} players")
         return top_players
 
-    def get_player_rank(self, username: str) -> Optional[int]:
+    def get_player_rank(self, username: str) -> int | None:
         """
         Get the rank of a specific player.
 
@@ -265,6 +302,9 @@ class LeaderboardDB:
         Returns:
             The player's rank (1-based) or None if not found
         """
+        if self.use_dynamodb:
+            return self._backend.get_player_rank(username)
+
         data = self._read_data()
 
         # Sort all players by score
@@ -278,7 +318,7 @@ class LeaderboardDB:
 
         return None
 
-    def get_player_score(self, username: str) -> Optional[dict]:
+    def get_player_score(self, username: str) -> dict | None:
         """
         Get the score record for a specific player.
 
@@ -288,6 +328,9 @@ class LeaderboardDB:
         Returns:
             The player's score dictionary or None if not found
         """
+        if self.use_dynamodb:
+            return self._backend.get_player_score(username)
+
         data = self._read_data()
 
         for player in data["players"]:
@@ -298,11 +341,17 @@ class LeaderboardDB:
 
     def get_total_players(self) -> int:
         """Get the total number of players in the leaderboard."""
+        if self.use_dynamodb:
+            return self._backend.get_total_players()
+
         data = self._read_data()
         return len(data["players"])
 
     def get_average_score(self) -> float:
         """Get the average score across all players."""
+        if self.use_dynamodb:
+            return self._backend.get_average_score()
+
         data = self._read_data()
 
         if not data["players"]:
@@ -313,6 +362,10 @@ class LeaderboardDB:
 
     def clear_leaderboard(self) -> None:
         """Clear all player data from the leaderboard (use with caution!)."""
+        if self.use_dynamodb:
+            self._backend.clear_leaderboard()
+            return
+
         data = self._read_data()
         data["players"] = []
         data["metadata"]["total_games"] = 0
@@ -332,6 +385,9 @@ class LeaderboardDB:
         Returns:
             PlayerScore object (existing or newly created)
         """
+        if self.use_dynamodb:
+            return self._backend.get_or_create_player(username)
+
         existing_player = self.get_player_history(username)
         if existing_player:
             return existing_player
@@ -354,6 +410,9 @@ class LeaderboardDB:
         Returns:
             True if update was successful
         """
+        if self.use_dynamodb:
+            return self._backend.update_player_after_round(username, completed_round)
+
         player = self.get_player_history(username)
         if not player:
             logger.error(f"Player {username} not found for round update")
@@ -374,7 +433,7 @@ class LeaderboardDB:
 
         return self.create_or_update_player(player)
 
-    def get_player_history(self, username: str) -> Optional[PlayerScore]:
+    def get_player_history(self, username: str) -> PlayerScore | None:
         """
         Get complete game history and status for a player.
 
@@ -384,6 +443,9 @@ class LeaderboardDB:
         Returns:
             PlayerScore object with complete history or None if not found
         """
+        if self.use_dynamodb:
+            return self._backend.get_player_history(username)
+
         data = self._read_data()
         data = self._ensure_data_structure(data)
 
@@ -419,7 +481,7 @@ class LeaderboardDB:
 
         return None
 
-    def backup_leaderboard(self, backup_path: Optional[str] = None) -> str:
+    def backup_leaderboard(self, backup_path: str | None = None) -> str:
         """
         Create a backup of the current leaderboard.
 
@@ -429,6 +491,9 @@ class LeaderboardDB:
         Returns:
             The path to the backup file
         """
+        if self.use_dynamodb:
+            return self._backend.backup_leaderboard(backup_path)
+
         if backup_path is None:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             backup_path = f"data/leaderboard_backup_{timestamp}.json"
