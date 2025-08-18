@@ -113,8 +113,6 @@ class COSTARFramework:
     def get_guidance(self) -> str:
         """Get formatted COSTAR guidance text."""
         return f"""
-**COSTAR Framework for Prompt Improvement:**
-
 **C - Context:** {self.context}
 **O - Objective:** {self.objective}
 **S - Style:** {self.style}
@@ -122,5 +120,5 @@ class COSTARFramework:
 **A - Audience:** {self.audience}
 **R - Response:** {self.response}
 
-Use these guidelines to improve the bad prompt below!
+💡 **Tip:** Include as many COSTAR elements as possible in your improved prompt!
 """

@@ -1,9 +1,22 @@
 {
   "players": [
+    {
+      "username": "tester1",
+      "rounds_remaining": 3,
+      "final_score": 0.0,
+      "rounds_played": 0,
+      "best_round_score": 0.0,
+      "total_rounds": 0,
+      "is_completed": false,
+      "created_at": "2025-08-18T09:12:17.875028",
+      "last_played": "2025-08-18T09:12:17.875029",
+      "rank": null,
+      "rounds": []
+    }
   ],
   "metadata": {
     "created_at": "2025-08-06T10:36:30.972347",
-    "last_updated": "2025-08-15T17:06:49.423401",
-    "total_games": 37
+    "last_updated": "2025-08-18T09:12:17.875579",
+    "total_games": 38
   }
 }

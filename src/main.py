@@ -34,6 +34,13 @@ async def help_action(action):
 ## 🎯 **How It Works:**
 Each round, you receive a **poorly written prompt** with its **weak AI response**. Your job is to **improve the prompt** using the **COSTAR framework** to generate a better response. The more improvement you achieve, the higher your score!
 
+## 🚀 **What Happens When You Start:**
+1. **You'll see a bad prompt** with its weak response
+2. **Analyze what's wrong** with the original prompt
+3. **Write a better prompt** using the COSTAR framework
+4. **Type it in the chat box** and press Enter
+5. **See your improved response** and get scored!
+
 ## 📊 **Detailed Scoring:**
 - **Prompt Quality (0-5 points):** Clarity, specificity, completeness
 - **COSTAR Usage (0-3 points):** Framework adherence
@@ -237,6 +244,12 @@ async def show_authentication_prompt():
         content="""
 # 🎮 **Welcome to Fix That Prompt!**
 *Transform bad prompts into brilliant ones using AI and the COSTAR framework*
+
+## 🎯 **What You'll Do:**
+- **See bad prompts** with weak AI responses
+- **Write better prompts** using the COSTAR framework
+- **Get scored** on how much you improve them
+- **Compete** on the leaderboard!
 
 👤 **Enter your Singlife email:**
 
@@ -804,11 +817,11 @@ async def handle_username_input(username_input: str):
         main_message = cl.user_session.get("main_message")
         if main_message:
             await main_message.update(
-                content="❌ **Email cannot be empty.** Please enter a valid Singlife email address."
+                content="❌ **Email cannot be empty.** Please enter a valid Singlife email address.\n\n💡 *eg. sk01@singlife.com*"
             )
         else:
             new_message = await cl.Message(
-                content="❌ **Email cannot be empty.** Please enter a valid Singlife email address."
+                content="❌ **Email cannot be empty.** Please enter a valid Singlife email address.\n\n💡 *eg. sk01@singlife.com*"
             ).send()
             cl.user_session.set("main_message", new_message)
 
@@ -817,7 +830,7 @@ async def handle_username_input(username_input: str):
     # Only allow @singlife.com emails
     if "@singlife.com" not in username_input.lower():
         await cl.Message(
-            content="❌ **Invalid email domain.** Please enter a valid SingLife email address (@singlife.com)."
+            content="❌ **Invalid email domain.** Please enter a valid SingLife email address (@singlife.com).\n\n💡 *eg. sk01@singlife.com*"
         ).send()
         return
 
@@ -825,7 +838,7 @@ async def handle_username_input(username_input: str):
     username = extract_singlife_username(username_input)
     if not username:
         await cl.Message(
-            content="❌ **Invalid email format.** Please enter a valid SingLife email address."
+            content="❌ **Invalid email format.** Please enter a valid SingLife email address.\n\n💡 *eg. sk01@singlife.com*"
         ).send()
         return
 
@@ -868,6 +881,12 @@ async def show_active_user_menu(player_data):
 - Each round: Fix a bad prompt using the **COSTAR framework**
 - Your **best round score** becomes your final leaderboard score
 - You can stop after any round or play all 3
+
+## 🚀 **What You'll Do:**
+1. **See a bad prompt** with its weak AI response
+2. **Write a better prompt** using the COSTAR framework
+3. **Type it in the chat** and see your improved response
+4. **Get scored** on how much you improved it!
 
 ## 📊 **Your Status:**
 - **Rounds Remaining:** {player_data.rounds_remaining}/3
@@ -1054,14 +1073,24 @@ async def start_new_round(username: str):
 
 ---
 
+## 🎯 **Your Mission:**
+**Write a BETTER prompt that will generate a MUCH better response!**
+
+### 📋 **What to do:**
+1. **Analyze the bad prompt** - What makes it unclear or ineffective?
+2. **Use the COSTAR framework** below to improve it
+3. **Type your improved prompt** in the chat box below
+4. **Submit it** to see how much better your response is!
+
+### 🔧 **COSTAR Framework - Use these elements:**
 {game.get_costar_guidance()}
 
 ---
 
-## 🚀 **Your Turn!**
-Now it's time to improve this prompt! Write a better version that addresses the issues above.
+## ✍️ **Ready to improve?**
+**Simply type your improved prompt below and press Enter:**
 
-**Type your improved prompt below:**
+💡 **Example:** Instead of "Write about AI", try "Write a 300-word blog post about AI for business executives, using a professional tone and including 3 key benefits."
 """
 
     round_message = await cl.Message(content=round_msg).send()
@@ -1075,7 +1104,8 @@ async def handle_improved_prompt(improved_prompt: str, username: str):
     if not improved_prompt.strip():
         empty_prompt_message = await cl.Message(
             content="❌ **Your improved prompt cannot be empty.** Please try again.\n\n"
-            "💡 **Need help?** Remember to use the COSTAR framework to improve the prompt!",
+            "💡 **What to do:** Write a better version of the bad prompt above using the COSTAR framework. Include context, objectives, style, tone, audience, and desired response format.\n\n"
+            "**Example:** Instead of 'Write about AI', try 'Write a 300-word blog post about AI for business executives, using a professional tone and including 3 key benefits.'",
             actions=[
                 Action(name="stop", payload={"action": "stop"}, label="🛑 Stop Game"),
             ],

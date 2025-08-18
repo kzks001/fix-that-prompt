@@ -1,142 +1,72 @@
 [
   {
-    "id": "vague_essay",
-    "category": "Academic Writing",
-    "bad_prompt": "Write about AI",
-    "weak_response": "AI is good. It helps people. There are many types of AI. Some people worry about AI. AI will change the future. The end.",
-    "context": "Student needs help writing an academic essay about artificial intelligence for a college course",
+    "id": "unclear_policy_summary",
+    "category": "Insurance Documentation",
+    "bad_prompt": "Summarize this policy",
+    "weak_response": "This policy provides coverage for health and hospital needs. It has exclusions. Benefits depend on the plan type.",
+    "context": "An insurance advisor needs to explain Singlife Shield benefits to a client who is comparing different coverage tiers",
     "expected_improvements": [
-      "Specify essay length and format requirements",
-      "Define specific aspects of AI to focus on",
-      "Indicate target audience and academic level",
-      "Request proper citations and references",
-      "Specify desired tone and writing style"
+      "Specify which product or coverage tier to summarize",
+      "Define the target audience (e.g., client with no insurance background)",
+      "Request summary in plain, non-technical language",
+      "Highlight key benefits, exclusions, and limitations",
+      "Request a comparison format if multiple plans are involved"
     ]
   },
   {
-    "id": "unclear_code",
-    "category": "Programming",
-    "bad_prompt": "Make a function",
-    "weak_response": "def func():\n    return True",
-    "context": "Developer needs a Python function to solve a specific problem",
+    "id": "generic_claims_email",
+    "category": "Client Communication",
+    "bad_prompt": "Write an email to a customer about their claim",
+    "weak_response": "Dear customer, your claim has been processed. Thank you.",
+    "context": "Claims officer needs to email a policyholder whose travel insurance claim was partially approved due to exclusions",
     "expected_improvements": [
-      "Specify what the function should do",
-      "Define input parameters and types",
-      "Specify expected output format",
-      "Include error handling requirements",
-      "Request documentation and examples"
+      "Specify the claim type and outcome (approved, rejected, partial)",
+      "Define the tone (empathetic but professional)",
+      "Include policyholder name and policy number placeholders",
+      "Clearly explain reasons for the decision",
+      "Provide next steps or appeal instructions"
     ]
   },
   {
-    "id": "generic_email",
-    "category": "Business Communication", 
-    "bad_prompt": "Write an email",
-    "weak_response": "Hi,\n\nI hope you are well. I wanted to reach out about something. Please let me know what you think.\n\nThanks,\nSender",
-    "context": "Professional needs to write a follow-up email after a client meeting",
+    "id": "vague_sales_pitch",
+    "category": "Sales Enablement",
+    "bad_prompt": "Help me sell insurance",
+    "weak_response": "Insurance is useful. You should get it. It protects you.",
+    "context": "Advisor needs to pitch an endowment plan to young professionals who want both protection and savings growth",
     "expected_improvements": [
-      "Specify the recipient and relationship",
-      "Define the email's specific purpose",
-      "Include relevant meeting details",
-      "Request specific action items",
-      "Set appropriate professional tone"
+      "Define the product type (endowment, whole life, term, etc.)",
+      "Specify the customer profile and financial goals",
+      "Highlight unique selling points (e.g., guaranteed returns, bonuses)",
+      "Include common objections and responses",
+      "Request persuasive but compliant language"
     ]
   },
   {
-    "id": "vague_analysis",
-    "category": "Data Analysis",
-    "bad_prompt": "Look at this data",
-    "weak_response": "The data shows numbers. There are high values and low values. Some trends exist. More analysis needed.",
-    "context": "Business analyst needs to examine sales performance data",
+    "id": "weak_regulatory_summary",
+    "category": "Compliance",
+    "bad_prompt": "Explain PDPA",
+    "weak_response": "PDPA is a law about personal data in Singapore. Companies must follow it.",
+    "context": "Operations manager needs a staff briefing note on how PDPA affects handling of customer medical reports in claims processing",
     "expected_improvements": [
-      "Specify the type of analysis required", 
-      "Define key metrics and KPIs to focus on",
-      "Indicate the time period for analysis",
-      "Request specific insights and recommendations",
-      "Specify output format and visualizations"
+      "Specify the insurance-specific context (claims, underwriting, marketing)",
+      "Define the target audience (non-legal staff, advisors, etc.)",
+      "Highlight concrete do's and don’ts",
+      "Request examples relevant to insurance workflows",
+      "Ask for compliance risks and escalation steps"
     ]
   },
   {
-    "id": "poor_creative",
-    "category": "Creative Writing",
-    "bad_prompt": "Write a story",
-    "weak_response": "Once upon a time there was a person. They did things. Then stuff happened. The end.",
-    "context": "Writer needs a compelling short story for a fiction magazine submission",
+    "id": "unclear_data_request",
+    "category": "Analytics",
+    "bad_prompt": "Look at the claims data",
+    "weak_response": "The claims data shows numbers. There are many claims. Some are large, some small.",
+    "context": "Data analyst needs to present insights on rising fraud risks in travel insurance claims",
     "expected_improvements": [
-      "Specify genre and target audience",
-      "Define word count and format requirements", 
-      "Include specific themes or elements",
-      "Request compelling characters and plot",
-      "Specify narrative style and voice"
-    ]
-  },
-  {
-    "id": "basic_recipe",
-    "category": "Cooking",
-    "bad_prompt": "How to cook food",
-    "weak_response": "Put ingredients together. Cook them. Eat when done.",
-    "context": "Home cook wants to prepare a specific dish for a dinner party",
-    "expected_improvements": [
-      "Specify the exact dish and cuisine type",
-      "Include dietary restrictions and preferences",
-      "Request serving size and prep time",
-      "Ask for detailed step-by-step instructions",
-      "Include ingredient substitutions and tips"
-    ]
-  },
-  {
-    "id": "weak_marketing",
-    "category": "Marketing",
-    "bad_prompt": "Sell this product",
-    "weak_response": "This product is good. You should buy it. It costs money. Available now.",
-    "context": "Marketing manager needs compelling copy for a new product launch",
-    "expected_improvements": [
-      "Define target customer demographics",
-      "Specify unique value propositions",
-      "Include competitive advantages",
-      "Request specific call-to-action",
-      "Define marketing channel and format"
-    ]
-  },
-  {
-    "id": "simple_explanation",
-    "category": "Education",
-    "bad_prompt": "Explain science",
-    "weak_response": "Science is about studying things. Scientists do experiments. They learn stuff. Science is important.",
-    "context": "Teacher needs to explain photosynthesis to 5th-grade students",
-    "expected_improvements": [
-      "Specify the exact scientific concept",
-      "Define the student age and grade level",
-      "Request age-appropriate language",
-      "Include examples and analogies",
-      "Ask for interactive elements"
-    ]
-  },
-  {
-    "id": "generic_advice",
-    "category": "Life Coaching",
-    "bad_prompt": "Help me with my life",
-    "weak_response": "Life is hard sometimes. Try to be positive. Things will get better. Stay strong.",
-    "context": "Person seeking guidance on career transition after job loss",
-    "expected_improvements": [
-      "Specify the exact life situation",
-      "Define specific goals and challenges",
-      "Request actionable steps and timeline",
-      "Include relevant personal context",
-      "Ask for resources and tools"
-    ]
-  },
-  {
-    "id": "unclear_travel",
-    "category": "Travel Planning", 
-    "bad_prompt": "Plan a trip",
-    "weak_response": "Go somewhere. Book flights. Stay at hotels. Have fun.",
-    "context": "Family of four planning a week-long vacation within budget constraints",
-    "expected_improvements": [
-      "Specify destination preferences and budget",
-      "Include travel dates and duration",
-      "Define family composition and ages",
-      "Request specific activities and accommodations",
-      "Include practical logistics and requirements"
+      "Specify the type of analysis (fraud detection, trends, root cause)",
+      "Define relevant metrics (claim frequency, average payout, anomaly patterns)",
+      "Set timeframe for analysis (e.g., past 12 months)",
+      "Request visualizations or tables",
+      "Ask for actionable recommendations to share with fraud team"
     ]
   }
 ]
