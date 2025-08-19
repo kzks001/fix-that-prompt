@@ -247,7 +247,6 @@ class RAGASPromptEvaluator:
         improved_prompt: str,
         improved_response: str,
         context: str,
-        stream_callback=None,  # Optional callback for streaming updates
     ) -> PromptEvaluation:
         """
         Evaluate a prompt improvement using separate metric evaluators concurrently.
@@ -257,7 +256,6 @@ class RAGASPromptEvaluator:
             improved_prompt: The user's improved prompt
             improved_response: The LLM response to the improved prompt
             context: The context/scenario for the prompt
-            stream_callback: Optional callback function for streaming updates
 
         Returns:
             PromptEvaluation with scores and feedback
@@ -278,23 +276,7 @@ class RAGASPromptEvaluator:
                 ),
             ]
 
-            # Use asyncio.as_completed to stream results as they finish
-            results = [None, None, None]  # [prompt_quality, costar, creativity]
-            metric_names = ["Prompt Quality", "COSTAR Usage", "Creativity"]
-            
-            for i, task in enumerate(asyncio.as_completed(tasks)):
-                result = await task
-                results[i] = result
-                
-                # Stream update if callback provided
-                if stream_callback:
-                    await stream_callback(
-                        metric_name=metric_names[i],
-                        score=result.score,
-                        max_score=result.max_score,
-                        completed_count=len([r for r in results if r is not None]),
-                        total_count=len(tasks)
-                    )
+            results = await asyncio.gather(*tasks)
 
             prompt_quality_result = results[0]
             costar_result = results[1]

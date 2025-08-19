@@ -1148,72 +1148,18 @@ async def handle_improved_prompt(improved_prompt: str, username: str):
         player_data = cl.user_session.get("player_data")
         current_round_number = player_data.rounds_played + 1
 
-        # Update status: Generating improved response
-        await processing_msg.update(
-            content="⏳ **Processing your improved prompt...**\n\n"
-            "✅ **Generating improved response...**\n"
-            "⏳ Evaluating with LLM-as-a-judge...\n"
-            "⏳ Calculating scores...\n\n"
-            "*This may take a moment...*"
-        )
-
-        # Create streaming callback for LLM response
-        response_chunks = []
-        async def stream_response_chunk(chunk, full_response):
-            response_chunks.append(chunk)
-            # Update the processing message to show streaming response
-            preview = full_response[:200] + "..." if len(full_response) > 200 else full_response
-            await processing_msg.update(
-                content=f"⏳ **Processing your improved prompt...**\n\n"
-                f"✅ **Generating improved response...**\n"
-                f"⏳ Evaluating with LLM-as-a-judge...\n"
-                f"⏳ Calculating scores...\n\n"
-                f"**Response Preview:**\n{preview}\n\n"
-                f"*Generating response...*"
-            )
-
-        # Generate improved response with streaming
+        # Generate improved response with proper context
         improved_response = await game.generate_improved_response(
-            improved_prompt, bad_prompt, stream_callback=stream_response_chunk
+            improved_prompt, bad_prompt
         )
 
-        # Create streaming callback for metric updates
-        async def stream_metric_update(metric_name, score, max_score, completed_count, total_count):
-            progress_bar = "█" * completed_count + "░" * (total_count - completed_count)
-            await processing_msg.update(
-                content=f"⏳ **Processing your improved prompt...**\n\n"
-                f"✅ **Generating improved response...** ✅\n"
-                f"✅ **Evaluating with LLM-as-a-judge...**\n"
-                f"📊 **Calculating scores...** [{progress_bar}] {completed_count}/{total_count}\n\n"
-                f"✅ **{metric_name}:** {score:.1f}/{max_score:.1f} points\n"
-                f"⏳ Waiting for remaining metrics...\n\n"
-                f"*Almost done...*"
-            )
-
-        # Evaluate the improvement with streaming
+        # Evaluate the improvement
         evaluation = await game.evaluator.evaluate_prompt_improvement(
             original_prompt=bad_prompt.bad_prompt,
             improved_prompt=improved_prompt,
             improved_response=improved_response,
             context=bad_prompt.context,
-            stream_callback=stream_metric_update,
         )
-
-        # Final streaming update with complete results
-        await processing_msg.update(
-            content=f"⏳ **Processing your improved prompt...**\n\n"
-            f"✅ **Generating improved response...** ✅\n"
-            f"✅ **Evaluating with LLM-as-a-judge...** ✅\n"
-            f"✅ **Calculating scores...** ✅\n\n"
-            f"🎉 **Evaluation Complete!**\n\n"
-            f"📊 **Your Score: {evaluation.total_score:.1f}/10**\n"
-            f"• Prompt Quality: {evaluation.prompt_quality_score:.1f}/5\n"
-            f"• COSTAR Usage: {evaluation.costar_usage_score:.1f}/3\n"
-            f"• Creativity: {evaluation.creativity_score:.1f}/2\n\n"
-            f"*Finalizing results...*"
-        )
-
-
 
         # Create game round
         game_round = GameRound(
