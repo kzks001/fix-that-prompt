@@ -77,25 +77,12 @@ def get_stats():
             Select="COUNT",
         )
 
-        # Calculate average score
-        all_completed = table.query(
-            IndexName="score-index",
-            KeyConditionExpression="game_status = :status",
-            ExpressionAttributeValues={":status": "completed"},
-        )
-
-        scores = [item.get("final_score", 0) for item in all_completed.get("Items", [])]
-        avg_score = sum(scores) / len(scores) if scores else 0
-
         return jsonify(
             {
                 "success": True,
                 "stats": {
                     "total_completed_games": completed_response.get("Count", 0),
                     "active_games": active_response.get("Count", 0),
-                    "average_score": round(avg_score, 2),
-                    "highest_score": max(scores) if scores else 0,
-                    "lowest_score": min(scores) if scores else 0,
                 },
             }
         )
