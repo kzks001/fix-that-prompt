@@ -8,7 +8,6 @@ from ..database.leaderboard_db import LeaderboardDB
 from ..evaluators.ragas_wrapper import RAGASPromptEvaluator
 from ..models.player_session import (
     BadPrompt,
-    COSTARFramework,
     GameRound,
     PlayerSession,
 )
@@ -43,7 +42,6 @@ class FixThatPromptGame:
         self.evaluator = RAGASPromptEvaluator(model_name)
 
         # Game configuration
-        self.costar_framework = COSTARFramework()
 
         logger.info(f"Game initialized with model: {model_name}")
 
@@ -88,10 +86,6 @@ class FixThatPromptGame:
 
         return None
 
-    def get_costar_guidance(self) -> str:
-        """Get the COSTAR framework guidance text."""
-        return self.costar_framework.get_guidance()
-
     def get_current_round_prompt(self, username: str) -> BadPrompt | None:
         """
         Get the bad prompt for the current round.
@@ -127,7 +121,7 @@ class FixThatPromptGame:
             return self.prompt_loader.get_random_prompt()
 
     async def generate_improved_response(
-        self, improved_prompt: str, bad_prompt: BadPrompt
+        self, improved_prompt: str, bad_prompt: BadPrompt, stream_callback=None
     ) -> str:
         """
         Generate an improved response using the player's improved prompt with proper context.
@@ -135,6 +129,7 @@ class FixThatPromptGame:
         Args:
             improved_prompt: The player's improved prompt
             bad_prompt: The original bad prompt with context and category
+            stream_callback: Optional callback for streaming response chunks
 
         Returns:
             Generated response text
@@ -154,8 +149,18 @@ Please respond to this prompt as if you are completing the original task. Focus 
 If the user's prompt is unclear, off-topic, or seems to be describing how to write prompts rather than actually giving you a task, please politely indicate that you need a clearer prompt for the {bad_prompt.category.lower()} task.
 """
 
-            response = await self.llm.ainvoke(contextual_prompt)
-            return response.content
+            if stream_callback:
+                # Use streaming if callback provided
+                full_response = ""
+                async for chunk in self.llm.astream(contextual_prompt):
+                    if chunk.content:
+                        full_response += chunk.content
+                        await stream_callback(chunk.content, full_response)
+                return full_response
+            else:
+                # Use regular invocation
+                response = await self.llm.ainvoke(contextual_prompt)
+                return response.content
 
         except Exception as e:
             logger.error(f"Error generating improved response: {e}")

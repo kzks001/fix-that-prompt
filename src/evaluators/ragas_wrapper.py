@@ -142,6 +142,7 @@ SCORING:
 - 0 points: No actual improvement, wrong topic, or not a real prompt
 
 Start your response with "Score: X" then explain why, focusing on whether this is actually a usable prompt for the intended task.
+Keep your response short and concise, at most 2 sentences.
 """
 
 
@@ -183,6 +184,7 @@ SCORING:
 - 0 points: No actual COSTAR application OR just describing what COSTAR is
 
 Start your response with "Score: X" then identify which specific COSTAR elements were actually applied in the user's prompt.
+Keep your response short and concise, at most 2 sentences.
 """
 
 
@@ -214,7 +216,8 @@ SCORING (only if it's actually a usable prompt for the task):
 - 1 point: Some creative elements or unique approaches for the task
 - 0 points: No creativity, generic, or not actually a prompt for the task
 
-Start your response with "Score: X" then explain whether this shows creativity in solving the actual task.
+Start your response with "Score: X" then explain in whether this shows creativity in solving the actual task.
+Keep your response short and concise, at most 2 sentences.
 """
 
 
@@ -244,6 +247,7 @@ class RAGASPromptEvaluator:
         improved_prompt: str,
         improved_response: str,
         context: str,
+        stream_callback=None,  # Optional callback for streaming updates
     ) -> PromptEvaluation:
         """
         Evaluate a prompt improvement using separate metric evaluators concurrently.
@@ -253,6 +257,7 @@ class RAGASPromptEvaluator:
             improved_prompt: The user's improved prompt
             improved_response: The LLM response to the improved prompt
             context: The context/scenario for the prompt
+            stream_callback: Optional callback function for streaming updates
 
         Returns:
             PromptEvaluation with scores and feedback
@@ -273,7 +278,23 @@ class RAGASPromptEvaluator:
                 ),
             ]
 
-            results = await asyncio.gather(*tasks)
+            # Use asyncio.as_completed to stream results as they finish
+            results = [None, None, None]  # [prompt_quality, costar, creativity]
+            metric_names = ["Prompt Quality", "COSTAR Usage", "Creativity"]
+            
+            for i, task in enumerate(asyncio.as_completed(tasks)):
+                result = await task
+                results[i] = result
+                
+                # Stream update if callback provided
+                if stream_callback:
+                    await stream_callback(
+                        metric_name=metric_names[i],
+                        score=result.score,
+                        max_score=result.max_score,
+                        completed_count=len([r for r in results if r is not None]),
+                        total_count=len(tasks)
+                    )
 
             prompt_quality_result = results[0]
             costar_result = results[1]

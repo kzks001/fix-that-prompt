@@ -41,6 +41,15 @@ Each round, you receive a **poorly written prompt** with its **weak AI response*
 4. **Type it in the chat box** and press Enter
 5. **See your improved response** and get scored!
 
+## 🔧 **COSTAR Framework - Use These Elements:**
+
+**C - Context:** Provide clear context and background information
+**O - Objective:** Define specific, measurable objectives  
+**S - Style:** Specify the desired tone, format, and style
+**T - Tone:** Set the appropriate conversational tone
+**A - Audience:** Identify the target audience clearly
+**R - Response:** Specify the desired response format and structure
+
 ## 📊 **Detailed Scoring:**
 - **Prompt Quality (0-5 points):** Clarity, specificity, completeness
 - **COSTAR Usage (0-3 points):** Framework adherence
@@ -1078,12 +1087,10 @@ async def start_new_round(username: str):
 
 ### 📋 **What to do:**
 1. **Analyze the bad prompt** - What makes it unclear or ineffective?
-2. **Use the COSTAR framework** below to improve it
+2. **Use the COSTAR framework** (see Game Guide 📖) to improve it
 3. **Type your improved prompt** in the chat box below
 4. **Submit it** to see how much better your response is!
-
-### 🔧 **COSTAR Framework - Use these elements:**
-{game.get_costar_guidance()}
+💡 **Tip:** Include as many COSTAR elements as possible in your improved prompt!
 
 ---
 
@@ -1104,7 +1111,7 @@ async def handle_improved_prompt(improved_prompt: str, username: str):
     if not improved_prompt.strip():
         empty_prompt_message = await cl.Message(
             content="❌ **Your improved prompt cannot be empty.** Please try again.\n\n"
-            "💡 **What to do:** Write a better version of the bad prompt above using the COSTAR framework. Include context, objectives, style, tone, audience, and desired response format.\n\n"
+            "💡 **What to do:** Write a better version of the bad prompt above. See the Game Guide 📖 for the COSTAR framework.\n\n"
             "**Example:** Instead of 'Write about AI', try 'Write a 300-word blog post about AI for business executives, using a professional tone and including 3 key benefits.'",
             actions=[
                 Action(name="stop", payload={"action": "stop"}, label="🛑 Stop Game"),
@@ -1127,7 +1134,7 @@ async def handle_improved_prompt(improved_prompt: str, username: str):
         cl.user_session.set("main_message", no_prompt_message)
         return
 
-    # Show processing message
+    # Show initial processing message
     processing_msg = await cl.Message(
         content="⏳ **Processing your improved prompt...**\n\n"
         "🤖 Generating improved response...\n"
@@ -1141,18 +1148,72 @@ async def handle_improved_prompt(improved_prompt: str, username: str):
         player_data = cl.user_session.get("player_data")
         current_round_number = player_data.rounds_played + 1
 
-        # Generate improved response with proper context
-        improved_response = await game.generate_improved_response(
-            improved_prompt, bad_prompt
+        # Update status: Generating improved response
+        await processing_msg.update(
+            content="⏳ **Processing your improved prompt...**\n\n"
+            "✅ **Generating improved response...**\n"
+            "⏳ Evaluating with LLM-as-a-judge...\n"
+            "⏳ Calculating scores...\n\n"
+            "*This may take a moment...*"
         )
 
-        # Evaluate the improvement
+        # Create streaming callback for LLM response
+        response_chunks = []
+        async def stream_response_chunk(chunk, full_response):
+            response_chunks.append(chunk)
+            # Update the processing message to show streaming response
+            preview = full_response[:200] + "..." if len(full_response) > 200 else full_response
+            await processing_msg.update(
+                content=f"⏳ **Processing your improved prompt...**\n\n"
+                f"✅ **Generating improved response...**\n"
+                f"⏳ Evaluating with LLM-as-a-judge...\n"
+                f"⏳ Calculating scores...\n\n"
+                f"**Response Preview:**\n{preview}\n\n"
+                f"*Generating response...*"
+            )
+
+        # Generate improved response with streaming
+        improved_response = await game.generate_improved_response(
+            improved_prompt, bad_prompt, stream_callback=stream_response_chunk
+        )
+
+        # Create streaming callback for metric updates
+        async def stream_metric_update(metric_name, score, max_score, completed_count, total_count):
+            progress_bar = "█" * completed_count + "░" * (total_count - completed_count)
+            await processing_msg.update(
+                content=f"⏳ **Processing your improved prompt...**\n\n"
+                f"✅ **Generating improved response...** ✅\n"
+                f"✅ **Evaluating with LLM-as-a-judge...**\n"
+                f"📊 **Calculating scores...** [{progress_bar}] {completed_count}/{total_count}\n\n"
+                f"✅ **{metric_name}:** {score:.1f}/{max_score:.1f} points\n"
+                f"⏳ Waiting for remaining metrics...\n\n"
+                f"*Almost done...*"
+            )
+
+        # Evaluate the improvement with streaming
         evaluation = await game.evaluator.evaluate_prompt_improvement(
             original_prompt=bad_prompt.bad_prompt,
             improved_prompt=improved_prompt,
             improved_response=improved_response,
             context=bad_prompt.context,
+            stream_callback=stream_metric_update,
         )
+
+        # Final streaming update with complete results
+        await processing_msg.update(
+            content=f"⏳ **Processing your improved prompt...**\n\n"
+            f"✅ **Generating improved response...** ✅\n"
+            f"✅ **Evaluating with LLM-as-a-judge...** ✅\n"
+            f"✅ **Calculating scores...** ✅\n\n"
+            f"🎉 **Evaluation Complete!**\n\n"
+            f"📊 **Your Score: {evaluation.total_score:.1f}/10**\n"
+            f"• Prompt Quality: {evaluation.prompt_quality_score:.1f}/5\n"
+            f"• COSTAR Usage: {evaluation.costar_usage_score:.1f}/3\n"
+            f"• Creativity: {evaluation.creativity_score:.1f}/2\n\n"
+            f"*Finalizing results...*"
+        )
+
+
 
         # Create game round
         game_round = GameRound(

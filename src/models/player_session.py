@@ -97,28 +97,3 @@ class PlayerSession:
             is_completed=is_game_complete,
             last_played=datetime.now(),
         )
-
-
-@dataclass
-class COSTARFramework:
-    """COSTAR framework guidance for prompt improvement."""
-
-    context: str = "Provide clear context and background information"
-    objective: str = "Define specific, measurable objectives"
-    style: str = "Specify the desired tone, format, and style"
-    tone: str = "Set the appropriate conversational tone"
-    audience: str = "Identify the target audience clearly"
-    response: str = "Specify the desired response format and structure"
-
-    def get_guidance(self) -> str:
-        """Get formatted COSTAR guidance text."""
-        return f"""
-**C - Context:** {self.context}
-**O - Objective:** {self.objective}
-**S - Style:** {self.style}
-**T - Tone:** {self.tone}
-**A - Audience:** {self.audience}
-**R - Response:** {self.response}
-
-💡 **Tip:** Include as many COSTAR elements as possible in your improved prompt!
-"""
