@@ -902,6 +902,7 @@ async def show_active_user_menu(player_data):
 - **Current Best Score:** {player_data.final_score:.1f}/10
 
 Ready to become a prompt master?
+Click the buttons below to get started!
 """
 
         actions = [
